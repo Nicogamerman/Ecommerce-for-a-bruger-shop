@@ -89,8 +89,13 @@ class Pedido extends Model{
     public function obtenerTodos()
     {
         $sql = "SELECT
-                  A.idpedido,
-                  A.fk_idcliente                                   
+                idpedido,                
+                fecha,
+                descripcion,
+                total,
+                fk_idsucursal,               
+                fk_idestado,       
+                fk_idcliente                                   
                 FROM pedidos A ORDER BY A.idpedido";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
