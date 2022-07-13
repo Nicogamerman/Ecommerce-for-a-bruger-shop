@@ -100,7 +100,7 @@ class Postulacion extends Model{
                   A.dni,
                   A.celular,
                   A.curriculum              
-                FROM ispostulacion A ORDER BY nombre";
+                FROM postulaciones A ORDER BY nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

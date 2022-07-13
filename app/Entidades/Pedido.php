@@ -25,17 +25,15 @@ class Pedido extends Model{
       ];
   
     public function insertar(){
-        $sql = "INSERT INTO $this->table (   
-            idpedidon         
+        $sql = "INSERT INTO $this->table (                       
             fecha,
             descripcion,
             total,  
             fk_idsucursal,
             fk_idcliente,
             fk_idestado            
-            ) VALUES (?, ?, ?, ?, ?, ?, ?);";
-        $result = DB::insert($sql, [
-            $this->idpedido,
+            ) VALUES (?, ?, ?, ?, ?, ?);";
+        $result = DB::insert($sql, [            
             $this->fecha,
             $this->descripcion,
             $this->total, 
@@ -53,20 +51,17 @@ class Pedido extends Model{
                 fecha,
                 descripcion,
                 total,
-                fk_idsucursal,
-                fk_idcategoria,
+                fk_idsucursal,                
                 fk_idcliente,
                 fk_idestado                
                 FROM pedidos WHERE idpedido = $idpedido";
         $lstRetorno = DB::select($sql);
 
-        if (count($lstRetorno) > 0) {
-            $this->idpedido = $lstRetorno[0]->idpedido;
-            $this->nombre = $lstRetorno[0]->nombre;
-            $this->cantidad = $lstRetorno[0]->cantidad;
-            $this->precio = $lstRetorno[0]->precio;
-            $this->imagen = $lstRetorno[0]->imagen;
-            $this->fk_idcategoria = $lstRetorno[0]->fk_idcategoria;      
+        if (count($lstRetorno) > 0) {            
+            $this->fecha = $lstRetorno[0]->fecha;            
+            $this->total = $lstRetorno[0]->total;
+            $this->descripcion = $lstRetorno[0]->descripcion;
+            $this->fk_idsucursal = $lstRetorno[0]->fk_idsucursal;      
             $this->fk_idcliente = $lstRetorno[0]->fk_idcliente;     
             $this->fk_idestado = $lstRetorno[0]->fk_idestado;          
             return $this;
@@ -76,16 +71,18 @@ class Pedido extends Model{
 
     public function guardar() {
         $sql = "UPDATE $this->table SET
-            fecha='$this->fecha',
-            descripcion='$this->descripcion',
-            total=$this->total
-            WHERE idmenu=?";
+            fecha='$this->fecha',            
+            descripcion=$this->descripcion,
+            total=$this->total,            
+            fk_idcategoria=$this->fk_idcategoria,
+            fk_idcliente=$this->fk_idcliente,
+            fk_idestado=$this->fk_idestado
+            WHERE idpedido=?";
         $affected = DB::update($sql, [$this->idpedido]);
     }
 
     public function eliminar(){
-        $sql = "DELETE FROM $this->table WHERE
-            idpedido=?";
+        $sql = "DELETE FROM $this->table WHERE idpedido=?";
         $affected = DB::delete($sql, [$this->idpedido]);
     }
 
@@ -94,7 +91,7 @@ class Pedido extends Model{
         $sql = "SELECT
                   A.idpedido,
                   A.fk_idcliente                                   
-                FROM idpedido A ORDER BY A.idpedido";
+                FROM pedidos A ORDER BY A.idpedido";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

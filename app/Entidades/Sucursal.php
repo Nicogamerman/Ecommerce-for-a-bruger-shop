@@ -87,7 +87,7 @@ class Sucursal extends Model{
                   A.telefono,
                   A.direccion,
                   A.linkmapa              
-                FROM idsucursal A ORDER BY nombre";
+                FROM sucursales A ORDER BY nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

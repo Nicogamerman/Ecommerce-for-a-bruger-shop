@@ -61,7 +61,7 @@ class Estado extends Model{
         $sql = "SELECT
                   A.idestado,
                   A.nombre               
-                FROM idestado A ORDER BY A.nombre";
+                FROM estados A ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

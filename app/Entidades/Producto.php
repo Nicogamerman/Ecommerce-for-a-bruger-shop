@@ -102,7 +102,7 @@ class Producto extends Model{
                   A.imagen,
                   A.descripcion,
                   A.fk_idcategoria                 
-                FROM idproducto A ORDER BY A.nombre";
+                FROM productos A ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

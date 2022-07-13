@@ -100,7 +100,7 @@ class Cliente extends Model{
                   A.dni,
                   A.celular,
                   A.clave                 
-                FROM idcliente A ORDER BY A.nombre";
+                FROM clientes A ORDER BY A.nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
