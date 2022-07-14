@@ -96,3 +96,51 @@ Route::get('/admin/patente/cargarGrilla', 'ControladorPatente@cargarGrilla')->na
 Route::get('/admin/patente/eliminar', 'ControladorPatente@eliminar');
 Route::get('/admin/patente/nuevo/{id}', 'ControladorPatente@editar');
 Route::post('/admin/patente/nuevo/{id}', 'ControladorPatente@guardar');
+
+
+/* --------------------------------------------- */
+/* CONTROLADOR CLIENTES                          */
+/* --------------------------------------------- */
+
+Route::get('/admin/cliente/nuevo', 'ControladorCliente@nuevo');
+
+/* --------------------------------------------- */
+/* CONTROLADOR POSTULACION                          */
+/* --------------------------------------------- */
+
+Route::get('/admin/postulacion/nuevo', 'ControladorPostulacion@nuevo');
+
+/* --------------------------------------------- */
+/* CONTROLADOR PEDIDOS                          */
+/* --------------------------------------------- */
+
+Route::get('/admin/pedido/nuevo', 'ControladorPedido@nuevo');
+
+/* --------------------------------------------- */
+/* CONTROLADOR CATEGORIA                          */
+/* --------------------------------------------- */
+
+Route::get('/admin/categoria/nuevo', 'ControladorCategoria@nuevo');
+
+/* --------------------------------------------- */
+/* CONTROLADOR PRODUCTO                          */
+/* --------------------------------------------- */
+
+Route::get('/admin/producto/nuevo', 'ControladorProducto@nuevo');
+
+/* --------------------------------------------- */
+/* CONTROLADOR ESTADOS                          */
+/* --------------------------------------------- */
+
+Route::get('/admin/estado/nuevo', 'ControladorEstado@nuevo');
+
+/* --------------------------------------------- */
+/* CONTROLADOR SUCURSALES                          */
+/* --------------------------------------------- */
+
+Route::get('/admin/sucursal/nuevo', 'ControladorSucursal@nuevo');
+
+
+
+
+
