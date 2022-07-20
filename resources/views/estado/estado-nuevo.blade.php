@@ -88,5 +88,5 @@ if (isset($msg)) {
         });
     }
 
-</script>
+</script> 
 @endsection

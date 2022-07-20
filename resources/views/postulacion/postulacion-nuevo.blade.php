@@ -57,14 +57,14 @@ if (isset($msg)) {
                 </div>
                 <div>
                   <label>Apellido: *</label>
-                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" required>
+                        <input type="text" id="txtApellido" name="txtApellido" class="form-control" required>
                 </div>
                 <div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div>
                   <label>Correo: *</label>
-                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" required>
+                        <input type="text" id="txtCorreo" name="txtCorreo" class="form-control" required>
                 </div>                
             </div>
     </div>
@@ -106,7 +106,7 @@ if (isset($msg)) {
     function eliminar() {
         $.ajax({
             type: "GET",
-            url: "{{ asset('admin/cliente/eliminar') }}",
+            url: "{{ asset('admin/postulacion/eliminar') }}",
             data: { id:globalId },
             async: true,
             dataType: "json",
@@ -122,7 +122,5 @@ if (isset($msg)) {
             }
         });
     }
-
 </script>
-     
 @endsection

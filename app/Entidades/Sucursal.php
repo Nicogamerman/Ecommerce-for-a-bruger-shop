@@ -22,6 +22,14 @@ class Sucursal extends Model{
   
       ];
 
+      public function cargarDesdeRequest($request) { //recibe por variable request generado por laravel.
+        $this->idsucursal = $request->input('id') != "0" ? $request->input('id') : $this->idcliente;
+        $this->nombre = $request->input('txtNombre');
+        $this->telefono = $request->input('txtTelefono');
+        $this->direccion = $request->input('txtDireccion');
+        $this->linkmapa = $request->input('txtLinkmapa');
+    }
+
     public function insertar(){
         $sql = "INSERT INTO $this->table (     
             idsucursal, 
@@ -91,5 +99,5 @@ class Sucursal extends Model{
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
-
+ 
 }

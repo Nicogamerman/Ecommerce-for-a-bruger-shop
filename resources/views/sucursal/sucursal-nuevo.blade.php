@@ -57,17 +57,17 @@ if (isset($msg)) {
                 </div>
                 <div>
                   <label>Telefono: *</label>
-                    <input type="text" id="txtNombre" name="txtNombre" class="form-control" required>
+                    <input type="text" id="txtTelefono" name="txtTelefono" class="form-control" required>
                 </div>
                 <div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div>
                   <label>Direccion: *</label>
-                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" required>
+                        <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" required>
                 </div>  
                 <label>Link Mapa: *</label>
-                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" required>
+                        <input type="text" id="txtLinkMapa" name="txtLinkMapa" class="form-control" required>
                 </div>
                 <div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
@@ -90,7 +90,7 @@ if (isset($msg)) {
             $("#modalGuardar").modal('toggle');
             msgShow("Corrija los errores e intente nuevamente.", "danger");
             return false;
-        }
+        } 
     }
 
     function eliminar() {

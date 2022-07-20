@@ -22,8 +22,17 @@ class Postulacion extends Model{
       protected $hidden = [
   
       ];
-  
 
+      public function cargarDesdeRequest($request) { //recibe por variable request generado por laravel.
+        $this->idpostulacion = $request->input('id') != "0" ? $request->input('id') : $this->idpostulacion;
+        $this->nombre = $request->input('txtNombre');
+        $this->apellido = $request->input('txtApellido');
+        $this->correo = $request->input('txtCorreo');        
+        $this->celular = $request->input('txtCelular');
+        $this->curriculum = $request->input('txtCurriculum');
+        // $this->fk_idcliente = $request->input('lstCliente'); para los casos con foreign key, no es el caso de la tabla cliente.
+    }
+  
     public function insertar(){
         $sql = "INSERT INTO $this->table (
             idpostulacion,            
@@ -104,6 +113,5 @@ class Postulacion extends Model{
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
-
 }
     

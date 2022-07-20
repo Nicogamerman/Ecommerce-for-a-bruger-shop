@@ -104,7 +104,7 @@ if (isset($msg)) {
             }
         });
     }
-
+ 
 </script>
     
 @endsection

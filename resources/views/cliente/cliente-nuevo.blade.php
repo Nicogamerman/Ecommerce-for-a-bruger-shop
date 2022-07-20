@@ -27,19 +27,6 @@ function fsalir(){
     location.href ="/admin/clientes";
 }
 </script>
-<script>
-function guardar(){
-    if ($("#forma1").valid()){
-      modificado = false;
-      form1.submit();
-    }
-    else {
-      $("#modalGuardar").modal("toggle");
-      msgShow("Corrija los errores e intente nuevamente.", "danger");
-      return false;
-    }
-}
-</script>
 @endsection
 @section ('contenido')
 <?php
@@ -108,7 +95,7 @@ if (isset($msg)) {
             </div>
     </div>
 </form>
-<div class="modal fade" id="mdlEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="mdlEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -160,6 +147,5 @@ if (isset($msg)) {
             }
         });
     }
-
 </script>
 @endsection

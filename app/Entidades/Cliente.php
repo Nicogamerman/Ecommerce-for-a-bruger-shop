@@ -81,7 +81,7 @@ class Cliente extends Model{
                 clave,
                 FROM clientes WHERE idcliente = $idcliente";
         $lstRetorno = DB::select($sql);
-
+ 
         if (count($lstRetorno) > 0) {
             $this->idcliente = $lstRetorno[0]->idcliente;
             $this->nombre = $lstRetorno[0]->nombre;
@@ -115,8 +115,4 @@ class Cliente extends Model{
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
-   
-
-   
-    
 }

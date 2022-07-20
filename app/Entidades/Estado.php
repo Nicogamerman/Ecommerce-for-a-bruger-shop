@@ -19,13 +19,20 @@ class Estado extends Model{
   
       ];
 
-      public function insertar(){
-        $sql = "INSERT INTO $this->table ('nombre') VALUES (?);";
-        $result = DB::insert($sql, [          
-          $this->nombre          
+      public function cargarDesdeRequest($request) { //recibe por variable request generado por laravel.
+        $this->idestado = $request->input('id') != "0" ? $request->input('id') : $this->idcliente;
+        $this->nombre = $request->input('txtNombre');
+    }
+
+    public function insertar(){
+        $sql = "INSERT INTO $this->table (            
+            nombre
+            ) VALUES (?);";
+        $result = DB::insert($sql, [
+            $this->nombre,
         ]);
         return $this->idestado = DB::getPdo()->lastInsertId();
-      }
+    }
 
       public function guardar() {
         $sql = "UPDATE estados SET            
