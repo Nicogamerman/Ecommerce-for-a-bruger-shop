@@ -24,7 +24,18 @@ class Cliente extends Model{
       protected $hidden = [
   
       ];
-  
+
+      public function cargarDesdeRequest($request) { //recibe por variable request generado por laravel.
+        $this->idcliente = $request->input('id') != "0" ? $request->input('id') : $this->idcliente;
+        $this->nombre = $request->input('txtNombre');
+        $this->apellido = $request->input('txtApellido');
+        $this->correo = $request->input('txtCorreo');
+        $this->dni = $request->input('lstDni');
+        $this->celular = $request->input('txtCelular');
+        $this->clave = $request->input('txtClave');
+        $this->fk_idcliente = $request->input('lstCliente'); //para los casos con foreign key
+    }
+
     public function insertar(){
         $sql = "INSERT INTO $this->table (            
             nombre,

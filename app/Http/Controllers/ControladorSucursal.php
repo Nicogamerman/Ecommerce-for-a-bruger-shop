@@ -14,7 +14,7 @@ class ControladorSucursal extends Controller
 {
     public function nuevo()
     {
-      $titulo = "Nuevo menu";
+      $titulo = "Nueva Sucursal";
       return view('sucursal.sucursal-nuevo', compact('titulo'));
       } 
 }

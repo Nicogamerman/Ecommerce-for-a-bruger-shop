@@ -26,4 +26,87 @@ function fsalir(){
     location.href ="/admin/clientes";
 }
 </script>
+<script>
+function guardar(){
+    if ($("#forma1").valid()){
+      modificado = false;
+      form1.submit();
+    }
+    else {
+      $("#modalGuardar").modal("toggle");
+      msgShow("Corrija los errores e intente nuevamente.", "danger");
+      return false;
+    }
+    }
+}
+</script>
+@endsection
+@section ('contenido')
+<?php
+if (isset($msg)) {
+    echo '<div id = "msg"></div>';
+    echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
+}
+?>
+<div class="panel-body">
+        <div id = "msg"></div>
+        <?php
+if (isset($msg)) {
+    echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
+}
+?>
+
+<form id="form1" method="POST">          
+<div class="row">
+    <div class="col-5">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
+                <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
+                <div class>
+                  <label>Nombre: *</label>
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" required>
+                </div>
+                <div>
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
+                    <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
+                </div>
+                <div>
+                  <label>Apellido: *</label>
+                        <input type="text" id="txtApellido" name="txtApellido" class="form-control" required>
+                </div>
+                <div>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
+                <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
+                <div>
+                  <label>Correo: *</label>
+                        <input type="text" id="txtCorreo" name="txtCorreo" class="form-control" required>
+                </div>                
+            </div>
+    </div>
+<div class="col-5">
+<div>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
+                <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
+                <div>
+                  <label>DNI: *</label>
+                        <input type="text" id="txtDni" name="txtDni" class="form-control" required>
+                </div>
+            </div>
+            <div>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
+                <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
+                <div>
+                  <label>Celular: *</label>
+                        <input type="text" id="txtCelular" name="txtCelular" class="form-control" required>
+                </div>
+            </div>
+            <div>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
+                <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
+                <div>
+                  <label>Clave: *</label>
+                        <input type="password" id="txtClave" name="txtClave" class="form-control" required>
+            </div>
+    </div>
+</form>
+     
 @endsection

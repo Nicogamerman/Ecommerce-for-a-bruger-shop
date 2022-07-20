@@ -102,36 +102,43 @@ Route::post('/admin/patente/nuevo/{id}', 'ControladorPatente@guardar');
 /* CONTROLADOR CLIENTES                          */
 /* --------------------------------------------- */
 Route::get('/admin/cliente/nuevo', 'ControladorCliente@nuevo');
+Route::post('/admin/cliente/nuevo', 'ControladorCliente@guardar');
 
 /* --------------------------------------------- */
 /* CONTROLADOR POSTULACIONES                          */
 /* --------------------------------------------- */
 Route::get('/admin/postulacion/nuevo', 'ControladorPostulacion@nuevo');
+Route::post('/admin/postulacion/nuevo', 'ControladorPostulacion@Guardar');
 
 /* --------------------------------------------- */
 /* CONTROLADOR PEDIDOS                          */
 /* --------------------------------------------- */
 Route::get('/admin/pedido/nuevo', 'ControladorPedido@nuevo');
+Route::post('/admin/pedido/nuevo', 'ControladorPedido@guardar');
 
 /* --------------------------------------------- */
 /* CONTROLADOR CATEGORIA                          */
 /* --------------------------------------------- */
 Route::get('/admin/categoria/nuevo', 'ControladorCategoria@nuevo');
+Route::post('/admin/categoria/nuevo', 'ControladorCategoria@guardar');
 
 /* --------------------------------------------- */
 /* CONTROLADOR PRODUCTO                          */
 /* --------------------------------------------- */
 Route::get('/admin/producto/nuevo', 'ControladorProducto@nuevo');
+Route::post('/admin/producto/nuevo', 'ControladorProducto@guardar');
 
 /* --------------------------------------------- */
 /* CONTROLADOR ESTADOS                          */
 /* --------------------------------------------- */
 Route::get('/admin/estado/nuevo', 'ControladorEstado@nuevo');
+Route::post('/admin/estado/nuevo', 'ControladorEstado@guardar');
 
 /* --------------------------------------------- */
 /* CONTROLADOR SUCURSALES                          */
 /* --------------------------------------------- */
 Route::get('/admin/sucursal/nuevo', 'ControladorSucursal@nuevo');
+Route::post('/admin/sucursal/nuevo', 'ControladorSucursal@guardar');
 
 
 
