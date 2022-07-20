@@ -5,6 +5,7 @@
     globalId = '<?php echo isset($pedido->idpedido) && $pedido->idpedido > 0 ? $pedido->idpedido : 0; ?>';
     <?php $globalId = isset($pedido->idpedido) ? $pedido->idpedido : "0";?>
 </script>
+@endsection
 <!-- TOOLBAR  INICIO/MENU/MODIFICAR dentro de NUEVO pedido -->
 @section('breadcrumb') 
 <ol class="breadcrumb">
@@ -68,5 +69,42 @@ if (isset($msg)) {
             </div>
     </div>
 </form>
+
+<script>
+
+    $("#form1").validate();
+
+    function guardar() {
+        if ($("#form1").valid()) {
+            modificado = false;
+            form1.submit();
+        } else {
+            $("#modalGuardar").modal('toggle');
+            msgShow("Corrija los errores e intente nuevamente.", "danger");
+            return false;
+        }
+    }
+
+    function eliminar() {
+        $.ajax({
+            type: "GET",
+            url: "{{ asset('admin/cliente/eliminar') }}",
+            data: { id:globalId },
+            async: true,
+            dataType: "json",
+            success: function (data) {
+                if (data.err = "0") {
+                    msgShow("Registro eliminado exitosamente.", "success");
+                    $("#btnEnviar").hide();
+                    $("#btnEliminar").hide();
+                    $('#mdlEliminar').modal('toggle');
+                } else {
+                    msgShow("Error al eliminar", "success");
+                }
+            }
+        });
+    }
+
+</script>
     
 @endsection

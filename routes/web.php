@@ -108,7 +108,7 @@ Route::post('/admin/cliente/nuevo', 'ControladorCliente@guardar');
 /* CONTROLADOR POSTULACIONES                          */
 /* --------------------------------------------- */
 Route::get('/admin/postulacion/nuevo', 'ControladorPostulacion@nuevo');
-Route::post('/admin/postulacion/nuevo', 'ControladorPostulacion@Guardar');
+Route::post('/admin/postulacion/nuevo', 'ControladorPostulacion@guardar');
 
 /* --------------------------------------------- */
 /* CONTROLADOR PEDIDOS                          */
