@@ -18,3 +18,4 @@ class ControladorCategoria extends Controller
       return view('categoria.categoria-nuevo', compact('titulo'));
       } 
 }
+

@@ -67,5 +67,4 @@ class Categoria extends Model{
         return $lstRetorno;
     }
    
-
 }
