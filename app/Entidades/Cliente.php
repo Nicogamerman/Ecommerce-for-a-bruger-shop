@@ -33,7 +33,7 @@ class Cliente extends Model{
         $this->dni = $request->input('lstDni');
         $this->celular = $request->input('txtCelular');
         $this->clave = $request->input('txtClave');
-        $this->fk_idcliente = $request->input('lstCliente'); //para los casos con foreign key
+        // $this->fk_idcliente = $request->input('lstCliente'); para los casos con foreign key, no es el caso de la tabla cliente.
     }
 
     public function insertar(){

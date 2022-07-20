@@ -42,16 +42,8 @@ class ControladorCliente extends Controller
 
                     $msg["ESTADO"] = MSG_SUCCESS;
                     $msg["MSG"] = OKINSERT;
-                }
-                $cliente_grupo_grupo = new ClienteArea();
-                $cliente_grupo->fk_idcliente = $entidad->idcliente;
-                $cliente_grupo->eliminarPorMenu();
-                if ($request->input("chk_grupo") != null && count($request->input("chk_grupo")) > 0) {
-                    foreach ($request->input("chk_grupo") as $grupo_id) {
-                        $cliente_grupo->fk_idarea = $grupo_id;
-                        $cliente_grupo->insertar();
-                    }
-                }
+                }       
+                
                 $_POST["id"] = $entidad->idcliente;
                 return view('cliente.cliente-listar', compact('titulo', 'msg'));
             }
