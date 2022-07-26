@@ -23,10 +23,19 @@ class Producto extends Model{
       protected $hidden = [
   
       ];
+
+      public function cargarDesdeRequest($request) { //recibe por variable request generado por laravel.
+        $this->idproducto = $request->input('id') != "0" ? $request->input('id') : $this->idproducto;
+        $this->nombre = $request->input('txtNombre');
+        $this->cantidad = $request->input('txtCantidad');
+        $this->precio = $request->input('txtPrecio');
+        $this->imagen = $request->input('txtImagen');
+        $this->descripcion = $request->input('txtDescripcion');
+        $this->fk_idcategoria = $request->input('lstCategoria'); 
+    }  
   
     public function insertar(){
         $sql = "INSERT INTO $this->table (            
-            idproducto,
             nombre,
             cantidad,
             precio,
@@ -35,7 +44,6 @@ class Producto extends Model{
             fk_idcategoria
             ) VALUES (?, ?, ?, ?, ?, ?);";
         $result = DB::insert($sql, [
-            $this->idproducto,
             $this->nombre,
             $this->cantidad,
             $this->precio,
@@ -47,8 +55,7 @@ class Producto extends Model{
     }
  
     public function guardar() {
-        $sql = "UPDATE $this->table SET
-            idproducto=$this->idproducto,
+        $sql = "UPDATE $this->table SET            
             nombre='$this->nombre',
             cantidad=$this->cantidad,
             precio=$this->precio,
@@ -59,7 +66,7 @@ class Producto extends Model{
             WHERE idproducto=?";
         $affected = DB::update($sql, [$this->idproducto]);
     }
-
+ 
     public function obtenerPorId($idproducto)
     {
         $sql = "SELECT
@@ -102,7 +109,7 @@ class Producto extends Model{
                   A.imagen,
                   A.descripcion,
                   A.fk_idcategoria                 
-                FROM productos A ORDER BY A.nombre";
+                FROM productos A ORDER BY nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }

@@ -61,6 +61,10 @@ if (isset($msg)) {
                         <input type="numbre" id="txtCantidad" name="txtCantidad" class="form-control" required>
                 </div>
                 <div>
+                  <label>Descripcion: *</label>
+                        <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" required>
+                </div>
+                <div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                     <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div>

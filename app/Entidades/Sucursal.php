@@ -31,15 +31,13 @@ class Sucursal extends Model{
     }
 
     public function insertar(){
-        $sql = "INSERT INTO $this->table (     
-            idsucursal, 
+        $sql = "INSERT INTO $this->table (    
             nombre,   
             telefono,
             direccion,
             linkmapa
             ) VALUES (?, ?, ?, ?);";
         $result = DB::insert($sql, [
-            $this->idsucursal,
             $this->nombre,
             $this->telefono,
             $this->direccion,
@@ -47,7 +45,7 @@ class Sucursal extends Model{
         ]);
         return $this->idsucursal = DB::getPdo()->lastInsertId();
     }
-
+ 
     public function guardar() {
         $sql = "UPDATE $this->table SET
             idsucursal=$this->idsucursal,

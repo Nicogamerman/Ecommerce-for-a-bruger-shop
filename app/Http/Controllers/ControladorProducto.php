@@ -14,7 +14,49 @@ class ControladorProducto extends Controller
 {
     public function nuevo()
     {
-      $titulo = "Nuevo Producto";
+      $titulo = "Nuevo producto";
       return view('producto.producto-nuevo', compact('titulo'));
-      } 
+    } 
+
+    public function guardar(Request $request) {
+        try {
+            //Define la entidad servicio
+            $titulo = "Modificar Producto";
+            $entidad = new Producto();
+            $entidad->cargarDesdeRequest($request);
+
+            //validaciones
+            if ($entidad->nombre == "") {
+                $msg["ESTADO"] = MSG_ERROR;
+                $msg["MSG"] = "Complete todos los datos";
+            } else {
+                if ($_POST["id"] > 0) {
+                    //Es actualizacion
+                    $entidad->guardar();
+
+                    $msg["ESTADO"] = MSG_SUCCESS;
+                    $msg["MSG"] = OKINSERT;
+                } else {
+                    //Es nuevo
+                    $entidad->insertar();
+
+                    $msg["ESTADO"] = MSG_SUCCESS;
+                    $msg["MSG"] = OKINSERT;
+                }       
+                
+                $_POST["id"] = $entidad->idproducto;
+                return view('producto.producto-listar', compact('titulo', 'msg'));
+            }
+        } catch (Exception $e) {
+            $msg["ESTADO"] = MSG_ERROR;
+            $msg["MSG"] = ERRORINSERT;
+        }
+
+        $id = $entidad->producto;
+        $producto = new Producto();
+        $producto->obtenerPorId($id);
+
+        return view('producto.producto-nuevo', compact('msg', 'producto', 'titulo')) . '?id=' . $producto->idproducto;
+
+    }
 }

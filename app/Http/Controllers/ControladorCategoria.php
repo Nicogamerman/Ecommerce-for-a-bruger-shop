@@ -14,14 +14,14 @@ class ControladorCategoria extends Controller
 {
     public function nuevo()
     {
-      $titulo = "Nueva Categoria";
+      $titulo = "Nueva categoria";
       return view('categoria.categoria-nuevo', compact('titulo'));
-      } 
+    } 
 
-      public function guardar(Request $request) {
+    public function guardar(Request $request) {
         try {
             //Define la entidad servicio
-            $titulo = "Modificar Categoria";
+            $titulo = "Modificar categoria";
             $entidad = new Categoria();
             $entidad->cargarDesdeRequest($request);
 
@@ -59,6 +59,4 @@ class ControladorCategoria extends Controller
         return view('categoria.categoria-nuevo', compact('msg', 'categoria', 'titulo')) . '?id=' . $categoria->idcategoria;
 
     }
-}  
-
-
+}

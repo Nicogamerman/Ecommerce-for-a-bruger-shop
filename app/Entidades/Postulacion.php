@@ -30,25 +30,20 @@ class Postulacion extends Model{
         $this->correo = $request->input('txtCorreo');        
         $this->celular = $request->input('txtCelular');
         $this->curriculum = $request->input('txtCurriculum');
-        // $this->fk_idcliente = $request->input('lstCliente'); para los casos con foreign key, no es el caso de la tabla cliente.
     }
   
     public function insertar(){
-        $sql = "INSERT INTO $this->table (
-            idpostulacion,            
+        $sql = "INSERT INTO $this->table (           
             nombre,
             apellido,
             correo,
             celular,
-            curriculum,
-           
+            curriculum
             ) VALUES (?, ?, ?, ?, ?);";
         $result = DB::insert($sql, [
-            $this->idpostulacion,
             $this->nombre,
             $this->apellido,
-            $this->correo,
-            $this->dni,
+            $this->correo,           
             $this->celular, 
             $this->curriculum           
         ]);
@@ -59,8 +54,7 @@ class Postulacion extends Model{
             idpostulacion=$this->idpostulacion,
             nombre='$this->nombre',
             apellido='$this->apellido',
-            correo='$this->correo',
-            dni='$this->dni'
+            correo='$this->correo',            
             celular='$this->celular'
             curriculum='$this->curriculum'
             WHERE idpostulacion=?";
@@ -73,8 +67,7 @@ class Postulacion extends Model{
                 idpostulacion,
                 nombre,
                 apellido,
-                correo,
-                dni,
+                correo,                
                 celular,  
                 curriculum              
                 FROM productos WHERE idproducto = $idpostulacion";
@@ -84,8 +77,7 @@ class Postulacion extends Model{
             $this->idpostulacion = $lstRetorno[0]->idpostulacion;
             $this->nombre = $lstRetorno[0]->nombre;
             $this->apellido = $lstRetorno[0]->apellido;
-            $this->correo = $lstRetorno[0]->correo;
-            $this->dni = $lstRetorno[0]->dni;  
+            $this->correo = $lstRetorno[0]->correo;             
             $this->celular = $lstRetorno[0]->celular;      
             $this->curriculum = $lstRetorno[0]->curriculum;            
             return $this;
@@ -105,8 +97,7 @@ class Postulacion extends Model{
                   A.idpostulacion,
                   A.nombre,
                   A.apellido,
-                  A.correo,
-                  A.dni,
+                  A.correo,                  
                   A.celular,
                   A.curriculum              
                 FROM postulaciones A ORDER BY nombre";

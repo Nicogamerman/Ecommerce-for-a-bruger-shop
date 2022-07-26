@@ -17,8 +17,7 @@ class Cliente extends Model{
           'correo',
           'dni',
           'celular',
-          'clave'
-          
+          'clave'       
       ];
   
       protected $hidden = [
@@ -30,7 +29,7 @@ class Cliente extends Model{
         $this->nombre = $request->input('txtNombre');
         $this->apellido = $request->input('txtApellido');
         $this->correo = $request->input('txtCorreo');
-        $this->dni = $request->input('lstDni');
+        $this->dni = $request->input('txtDni');
         $this->celular = $request->input('txtCelular');
         $this->clave = $request->input('txtClave');
         // $this->fk_idcliente = $request->input('lstCliente'); para los casos con foreign key, no es el caso de la tabla cliente.

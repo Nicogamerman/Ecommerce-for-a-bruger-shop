@@ -51,7 +51,7 @@ class ControladorPedido extends Controller
             $msg["ESTADO"] = MSG_ERROR;
             $msg["MSG"] = ERRORINSERT;
         }
-
+ 
         $id = $entidad->pedido;
         $pedido = new Pedido();
         $pedido->obtenerPorId($id);
@@ -59,6 +59,6 @@ class ControladorPedido extends Controller
         return view('pedido.pedido-nuevo', compact('msg', 'pedido', 'titulo')) . '?id=' . $pedido->idpedido;
 
     }
-}
+} 
 
  

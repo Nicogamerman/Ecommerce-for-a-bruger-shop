@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Entidades;
+namespace App\Entidades; 
 
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Pedido extends Model{
-
+ 
       protected $table = 'pedidos';
       public $timestamps = false;
   
@@ -26,7 +26,7 @@ class Pedido extends Model{
 
       public function cargarDesdeRequest($request) { //recibe por variable request generado por laravel.
         $this->idpedido = $request->input('id') != "0" ? $request->input('id') : $this->idpedido;
-        $this->fecha = $request->input('txtFecha');
+        $this->fecha = $request->input('txtDate');
         $this->descripcion = $request->input('txtDescripcion');
         $this->total = $request->input('txtTotal');        
         $this->fk_idsucursal = $request->input('lstSucursal');
@@ -54,20 +54,31 @@ class Pedido extends Model{
         return $this->idpedido = DB::getPdo()->lastInsertId();
     }
 
-    public function obtenerPorId($idpedido)
-    {
+    public function guardar() {
+        $sql = "UPDATE $this->table SET
+            fecha='$this->fecha',            
+            descripcion=$this->descripcion,
+            total=$this->total,            
+            fk_idcategoria=$this->fk_idcategoria, 
+            fk_idcliente=$this->fk_idcliente,
+            fk_idestado=$this->fk_idestado
+            WHERE idpedido=?";
+        $affected = DB::update($sql, [$this->idpedido]);
+    }
+
+    public function obtenerPorId($idpedido){
         $sql = "SELECT
                 idpedido,
-                fecha,
-                descripcion,
+                fecha,                
                 total,
-                fk_idsucursal,                
+                descripcion,                fk_idsucursal,                
                 fk_idcliente,
                 fk_idestado                
                 FROM pedidos WHERE idpedido = $idpedido";
         $lstRetorno = DB::select($sql);
 
         if (count($lstRetorno) > 0) {            
+            $this->idpedido = $lstRetorno[0]->idpedido;
             $this->fecha = $lstRetorno[0]->fecha;            
             $this->total = $lstRetorno[0]->total;
             $this->descripcion = $lstRetorno[0]->descripcion;
@@ -77,19 +88,7 @@ class Pedido extends Model{
             return $this;
         }
         return null;
-    }
-
-    public function guardar() {
-        $sql = "UPDATE $this->table SET
-            fecha='$this->fecha',            
-            descripcion=$this->descripcion,
-            total=$this->total,            
-            fk_idcategoria=$this->fk_idcategoria,
-            fk_idcliente=$this->fk_idcliente,
-            fk_idestado=$this->fk_idestado
-            WHERE idpedido=?";
-        $affected = DB::update($sql, [$this->idpedido]);
-    }
+    } 
 
     public function eliminar(){
         $sql = "DELETE FROM $this->table WHERE idpedido=?";
