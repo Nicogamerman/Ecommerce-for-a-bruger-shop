@@ -44,7 +44,7 @@ if (isset($msg)) {
     ?> 
     <form id="form1" method="POST">
         <div class="row">
-            <div class="col-5">
+            <div class="col-6">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div class>
@@ -57,7 +57,7 @@ if (isset($msg)) {
                 </div>
                 <div>
                     <label>Descripcion: *</label>
-                    <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" required>
+                    <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control">
                 </div>
                 <div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
@@ -65,6 +65,35 @@ if (isset($msg)) {
                     <div>
                         <label>Total: *</label>
                         <input type="number" id="txtTotal" name="txtTotal" class="form-control" required>
+                    </div>
+                </div>
+                                    
+                    <div>
+                        <label>Sucursal: *</label>
+                        <select id="lstSucursal" name="lstSucursal" class="form-control">
+                            <option disable selected>Seleccionar</option>
+                            @foreach ($aSucursales as $item)
+                            <option value="{{ $item->idsucursal}}">{{ $item->nombre}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label>Cliente: *</label>
+                        <select id="lstCliente" name="lstCliente" class="form-control" >
+                            <option disable selected>Seleccionar</option>
+                            @foreach ($aClientes as $item)
+                            <option value="{{ $item->idcliente}}">{{ $item->nombre}}{{ $item->apellido}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label>Estado: *</label>
+                        <select id="lstEstado" name="lstEstado" class="form-control">
+                            <option disable selected>Seleccionar</option>
+                            @foreach ($aEstados as $item)
+                            <option value="{{ $item->idestado}}">{{ $item->nombre}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>

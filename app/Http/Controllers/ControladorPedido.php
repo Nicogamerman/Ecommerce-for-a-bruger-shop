@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Entidades\Pedido;
+use App\Entidades\Sucursal;
+use App\Entidades\Cliente;
+use App\Entidades\Estado;
 use App\Entidades\Sistema\MenuArea;
 use App\Entidades\Sistema\Patente;//controles de permisos
 use App\Entidades\Sistema\Usuario;//controles de permisos
@@ -15,7 +18,16 @@ class ControladorPedido extends Controller
     public function nuevo()
     {
       $titulo = "Nuevo Pedido";
-      return view('pedido.pedido-nuevo', compact('titulo'));
+      $sucursal = new Sucursal ();
+      $aSucursales = $sucursal -> obtenertodos();
+
+      $cliente = new Cliente ();
+      $aClientes = $cliente -> obtenertodos();
+
+      $estado = new Estado ();
+      $aEstados = $estado -> obtenertodos(); //Nelson coloco en singular el array.
+  
+      return view('pedido.pedido-nuevo', compact('titulo','aSucursales','aClientes','aEstados'));
       } 
 
       public function guardar(Request $request) {
@@ -26,7 +38,7 @@ class ControladorPedido extends Controller
             $entidad->cargarDesdeRequest($request);
 
             //validaciones
-            if ($entidad->nombre == "") {
+            if ($entidad->fk_idcliente == ""||$entidad->fecha == ""||$entidad->total == "") {
                 $msg["ESTADO"] = MSG_ERROR;
                 $msg["MSG"] = "Complete todos los datos";
             } else {
