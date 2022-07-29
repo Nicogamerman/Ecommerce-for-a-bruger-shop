@@ -30,6 +30,22 @@ class ControladorPedido extends Controller
       return view('pedido.pedido-nuevo', compact('titulo','aSucursales','aClientes','aEstados'));
       } 
 
+      public function index()
+      {
+          $titulo = "Listado de Clientes";
+          if (Usuario::autenticado() == true) {
+              if (!Patente::autorizarOperacion("MENUCONSULTA")) {
+                  $codigo = "MENUCONSULTA";
+                  $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                  return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+              } else {
+                  return view('pedido.pedido-listar', compact('titulo'));
+              }
+          } else {
+              return redirect('admin/login');
+          }
+      }
+
       public function guardar(Request $request) {
         try {
             //Define la entidad servicio

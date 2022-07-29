@@ -14,7 +14,7 @@
 </ol>
 <!-- Deino la toolbar -->
 <ol class="toolbar">
-    <li class="btn-item"><a title="Nuevo" href="/admin/cliente/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
+    <li class="btn-item"><a title="Nuevo" href="/admin/categoria/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
     <li class="btn-item"><a title="Recargar" href="#" class="fa fa-refresh" aria-hidden="true" onclick='window.location.replace("/admin/clientes");'><span>Recargar</span></a></li>
 </ol>
 @endsection
@@ -28,10 +28,7 @@ if (isset($msg)) {
 <table id="grilla" class="display">
     <thead>
         <tr>
-            <th>Nombre y Apellido</th>
-            <th>Documento</th>
-            <th>Correo</th>
-            <th>celular</th>
+            <th>Nombre</th>            
         </tr>
     </thead>
 </table> 
@@ -40,4 +37,4 @@ if (isset($msg)) {
     $('#grilla').DataTable();
 } );
 </script>
-@endsection 
+@endsection

@@ -16,7 +16,24 @@ class ControladorEstado extends Controller
     {
       $titulo = "Nuevo Estado";
       return view('estado.estado-nuevo', compact('titulo'));
-      } 
+      }
+      
+      public function index()
+    {
+        $titulo = "Estados";
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("MENUCONSULTA")) {
+                $codigo = "MENUCONSULTA";
+                $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                return view('estado.estado-listar', compact('titulo'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
+    }
+      
       public function guardar(Request $request) {
         try {
             //Define la entidad servicio
