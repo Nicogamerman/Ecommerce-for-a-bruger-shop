@@ -103,6 +103,9 @@ Route::post('/admin/patente/nuevo/{id}', 'ControladorPatente@guardar');
 /* --------------------------------------------- */
 Route::get('/admin/cliente/nuevo', 'ControladorCliente@nuevo');
 Route::post('/admin/cliente/nuevo', 'ControladorCliente@guardar');
+// Por que utilizo el metodo get?
+Route::get('/admin/clientes', 'ControladorCliente@index'); 
+
 
 /* --------------------------------------------- */
 /* CONTROLADOR POSTULACIONES                          */

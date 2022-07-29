@@ -18,6 +18,22 @@ class ControladorCliente extends Controller
       return view('cliente.cliente-nuevo', compact('titulo'));
     } 
 
+    public function index()
+    {
+        $titulo = "Listado de Clientes";
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("MENUCONSULTA")) {
+                $codigo = "MENUCONSULTA";
+                $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                return view('cliente.cliente-listar', compact('titulo'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
+    }
+
     public function guardar(Request $request) {
         try {
             //Define la entidad servicio
