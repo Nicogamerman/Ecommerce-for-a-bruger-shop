@@ -1,7 +1,7 @@
 @extends('plantilla')
 
 @section('titulo', $titulo)
-
+ 
 @section('scripts')
 <!-- asset lo busca dentro de la carpeta public cssdatatables, lo mismo para el asset de js-->
 <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet"> 
@@ -12,7 +12,7 @@
     <li class="breadcrumb-item"><a href="/home">Inicio</a></li>
     <li class="breadcrumb-item active">Cliente</a></li>
 </ol>
-<!-- Deino la toolbar -->
+<!-- Defino la toolbar -->
 <ol class="toolbar">
     <li class="btn-item"><a title="Nuevo" href="/admin/cliente/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
     <li class="btn-item"><a title="Recargar" href="#" class="fa fa-refresh" aria-hidden="true" onclick='window.location.replace("/admin/clientes");'><span>Recargar</span></a></li>

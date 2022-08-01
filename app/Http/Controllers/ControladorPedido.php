@@ -32,7 +32,7 @@ class ControladorPedido extends Controller
 
       public function index()
       {
-          $titulo = "Listado de Clientes";
+          $titulo = "Listado de Pedidos";
           if (Usuario::autenticado() == true) {
               if (!Patente::autorizarOperacion("MENUCONSULTA")) {
                   $codigo = "MENUCONSULTA";

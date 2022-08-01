@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+ 
 use App\Entidades\Cliente;
 use App\Entidades\Sistema\MenuArea;
 use App\Entidades\Sistema\Patente;//controles de permisos
