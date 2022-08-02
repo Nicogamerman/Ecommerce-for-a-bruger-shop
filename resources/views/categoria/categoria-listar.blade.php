@@ -28,13 +28,23 @@ if (isset($msg)) {
 <table id="grilla" class="display">
     <thead>
         <tr>
+            <th></th>
             <th>Nombre</th>            
         </tr>
     </thead>
 </table> 
-<script>
+<script> //Con esta parte del codigo, podemos agregar el buscador, ordenar por nombre, ordenar por documento, mostrar X cantidad de items... etc
 	$(document).ready( function () {
-    $('#grilla').DataTable();
+    var dataTable = $('#grilla').DataTable({
+	    "processing": true,
+        "serverSide": true,
+	    "bFilter": true,
+	    "bInfo": true,
+	    "bSearchable": true,
+        "pageLength": 25,
+        "order": [[ 0, "asc" ]],
+	    "ajax": "{{ route('categoria.cargarGrilla') }}"
+	});
 } );
 </script>
 @endsection

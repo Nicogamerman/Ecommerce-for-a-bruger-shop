@@ -17,6 +17,29 @@
 Route::group(array('domain' => '127.0.0.1'), function () {
 
     Route::get('/', 'ControladorWebHome@index');
+    Route::get('/takeaway', 'ControladorWebTakeaway@index');
+    Route::post('/takeaway', 'ControladorWebTakeaway@agregarAlCarrito');
+    Route::get('/nosotros', 'ControladorWebNosotros@index');
+    Route::get('/gracias-postulacion', 'ControladorWebGraciasPostulacion@index');
+    Route::post('/nosotros', 'ControladorWebNosotros@enviar');
+    Route::get('/contacto', 'ControladorWebContacto@index');
+    Route::get('/confirmacion-envio', 'ControladorWebConfirmacionEnvio@index');
+    Route::post('/contacto', 'ControladorWebContacto@enviar');
+    Route::get('/mi-cuenta', 'ControladorWebMiCuenta@index');
+    Route::post('/mi-cuenta', 'ControladorWebMiCuenta@editar');
+    Route::get('/login', 'ControladorWebLogin@index');
+    Route::post('/login', 'ControladorWebLogin@ingresar');
+    Route::get('/recuperar-clave', 'ControladorWebRecuperarClave@index');
+    Route::post('/recuperar-clave', 'ControladorWebRecuperarClave@enviar');
+    Route::get('/nuevo-registro', 'ControladorWebNuevoRegistro@index');
+    Route::post('/nuevo-registro', 'ControladorWebNuevoRegistro@enviar');
+    Route::get('/cambiar-clave', 'ControladorWebCambiarClave@index');
+    Route::post('/cambiar-clave', 'ControladorWebCambiarClave@guardar');
+    Route::get('/logout', 'ControladorWebLogout@logout');
+    Route::get('/carrito', 'ControladorWebCarrito@index');
+    Route::get('/cambiar-datos', 'ControladorWebCambiarDatos@index');
+    Route::post('/cambiar-datos', 'ControladorWebCambiarDatos@editar');
+
  
 
     Route::get('/admin', 'ControladorHome@index');
@@ -82,9 +105,7 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::get('/admin/sistema/menu/cargarGrilla', 'ControladorMenu@cargarGrilla')->name('menu.cargarGrilla');
     Route::get('/admin/sistema/menu/eliminar', 'ControladorMenu@eliminar');
     Route::get('/admin/sistema/menu/{id}', 'ControladorMenu@editar');
-    Route::post('/admin/sistema/menu/{id}', 'ControladorMenu@guardar');
-
-});
+    Route::post('/admin/sistema/menu/{id}', 'ControladorMenu@guardar');});
 
 /* --------------------------------------------- */
 /* CONTROLADOR PATENTES                          */
@@ -97,54 +118,70 @@ Route::get('/admin/patente/eliminar', 'ControladorPatente@eliminar');
 Route::get('/admin/patente/nuevo/{id}', 'ControladorPatente@editar');
 Route::post('/admin/patente/nuevo/{id}', 'ControladorPatente@guardar');
 
-
 /* --------------------------------------------- */
 /* CONTROLADOR CLIENTES                          */
 /* --------------------------------------------- */
 Route::get('/admin/cliente/nuevo', 'ControladorCliente@nuevo');
 Route::post('/admin/cliente/nuevo', 'ControladorCliente@guardar');
-Route::get('/admin/clientes', 'ControladorCliente@index'); 
-Route::get('/admin/clientes/CargarGrilla', 'ControladorCliente@cargarGrilla')->name('cliente.cargarGrilla'); //LA RUTA A LA CUAL SE DIRIGE EL AJAX DENTRO DEL ARCHIVO CLIENTE-LISTAR
-
+Route::get('/admin/clientes', 'ControladorCliente@index');
+Route::get('/admin/clientes/CargarGrilla', 'ControladorCliente@cargarGrilla')->name('cliente.cargarGrilla');
+Route::get('/admin/cliente/eliminar', 'ControladorCliente@eliminar');
+Route::get('/admin/cliente/{id}', 'ControladorCliente@editar');
+Route::post('/admin/cliente/{id}', 'ControladorCliente@guardar');
 
 /* --------------------------------------------- */
-/* CONTROLADOR POSTULACIONES                          */
+/* CONTROLADOR POSTULACION                          */
 /* --------------------------------------------- */
 Route::get('/admin/postulacion/nuevo', 'ControladorPostulacion@nuevo');
 Route::post('/admin/postulacion/nuevo', 'ControladorPostulacion@guardar');
 Route::get('/admin/postulaciones', 'ControladorPostulacion@index');
-Route::get('/admin/postulaciones/CargarGrilla', 'ControladorPostulacion@cargarGrilla')->name('postulacion.cargarGrilla'); //LA RUTA A LA CUAL SE DIRIGE EL AJAX DENTRO DEL ARCHIVO CLIENTE-LISTAR
+Route::get('/admin/postulaciones/CargarGrilla', 'ControladorPostulacion@cargarGrilla')->name('postulacion.cargarGrilla');
+Route::get('/admin/postulacion/eliminar', 'ControladorPostulacion@eliminar');
+Route::get('/admin/postulacion/{id}', 'ControladorPostulacion@editar');
+Route::post('/admin/postulacion/{id}', 'ControladorPostulacion@guardar');
 
 /* --------------------------------------------- */
-/* CONTROLADOR PEDIDOS                          */
+/* CONTROLADOR PEDIDOS                      */
 /* --------------------------------------------- */
 Route::get('/admin/pedido/nuevo', 'ControladorPedido@nuevo');
 Route::post('/admin/pedido/nuevo', 'ControladorPedido@guardar');
 Route::get('/admin/pedidos', 'ControladorPedido@index');
-Route::get('/admin/pedidos/CargarGrilla', 'ControladorPedido@cargarGrilla')->name('pedido.cargarGrilla'); //LA RUTA A LA CUAL SE DIRIGE EL AJAX DENTRO DEL ARCHIVO CLIENTE-LISTAR
+Route::get('/admin/pedidos/CargarGrilla', 'ControladorPedido@cargarGrilla')->name('pedido.cargarGrilla');
+Route::get('/admin/pedido/eliminar', 'ControladorPedido@eliminar');
+Route::get('/admin/pedido/{id}', 'ControladorPedido@editar');
+Route::post('/admin/pedido/{id}', 'ControladorPedido@guardar');
 
 /* --------------------------------------------- */
-/* CONTROLADOR CATEGORIA                          */
+/* CONTROLADOR CATEGORIAS                          */
 /* --------------------------------------------- */
 Route::get('/admin/categoria/nuevo', 'ControladorCategoria@nuevo');
 Route::post('/admin/categoria/nuevo', 'ControladorCategoria@guardar');
 Route::get('/admin/categorias', 'ControladorCategoria@index');
-Route::get('/admin/categorias/CargarGrilla', 'ControladorCategoria@cargarGrilla')->name('categoria.cargarGrilla'); //LA RUTA A LA CUAL SE DIRIGE EL AJAX DENTRO DEL ARCHIVO CLIENTE-LISTAR
+Route::get('/admin/categorias/CargarGrilla', 'ControladorCategoria@cargarGrilla')->name('categoria.cargarGrilla');
+Route::get('/admin/categoria/eliminar', 'ControladorCategoria@eliminar');
+Route::get('/admin/categoria/{id}', 'ControladorCategoria@editar');
+Route::post('/admin/categoria/{id}', 'ControladorCategoria@guardar');
 
 /* --------------------------------------------- */
-/* CONTROLADOR PRODUCTO                          */
+/* CONTROLADOR PRODUCTOS                          */
 /* --------------------------------------------- */
 Route::get('/admin/producto/nuevo', 'ControladorProducto@nuevo');
 Route::post('/admin/producto/nuevo', 'ControladorProducto@guardar');
 Route::get('/admin/productos', 'ControladorProducto@index');
-Route::get('/admin/productos/CargarGrilla', 'ControladorProducto@cargarGrilla')->name('producto.cargarGrilla'); //LA RUTA A LA CUAL SE DIRIGE EL AJAX DENTRO DEL ARCHIVO CLIENTE-LISTAR
+Route::get('/admin/productos/CargarGrilla', 'ControladorProducto@cargarGrilla')->name('producto.cargarGrilla');
+Route::get('/admin/producto/eliminar', 'ControladorProducto@eliminar');
+Route::get('/admin/producto/{id}', 'ControladorProducto@editar');
+Route::post('/admin/producto/{id}', 'ControladorProducto@guardar');
 
 /* --------------------------------------------- */
 /* CONTROLADOR ESTADOS                          */
 /* --------------------------------------------- */
 Route::get('/admin/estado/nuevo', 'ControladorEstado@nuevo');
 Route::post('/admin/estado/nuevo', 'ControladorEstado@guardar');
-Route::get('/admin/estados/CargarGrilla', 'ControladorEstado@cargarGrilla')->name('estado.cargarGrilla'); //LA RUTA A LA CUAL SE DIRIGE EL AJAX DENTRO DEL ARCHIVO CLIENTE-LISTAR
+Route::get('/admin/estados', 'ControladorEstado@index');
+Route::get('/admin/estados/CargarGrilla', 'ControladorEstado@cargarGrilla')->name('estado.cargarGrilla');
+Route::get('/admin/estado/eliminar', 'ControladorEstado@eliminar');
+Route::get('/admin/estado/{id}', 'ControladorEstado@editar');
 
 /* --------------------------------------------- */
 /* CONTROLADOR SUCURSALES                          */
@@ -152,9 +189,8 @@ Route::get('/admin/estados/CargarGrilla', 'ControladorEstado@cargarGrilla')->nam
 Route::get('/admin/sucursal/nuevo', 'ControladorSucursal@nuevo');
 Route::post('/admin/sucursal/nuevo', 'ControladorSucursal@guardar');
 Route::get('/admin/sucursales', 'ControladorSucursal@index');
-Route::get('/admin/sucursales/CargarGrilla', 'ControladorSucursal@cargarGrilla')->name('sucursal.cargarGrilla'); //LA RUTA A LA CUAL SE DIRIGE EL AJAX DENTRO DEL ARCHIVO CLIENTE-LISTAR
-
-
-
+Route::get('/admin/sucursales/CargarGrilla', 'ControladorSucursal@cargarGrilla')->name('sucursal.cargarGrilla');
+Route::get('/admin/sucursal/eliminar', 'ControladorSucursal@eliminar');
+Route::get('/admin/sucursal/{id}', 'ControladorSucursal@editar');
 
 

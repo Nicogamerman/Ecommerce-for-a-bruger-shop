@@ -98,4 +98,37 @@ class Sucursal extends Model{
         return $lstRetorno;
     }
  
+    public function obtenerFiltrado()
+    {
+        $request = $_REQUEST;
+        $columns = array(
+            0 => 'A.idsucursal',
+            1 => 'A.telefono',
+            2 => 'A.direccion',
+            3 => 'A.linkmapa',
+            4 => 'A.nombre',
+        );
+        $sql = "SELECT DISTINCT
+                    A.idsucursal,
+                    A.telefono,
+                    A.direccion,
+                    A.linkmapa,
+                    A.nombre
+                    FROM sucursales A
+                WHERE 1=1
+                ";
+
+        //Realiza el filtrado
+        if (!empty($request['search']['value'])) {
+            $sql .= " AND ( A.nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.telefono LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.direccion LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.linkmapa LIKE '%" . $request['search']['value'] . "%' )";            
+        }
+        $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
+
+        $lstRetorno = DB::select($sql);
+
+        return $lstRetorno;
+    }
 }

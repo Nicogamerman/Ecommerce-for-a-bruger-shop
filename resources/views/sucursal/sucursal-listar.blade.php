@@ -28,16 +28,26 @@ if (isset($msg)) {
 <table id="grilla" class="display">
     <thead>
         <tr>
-            <th>Nombre y Apellido</th>
-            <th>Documento</th>
-            <th>Correo</th>
-            <th>celular</th>
+            <th></th>
+            <th>Telefono</th>
+            <th>Direccion</th>
+            <th>Linkmapa</th>
+            <th>Nombre</th>
         </tr>
     </thead>
 </table> 
 <script>
 	$(document).ready( function () {
-    $('#grilla').DataTable();
+    var dataTable = $('#grilla').DataTable({
+	    "processing": true,
+        "serverSide": true,
+	    "bFilter": true,
+	    "bInfo": true,
+	    "bSearchable": true,
+        "pageLength": 25,
+        "order": [[ 0, "asc" ]],
+	    "ajax": "{{ route('sucursal.cargarGrilla') }}"
+	});
 } );
 </script>
-@endsection 
+@endsection

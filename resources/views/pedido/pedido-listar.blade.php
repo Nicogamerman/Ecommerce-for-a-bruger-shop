@@ -28,6 +28,7 @@ if (isset($msg)) {
 <table id="grilla" class="display">
     <thead>
         <tr>
+            <th></th>
             <th>Fecha</th>
             <th>Descripcion</th>
             <th>Total</th>            
@@ -36,7 +37,16 @@ if (isset($msg)) {
 </table> 
 <script>
 	$(document).ready( function () {
-    $('#grilla').DataTable();
+    var dataTable = $('#grilla').DataTable({
+	    "processing": true,
+        "serverSide": true,
+	    "bFilter": true,
+	    "bInfo": true,
+	    "bSearchable": true,
+        "pageLength": 25,
+        "order": [[ 0, "asc" ]],
+	    "ajax": "{{ route('pedido.cargarGrilla') }}"
+	});
 } );
 </script>
-@endsection 
+@endsection

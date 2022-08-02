@@ -5,44 +5,45 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Cliente extends Model{
+class Cliente extends Model
+{
+    protected $table = 'clientes';
+    public $timestamps = false;
 
-      protected $table = 'clientes';
-      public $timestamps = false;
-  
-      protected $fillable = [
-          'idcliente',
-          'nombre',
-          'apellido',
-          'correo',
-          'dni',
-          'celular',
-          'clave'       
-      ];
-  
-      protected $hidden = [
-  
-      ];
+    protected $fillable = [
+        'idcliente',
+        'nombre',
+        'apellido',
+        'correo',
+        'dni',
+        'celular',
+        'clave',
+    ];
 
-      public function cargarDesdeRequest($request) { //recibe por variable request generado por laravel.
+    protected $hidden = [
+
+    ];
+
+    public function cargarDesdeRequest($request)
+    {
         $this->idcliente = $request->input('id') != "0" ? $request->input('id') : $this->idcliente;
         $this->nombre = $request->input('txtNombre');
         $this->apellido = $request->input('txtApellido');
         $this->correo = $request->input('txtCorreo');
         $this->dni = $request->input('txtDni');
         $this->celular = $request->input('txtCelular');
-        $this->clave = $request->input('txtClave');
-        // $this->fk_idcliente = $request->input('lstCliente'); para los casos con foreign key, no es el caso de la tabla cliente.
+        $this->clave = password_hash($request->input('txtClave'), PASSWORD_DEFAULT);
     }
 
-    public function insertar(){
-        $sql = "INSERT INTO $this->table (            
-            nombre,
-            apellido,
-            correo,
-            dni,
-            celular,
-            clave
+    public function insertar()
+    {
+        $sql = "INSERT INTO $this->table (
+                  nombre,
+                  apellido,
+                  correo,
+                  dni,
+                  celular,
+                  clave
             ) VALUES (?, ?, ?, ?, ?, ?);";
         $result = DB::insert($sql, [
             $this->nombre,
@@ -54,17 +55,27 @@ class Cliente extends Model{
         ]);
         return $this->idcliente = DB::getPdo()->lastInsertId();
     }
- 
-    public function guardar() {
-        $sql = "UPDATE $this->table SET
-            idcliente='$this->idcliente',
+
+    public function guardar()
+    {
+        if ($this->clave != "") {
+            $sql = "UPDATE $this->table SET
+            nombre='$this->nombre',
+            apellido='$this->apellido',
+            correo='$this->correo',
+            dni='$this->dni',
+            celular='$this->celular',
+            clave='$this->clave'
+            WHERE idcliente=?";
+        } else {
+            $sql = "UPDATE $this->table SET
             nombre='$this->nombre',
             apellido='$this->apellido',
             correo='$this->correo',
             dni='$this->dni',
             celular='$this->celular'
-            clave='$this->clave'
             WHERE idcliente=?";
+        }
         $affected = DB::update($sql, [$this->idcliente]);
     }
 
@@ -77,10 +88,10 @@ class Cliente extends Model{
                 correo,
                 dni,
                 celular,
-                clave,
+                clave
                 FROM clientes WHERE idcliente = $idcliente";
         $lstRetorno = DB::select($sql);
- 
+
         if (count($lstRetorno) > 0) {
             $this->idcliente = $lstRetorno[0]->idcliente;
             $this->nombre = $lstRetorno[0]->nombre;
@@ -94,23 +105,23 @@ class Cliente extends Model{
         return null;
     }
 
-    public function eliminar(){
-        $sql = "DELETE FROM $this->table WHERE
-            idcliente=?";
+    public function eliminar()
+    {
+        $sql = "DELETE FROM $this->table WHERE idcliente=?";
         $affected = DB::delete($sql, [$this->idcliente]);
     }
 
     public function obtenerTodos()
     {
         $sql = "SELECT
-                  A.idcliente,
-                  A.nombre,
-                  A.apellido,
-                  A.correo,
-                  A.dni,
-                  A.celular,
-                  A.clave                 
-                FROM clientes A ORDER BY A.nombre";
+                idcliente,
+                nombre,
+                apellido,
+                correo,
+                dni,
+                celular,
+                clave
+                FROM $this->table ORDER BY nombre";
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
@@ -119,31 +130,30 @@ class Cliente extends Model{
     {
         $request = $_REQUEST;
         $columns = array(
-            0 => 'A.nombre',
-            1 => 'B.dni',
-            2 => 'A.correo',
-            3 => 'A.celular',
+            0 => 'A.idcliente',
+            1 => 'A.nombre',
+            2 => 'A.dni',
+            3 => 'A.correo',
+            4 => 'A.celular',
         );
-        // Columnas de ordenamiento:
-        $sql = "SELECT DISTINCT 
+        $sql = "SELECT DISTINCT
                     A.idcliente,
                     A.nombre,
                     A.apellido,
                     A.correo,
                     A.dni,
                     A.celular,
-                    A.clave         
+                    A.clave
                     FROM clientes A
-                    -- LEFT JOIN sistema_menues B ON A.id_padre = B.idmenu NO BUSCAMOS DATOS EN OTRA TABLA EN CLIENTES, EN OTROS SI
                 WHERE 1=1
                 ";
 
         //Realiza el filtrado
         if (!empty($request['search']['value'])) {
             $sql .= " AND ( A.nombre LIKE '%" . $request['search']['value'] . "%' ";
-            $sql .= " OR B.apellido LIKE '%" . $request['search']['value'] . "%' ";
-            $sql .= " OR A.documento LIKE '%" . $request['search']['value'] . "%' )";
-            $sql .= " OR A.correo LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR A.apellido LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.documento LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.correo LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR A.celular LIKE '%" . $request['search']['value'] . "%' )";
         }
         $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
@@ -152,4 +162,23 @@ class Cliente extends Model{
 
         return $lstRetorno;
     }
+    public function obtenerPorCorreo($correo)
+    {
+        $sql = "SELECT
+                idcliente,
+                correo,
+                clave
+                FROM clientes WHERE correo = '$correo'";
+
+        $lstRetorno = DB::select($sql);
+
+        if (count($lstRetorno) > 0) {
+            $this->idcliente = $lstRetorno[0]->idcliente;
+            $this->correo = $lstRetorno[0]->correo;
+            $this->clave = $lstRetorno[0]->clave;
+            return $this;
+        }
+        return null;
+    }
+
 }

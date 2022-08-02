@@ -109,4 +109,35 @@ class Pedido extends Model{
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
+
+    public function obtenerFiltrado()
+    {
+        $request = $_REQUEST;
+        $columns = array(
+            0 => 'A.idpedido',
+            1 => 'A.fecha',
+            2 => 'A.descripcion',
+            3 => 'A.total',            
+        );
+        $sql = "SELECT DISTINCT
+                    A.idpedido,
+                    A.fecha,
+                    A.descripcion,
+                    A.total
+                    FROM pedidos A
+                WHERE 1=1
+                ";
+
+        //Realiza el filtrado
+        if (!empty($request['search']['value'])) {
+            $sql .= " AND ( A.fecha LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.descripcion LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.total LIKE '%" . $request['search']['value'] . "%' )";
+        }
+        $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
+
+        $lstRetorno = DB::select($sql);
+
+        return $lstRetorno;
+    }
 }

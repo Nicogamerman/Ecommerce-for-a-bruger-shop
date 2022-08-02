@@ -1,10 +1,9 @@
 @extends('plantilla')
 
-@section('titulo', $titulo)
- 
+@section('titulo', "$titulo")
+
 @section('scripts')
-<!-- asset lo busca dentro de la carpeta public cssdatatables, lo mismo para el asset de js-->
-<link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet"> 
+<link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
 <script src="{{ asset('js/datatables.min.js') }}"></script>
 @endsection
 @section('breadcrumb')
@@ -12,7 +11,6 @@
     <li class="breadcrumb-item"><a href="/home">Inicio</a></li>
     <li class="breadcrumb-item active">Cliente</a></li>
 </ol>
-<!-- Defino la toolbar -->
 <ol class="toolbar">
     <li class="btn-item"><a title="Nuevo" href="/admin/cliente/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
     <li class="btn-item"><a title="Recargar" href="#" class="fa fa-refresh" aria-hidden="true" onclick='window.location.replace("/admin/clientes");'><span>Recargar</span></a></li>
@@ -28,17 +26,17 @@ if (isset($msg)) {
 <table id="grilla" class="display">
     <thead>
         <tr>
-            <th>Nombre y Apellido</th>
+            <th></th>
+            <th>Nombre y apellido</th>
             <th>Documento</th>
             <th>Correo</th>
-            <th>celular</th>
+            <th>Celular</th>
         </tr>
     </thead>
 </table> 
-<script> //Con esta parte del codigo, podemos agregar el buscador, ordenar por nombre, ordenar por documento, mostrar X cantidad de items... etc
+<script>
 	$(document).ready( function () {
-    $('#grilla').DataTable();    
-	var dataTable = $('#grilla').DataTable({
+    var dataTable = $('#grilla').DataTable({
 	    "processing": true,
         "serverSide": true,
 	    "bFilter": true,
@@ -46,8 +44,8 @@ if (isset($msg)) {
 	    "bSearchable": true,
         "pageLength": 25,
         "order": [[ 0, "asc" ]],
-	    "ajax": "{{ route('cliente.cargarGrilla') }}" //ACA CON EL ATRIBUTO AJAX VAMOS A BUSCAR A LA RUTA CLIENTE.CARGARGRILLA EN EL ROUTES/WEB
+	    "ajax": "{{ route('cliente.cargarGrilla') }}"
 	});
 } );
 </script>
-@endsection 
+@endsection

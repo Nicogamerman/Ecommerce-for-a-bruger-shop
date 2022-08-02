@@ -34,6 +34,41 @@ class ControladorProducto extends Controller
         }
     }
 
+    public function cargarGrilla()
+    {
+        $request = $_REQUEST;
+
+        $entidad = new Producto();
+        $aProductos = $entidad->obtenerFiltrado();
+
+        $data = array();
+        $cont = 0;
+
+        $inicio = $request['start'];
+        $registros_por_pagina = $request['length'];
+
+        for ($i = $inicio; $i < count($aProductos) && $cont < $registros_por_pagina; $i++) {
+            $row = array();
+            $row[] = "<a href='/admin/producto/" . $aProductos[$i]->idproducto . "' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
+            $row[] = $aProductos[$i]->nombre;
+            $row[] = $aProductos[$i]->cantidad;
+            $row[] = $aProductos[$i]->precio;
+            $row[] = $aProductos[$i]->imagen;
+            $row[] = $aProductos[$i]->fk_idcategoria;
+            $row[] = $aProductos[$i]->descripcion;
+            $cont++;
+            $data[] = $row;
+        }
+
+        $json_data = array(
+            "draw" => intval($request['draw']),
+            "recordsTotal" => count($aProductos), //cantidad total de registros sin paginar
+            "recordsFiltered" => count($aProductos), //cantidad total de registros en la paginacion
+            "data" => $data,
+        );
+        return json_encode($json_data);
+    }
+
     public function guardar(Request $request) {
         try {
             //Define la entidad servicio

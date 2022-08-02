@@ -21,8 +21,8 @@ class ControladorPedido extends Controller
       $sucursal = new Sucursal ();
       $aSucursales = $sucursal -> obtenertodos();
 
-      $cliente = new Cliente ();
-      $aClientes = $cliente -> obtenertodos();
+      $pedido = new Pedido ();
+      $aPedidos = $pedido -> obtenertodos();
 
       $estado = new Estado ();
       $aEstados = $estado -> obtenertodos(); //Nelson coloco en singular el array.
@@ -46,6 +46,38 @@ class ControladorPedido extends Controller
           }
       }
 
+      public function cargarGrilla()
+      {
+          $request = $_REQUEST;
+  
+          $entidad = new Pedido();
+          $aPedidos = $entidad->obtenerFiltrado();
+  
+          $data = array();
+          $cont = 0;
+  
+          $inicio = $request['start'];
+          $registros_por_pagina = $request['length'];
+  
+          for ($i = $inicio; $i < count($aPedidos) && $cont < $registros_por_pagina; $i++) {
+              $row = array();
+              $row[] = "<a href='/admin/pedido/" . $aPedidos[$i]->idpedido . "' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
+              $row[] = $aPedidos[$i]->fecha;
+              $row[] = $aPedidos[$i]->descripcion;
+              $row[] = $aPedidos[$i]->total;              
+              $cont++;
+              $data[] = $row;
+          }
+  
+          $json_data = array(
+              "draw" => intval($request['draw']),
+              "recordsTotal" => count($aPedidos), //cantidad total de registros sin paginar
+              "recordsFiltered" => count($aPedidos), //cantidad total de registros en la paginacion
+              "data" => $data,
+          );
+          return json_encode($json_data);
+      }
+
       public function guardar(Request $request) {
         try {
             //Define la entidad servicio
@@ -54,7 +86,7 @@ class ControladorPedido extends Controller
             $entidad->cargarDesdeRequest($request);
 
             //validaciones
-            if ($entidad->fk_idcliente == ""||$entidad->fecha == ""||$entidad->total == "") {
+            if ($entidad->fk_idpedido == ""||$entidad->fecha == ""||$entidad->total == "") {
                 $msg["ESTADO"] = MSG_ERROR;
                 $msg["MSG"] = "Complete todos los datos";
             } else {

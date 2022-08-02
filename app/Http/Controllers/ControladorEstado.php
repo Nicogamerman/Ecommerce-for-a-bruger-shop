@@ -33,6 +33,36 @@ class ControladorEstado extends Controller
             return redirect('admin/login');
         }
     }
+
+    public function cargarGrilla()
+    {
+        $request = $_REQUEST;
+
+        $entidad = new Estado();
+        $aEstados = $entidad->obtenerFiltrado();
+
+        $data = array();
+        $cont = 0;
+
+        $inicio = $request['start'];
+        $registros_por_pagina = $request['length'];
+
+        for ($i = $inicio; $i < count($aEstados) && $cont < $registros_por_pagina; $i++) {
+            $row = array();
+            $row[] = "<a href='/admin/estado/" . $aEstados[$i]->idestado . "' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
+            $row[] = $aEstados[$i]->nombre;
+            $cont++;
+            $data[] = $row;
+        }
+
+        $json_data = array(
+            "draw" => intval($request['draw']),
+            "recordsTotal" => count($aEstados), //cantidad total de registros sin paginar
+            "recordsFiltered" => count($aEstados), //cantidad total de registros en la paginacion
+            "data" => $data,
+        );
+        return json_encode($json_data);
+    }
       
       public function guardar(Request $request) {
         try {
@@ -77,4 +107,3 @@ class ControladorEstado extends Controller
     }
 
 }
- 
