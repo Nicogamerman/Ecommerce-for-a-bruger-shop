@@ -114,4 +114,42 @@ class Cliente extends Model{
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
+
+    public function obtenerFiltrado()
+    {
+        $request = $_REQUEST;
+        $columns = array(
+            0 => 'A.nombre',
+            1 => 'B.dni',
+            2 => 'A.correo',
+            3 => 'A.celular',
+        );
+        // Columnas de ordenamiento:
+        $sql = "SELECT DISTINCT 
+                    A.idcliente,
+                    A.nombre,
+                    A.apellido,
+                    A.correo,
+                    A.dni,
+                    A.celular,
+                    A.clave         
+                    FROM clientes A
+                    -- LEFT JOIN sistema_menues B ON A.id_padre = B.idmenu NO BUSCAMOS DATOS EN OTRA TABLA EN CLIENTES, EN OTROS SI
+                WHERE 1=1
+                ";
+
+        //Realiza el filtrado
+        if (!empty($request['search']['value'])) {
+            $sql .= " AND ( A.nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR B.apellido LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR A.documento LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR A.correo LIKE '%" . $request['search']['value'] . "%' )";
+            $sql .= " OR A.celular LIKE '%" . $request['search']['value'] . "%' )";
+        }
+        $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
+
+        $lstRetorno = DB::select($sql);
+
+        return $lstRetorno;
+    }
 }

@@ -35,9 +35,19 @@ if (isset($msg)) {
         </tr>
     </thead>
 </table> 
-<script>
+<script> //Con esta parte del codigo, podemos agregar el buscador, ordenar por nombre, ordenar por documento, mostrar X cantidad de items... etc
 	$(document).ready( function () {
-    $('#grilla').DataTable();
+    $('#grilla').DataTable();    
+	var dataTable = $('#grilla').DataTable({
+	    "processing": true,
+        "serverSide": true,
+	    "bFilter": true,
+	    "bInfo": true,
+	    "bSearchable": true,
+        "pageLength": 25,
+        "order": [[ 0, "asc" ]],
+	    "ajax": "{{ route('cliente.cargarGrilla') }}" //ACA CON EL ATRIBUTO AJAX VAMOS A BUSCAR A LA RUTA CLIENTE.CARGARGRILLA EN EL ROUTES/WEB
+	});
 } );
 </script>
 @endsection 

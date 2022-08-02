@@ -28,10 +28,12 @@ if (isset($msg)) {
 <table id="grilla" class="display">
     <thead>
         <tr>
-            <th>Nombre y Apellido</th>
-            <th>Documento</th>
-            <th>Correo</th>
-            <th>celular</th>
+            <th></th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Categoria</th>
+            <th>Descripcion</th>
         </tr>
     </thead>
 </table> 
