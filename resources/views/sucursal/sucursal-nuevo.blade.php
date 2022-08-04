@@ -6,7 +6,6 @@
     <?php $globalId = isset($sucursal->idsucursal) ? $sucursal->idsucursal : "0";?>
 </script>
 @endsection
-<!-- TOOLBAR  INICIO/MENU/MODIFICAR dentro de NUEVO sucursal -->
 @section('breadcrumb') 
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/admin/home">Inicio</a></li>
@@ -49,7 +48,7 @@ if (isset($msg)) {
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div class>
                   <label>Nombre: *</label>
-                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" required>
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{$sucursal->nombre}}"required>
                 </div>
                 <div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
@@ -57,17 +56,17 @@ if (isset($msg)) {
                 </div>
                 <div>
                   <label>Telefono: *</label>
-                    <input type="text" id="txtTelefono" name="txtTelefono" class="form-control" required>
+                    <input type="text" id="txtTelefono" name="txtTelefono" class="form-control" value="{{$sucursal->telefono}}"required>
                 </div>
                 <div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div>
                   <label>Direccion: *</label>
-                        <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" required>
+                        <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" value="{{$sucursal->direccion}}"required>
                 </div>  
                 <label>Link Mapa: *</label>
-                        <input type="text" id="txtLinkMapa" name="txtLinkMapa" class="form-control" required>
+                        <input type="text" id="txtLinkMapa" name="txtLinkMapa" class="form-control" value="{{$sucursal->linkmapa}}"required>
                 </div>
                 <div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>

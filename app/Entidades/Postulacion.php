@@ -113,7 +113,7 @@ class Postulacion extends Model{
             2 => 'A.apellido',
             3 => 'A.celular',
             4 => 'A.correo',
-            5 => 'A.curriculum',
+            // 5 => 'A.curriculum', no hace falta ya que no se puede ordenar por curriculum.
         );
         $sql = "SELECT DISTINCT
                 A.idpostulacion,
@@ -126,7 +126,7 @@ class Postulacion extends Model{
                 WHERE 1=1";
 
         //Realiza el filtrado
-        if (!empty($request['search']['value'])) {
+        if (!empty($request['search']['value'])) { //query que busca, no importa el orden.
             $sql .= " AND ( A.nombre LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR A.apellido LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR A.celular LIKE '%" . $request['search']['value'] . "%' ";

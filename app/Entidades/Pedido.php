@@ -116,22 +116,35 @@ class Pedido extends Model{
         $columns = array(
             0 => 'A.idpedido',
             1 => 'A.fecha',
-            2 => 'A.descripcion',
-            3 => 'A.total',            
+            2 => 'B.nombre', // ¿Por que se indican con una letra B. C. D.?
+            3 => 'C.nombre',
+            4 => 'D.nombre',
+            5 => 'A.total'
         );
         $sql = "SELECT DISTINCT
                     A.idpedido,
                     A.fecha,
                     A.descripcion,
+                    B.nombre AS sucursal, 
+                    C.nombre AS cliente,
+                    D.nombre AS estado,
+                    A.fk_idsucursal, 
+                    A.fk_idcliente,
+                    A.fk_idestado,
                     A.total
-                    FROM pedidos A
+                    FROM pedidos A 
+                    INNER JOIN sucursales B ON A.fk_idsucursal = B.idsucursal 
+                    INNER JOIN clientes C ON A.fk_idcliente = C.idcliente
+                    INNER JOIN estados D ON A.fk_idestado = D.idestado
                 WHERE 1=1
                 ";
 
         //Realiza el filtrado
         if (!empty($request['search']['value'])) {
             $sql .= " AND ( A.fecha LIKE '%" . $request['search']['value'] . "%' ";
-            $sql .= " OR A.descripcion LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR B.nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR C.nombre LIKE '%" . $request['search']['value'] . "%' ";
+            $sql .= " OR D.nombre LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR A.total LIKE '%" . $request['search']['value'] . "%' )";
         }
         $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
@@ -140,4 +153,5 @@ class Pedido extends Model{
 
         return $lstRetorno;
     }
+
 }

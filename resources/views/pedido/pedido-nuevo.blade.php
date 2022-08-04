@@ -44,62 +44,110 @@ if (isset($msg)) {
     ?> 
     <form id="form1" method="POST">
         <div class="row">
-            <div class="col-6">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
-                <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
-                <div class>
-                    <label>Fecha: *</label>
-                    <input type="date" id="txtDate" name="txtDate" class="form-control" required>
-                </div>
-                <div>
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
-                    <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
-                </div>
-                <div>
-                    <label>Descripcion: *</label>
-                    <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control">
-                </div>
-                <div>
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
-                    <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
-                    <div>
-                        <label>Total: *</label>
-                        <input type="number" id="txtTotal" name="txtTotal" class="form-control" required>
-                    </div>
-                </div>
-                                    
-                    <div>
-                        <label>Sucursal: *</label>
-                        <select id="lstSucursal" name="lstSucursal" class="form-control">
-                            <option disable selected>Seleccionar</option>
-                            @foreach ($aSucursales as $item)
-                            <option value="{{ $item->idsucursal}}">{{ $item->nombre}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label>Cliente: *</label>
-                        <select id="lstCliente" name="lstCliente" class="form-control" >
-                            <option disable selected>Seleccionar</option>
-                            @foreach ($aClientes as $item)
-                            <option value="{{ $item->idcliente}}">{{ $item->nombre}}{{ $item->apellido}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label>Estado: *</label>
-                        <select id="lstEstado" name="lstEstado" class="form-control">
-                            <option disable selected>Seleccionar</option>
-                            @foreach ($aEstados as $item)
-                            <option value="{{ $item->idestado}}">{{ $item->nombre}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+            <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
+            <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
+            
+            <div class="form-group col-lg-6">
+                <label for="txtFecha" class="d-block">Fecha:*</label>
+                <select class="form-control d-inline"  name="txtDia" id="txtDia" style="width: 80px" required>
+                    <option selected="" disabled="">DD</option>
+                    @for($i=1; $i <= 31; $i++)
+                        @if($pedido->fecha != "" && $i == date_format(date_create($pedido->fecha), "d"))
+                            <option selected> {{$i}} </option>
+                        @else
+                            <option> {{$i}} </option>
+                        <@endif
+                    @endfor
+                </select>
+                <select class="form-control d-inline"  name="txtMes" id="txtMes" style="width: 80px" required>
+                    <option selected="" disabled="">MM</option>
+                    @for($i=1; $i <= 12; $i++)
+                        @if($pedido->fecha != "" && $i == date_format(date_create($pedido->fecha), "m"))
+                            <option selected> {{$i}} </option>
+                        @else                            
+                            <option> {{$i}} </option>
+                        @endif
+                    @endfor
+                </select>
+                <select class="form-control d-inline"  name="txtAnio" id="txtAnio" style="width: 100px" required>
+                    <option selected="" disabled="">AAAA</option>
+                    @for($i=1900; $i <= date("Y"); $i++)
+                        @if($pedido->fecha != "" && $i == date_format(date_create($pedido->fecha), "Y"))
+                            <option selected> {{$i}} </option>
+                        @else 
+                            <option> {{$i}} </option>
+                        @endif
+                    @endfor
+                </select>
             </div>
+            
+            <div class="form-group col-lg-6">
+                <label>Sucursal: *</label>
+                <select name="lstSucursal" id="lstSucursal" class="form-control"  required>
+                    <option disabled selected>Seleccionar</option>
+                    @foreach($aSucursales as $item)
+                        @if($pedido->fk_idsucursal == $item->idsucursal)
+                            <option selected value=" {{ $item->idsucursal }} "> {{ $item->nombre }} </option>
+                        @else
+                            <option value=" {{ $item->idsucursal }} "> {{ $item->nombre }} </option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group col-lg-6">
+                <label>Cliente: *</label>
+                <select name="lstCliente" id="lstCliente" class="form-control"  required>
+                    <option disabled selected>Seleccionar</option>
+                    @foreach($aClientes as $item)
+                        @if($pedido->fk_idcliente == $item->idcliente)
+                            <option selected value=" {{ $item->idcliente }} "> {{ $item->nombre }} {{ $item->apellido}}</option>
+                        @else
+                            <option value="{{ $item->idcliente}}">{{ $item->nombre}} {{ $item->apellido}}</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group col-lg-6">
+                <label>Estado: *</label>
+                <select name="lstEstado" id="lstEstado" class="form-control"  required>
+                    <option disabled selected>Seleccionar</option>
+                    @foreach($aEstados as $item)
+                        @if($pedido->fk_idestado == $item->idestado)
+                            <option selected value=" {{ $item->idestado }} "> {{ $item->nombre }}</option>
+                        @else
+                            <option value="{{ $item->idestado}}">{{ $item->nombre}}</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group col-lg-12">
+                <label>Descripción: *</label>
+                <textarea id="txtDescripcion" name="txtDescripcion" class="form-control">{{ $pedido->descripcion }}</textarea>
+            </div>
+            <div class="form-group col-lg-6">
+                <label>Total: *</label>
+                <input type="number" name="txtTotal" id="txtTotal" class="form-control" value="{{ $pedido->total }}" required>
+            </div>  
+        </div>
     </form>
-
-    <script>
+      <div class="modal fade" id="mdlEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Eliminar registro?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">¿Deseas eliminar el registro actual?</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
+            <button type="button" class="btn btn-primary" onclick="eliminar();">Sí</button>
+          </div>
+        </div>
+      </div>
+    </div>
+<script>
         $("#form1").validate();
 
         function guardar() {

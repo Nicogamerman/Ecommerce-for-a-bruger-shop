@@ -26,6 +26,9 @@ class ControladorPedido extends Controller
 
       $estado = new Estado ();
       $aEstados = $estado -> obtenertodos(); //Nelson coloco en singular el array.
+
+      $cliente = new Cliente ();
+      $aClientes = $cliente -> obtenertodos(); //Nelson coloco en singular el array.
   
       return view('pedido.pedido-nuevo', compact('titulo','aSucursales','aClientes','aEstados'));
       } 
@@ -60,15 +63,16 @@ class ControladorPedido extends Controller
           $registros_por_pagina = $request['length'];
   
           for ($i = $inicio; $i < count($aPedidos) && $cont < $registros_por_pagina; $i++) {
-              $row = array();
-              $row[] = "<a href='/admin/pedido/" . $aPedidos[$i]->idpedido . "' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
-              $row[] = $aPedidos[$i]->fecha;
-              $row[] = $aPedidos[$i]->descripcion;
-              $row[] = $aPedidos[$i]->total;              
-              $cont++;
-              $data[] = $row;
-          }
-  
+                $row = array();
+                $row[] = "<a href='/admin/pedido/".$aPedidos[$i]->idpedido."' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
+                $row[] = date_format(date_create($aPedidos[$i]->fecha), "d/m/Y") ;
+                $row[] = $aPedidos[$i]->sucursal;
+                $row[] = "<a href='/admin/cliente/".$aPedidos[$i]->fk_idcliente."'>".$aPedidos[$i]->cliente."</a>";
+                $row[] = $aPedidos[$i]->estado;
+                $row[] = $aPedidos[$i]->total;
+                $cont++;
+                $data[] = $row;
+            }
           $json_data = array(
               "draw" => intval($request['draw']),
               "recordsTotal" => count($aPedidos), //cantidad total de registros sin paginar
@@ -117,8 +121,46 @@ class ControladorPedido extends Controller
         $pedido->obtenerPorId($id);
 
         return view('pedido.pedido-nuevo', compact('msg', 'pedido', 'titulo')) . '?id=' . $pedido->idpedido;
-
     }
-} 
 
- 
+    public function editar($id)
+    {
+        $titulo = "Modificar Pedido";
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("PEDIDOEDITAR")) {
+                $codigo = "CLIENTEEDITAR";
+                $mensaje = "No tiene pemisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                $pedido = new Pedido();
+                $pedido->obtenerPorId($id);
+
+                return view('pedido.pedido-nuevo', compact('pedido', 'titulo'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
+    }
+
+    public function eliminar(Request $request)
+    {
+        $id = $request->input('id');
+
+        if (Usuario::autenticado() == true) {
+            if (Patente::autorizarOperacion("PEDIDOELIMINAR")) {
+
+                $entidad = new Pedido();
+                $entidad->cargarDesdeRequest($request);
+                $entidad->eliminar();
+
+                $aResultado["err"] = EXIT_SUCCESS; //eliminado correctamente
+            } else {
+                $codigo = "PEDIDOELIMINAR";
+                $aResultado["err"] = "No tiene pemisos para la operaci&oacute;n.";
+            }
+            echo json_encode($aResultado);
+        } else {
+            return redirect('admin/login');
+        }
+    } 
+}

@@ -106,4 +106,44 @@ class ControladorEstado extends Controller
 
     }
 
+    public function editar($id)
+    {
+        $titulo = "Modificar estado";
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("ESTADOEDITAR")) {
+                $codigo = "ESTADOEDITAR";
+                $mensaje = "No tiene pemisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                $estado = new Estado();
+                $estado->obtenerPorId($id);
+
+                return view('estado.estado-nuevo', compact('estado', 'titulo'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
+    }
+
+    public function eliminar(Request $request)
+    {
+        $id = $request->input('id');
+
+        if (Usuario::autenticado() == true) {
+            if (Patente::autorizarOperacion("ESTADOELIMINAR")) {
+
+                $entidad = new Estado();
+                $entidad->cargarDesdeRequest($request);
+                $entidad->eliminar();
+
+                $aResultado["err"] = EXIT_SUCCESS; //eliminado correctamente
+            } else {
+                $codigo = "ESTADOELIMINAR";
+                $aResultado["err"] = "No tiene pemisos para la operaci&oacute;n.";
+            }
+            echo json_encode($aResultado);
+        } else {
+            return redirect('admin/login');
+        }
+    }
 }

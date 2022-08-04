@@ -46,11 +46,13 @@ if (isset($msg)) {
 <form id="form1" method="POST">          
 <div class="row">
     <div class="col-5">
+        
         <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
-                <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
+                <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required></input>
                 <div class>
+
                   <label>Nombre: *</label>
-                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" required>
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{$cliente->nombre}}" required>
                 </div>
                 <div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
@@ -58,14 +60,14 @@ if (isset($msg)) {
                 </div>
                 <div>
                   <label>Apellido: *</label>
-                        <input type="text" id="txtApellido" name="txtApellido" class="form-control" required>
+                        <input type="text" id="txtApellido" name="txtApellido" class="form-control" value="{{$cliente->apellido}}"required>
                 </div>
                 <div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div>
                   <label>Correo: *</label>
-                        <input type="text" id="txtCorreo" name="txtCorreo" class="form-control" required>
+                        <input type="text" id="txtCorreo" name="txtCorreo" class="form-control" value="{{$cliente->correo}}" required>
                 </div>                
             </div>
     </div>
@@ -75,7 +77,7 @@ if (isset($msg)) {
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div>
                   <label>DNI: *</label>
-                        <input type="text" id="txtDni" name="txtDni" class="form-control" required>
+                        <input type="text" id="txtDni" name="txtDni" class="form-control" value="{{$cliente->dni}}" required>
                 </div>
             </div>
             <div>
@@ -83,7 +85,7 @@ if (isset($msg)) {
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div>
                   <label>Celular: *</label>
-                        <input type="text" id="txtCelular" name="txtCelular" class="form-control" required>
+                        <input type="text" id="txtCelular" name="txtCelular" class="form-control" value="{{$cliente->celular}}"required>
                 </div>
             </div>
             <div>

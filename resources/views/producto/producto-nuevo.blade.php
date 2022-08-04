@@ -50,7 +50,7 @@ if (isset($msg)) {
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div class>
                   <label>Nombre: *</label>
-                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" required>
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{$producto->nombre}}"required>
                 </div>
                 <div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
@@ -58,18 +58,18 @@ if (isset($msg)) {
                 </div>
                 <div>
                   <label>Cantidad: *</label>
-                        <input type="numbre" id="txtCantidad" name="txtCantidad" class="form-control" required>
+                        <input type="numbre" id="txtCantidad" name="txtCantidad" class="form-control" value="{{$producto->cantidad}}"required>
                 </div>
                 <div>
                   <label>Descripcion: *</label>
-                        <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" required>
+                        <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" value="{{$producto->descripcion}}"required>
                 </div>
                 <div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                     <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div>
                   <label>Precio: *</label>
-                        <input type="number" id="txtPrecio" name="txtPrecio" class="form-control" required>
+                        <input type="number" id="txtPrecio" name="txtPrecio" class="form-control" value="{{$producto->precio}}"required>
                 </div>     
                 <div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
@@ -100,7 +100,7 @@ if (isset($msg)) {
     function eliminar() {
         $.ajax({
             type: "GET",
-            url: "{{ asset('admin/cliente/eliminar') }}",
+            url: "{{ asset('admin/producto/eliminar') }}",
             data: { id:globalId },
             async: true,
             dataType: "json",

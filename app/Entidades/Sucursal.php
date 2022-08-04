@@ -65,7 +65,7 @@ class Sucursal extends Model{
                 telefono,
                 direccion,
                 linkmapa                   
-                FROM productos WHERE idproducto = $idproducto";
+                FROM sucursales WHERE idsucursal = $idsucursal";
         $lstRetorno = DB::select($sql);
 
         if (count($lstRetorno) > 0) {
