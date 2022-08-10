@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Entidades\Producto;
-use App\Entidades\Sistema\MenuArea;
+use App\Entidades\Categoria;
 use App\Entidades\Sistema\Patente;//controles de permisos
 use App\Entidades\Sistema\Usuario;//controles de permisos
 use Illuminate\Http\Request;
@@ -14,9 +14,14 @@ class ControladorProducto extends Controller
 {
     public function nuevo()
     {
-      $titulo = "Nuevo producto";
-      return view('producto.producto-nuevo', compact('titulo'));
-    } 
+        $titulo = "Nuevo Producto";
+        $producto = new Producto();
+
+        $categoria = new Categoria();
+        $aCategorias = $categoria->obtenerTodos();     
+
+        return view('producto.producto-nuevo', compact('titulo', 'producto', 'aCategorias'));
+    }
 
     public function index()
     {
@@ -52,10 +57,9 @@ class ControladorProducto extends Controller
             $row[] = "<a href='/admin/producto/" . $aProductos[$i]->idproducto . "' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
             $row[] = $aProductos[$i]->nombre;
             $row[] = $aProductos[$i]->cantidad;
-            $row[] = $aProductos[$i]->precio;
-            $row[] = $aProductos[$i]->imagen;
-            $row[] = $aProductos[$i]->fk_idcategoria;
-            $row[] = $aProductos[$i]->descripcion;
+            $row[] =  "$" . number_format($aProductos[$i]->precio,2, ",", ".");            
+            $row[] = $aProductos[$i]->categoria;
+            $row[] = "<img src='/files/".$aProductos[$i]->imagen."'class='img-thumbnail'>";
             $cont++;
             $data[] = $row;
         }
@@ -72,9 +76,18 @@ class ControladorProducto extends Controller
     public function guardar(Request $request) {
         try {
             //Define la entidad servicio
-            $titulo = "Modificar Producto";
+            $titulo = "Modificar producto";
             $entidad = new Producto();
             $entidad->cargarDesdeRequest($request);
+
+            if ($_FILES["archivo"]["error"] === UPLOAD_ERR_OK) { //Se adjunta imagen
+                $extension = pathinfo($_FILES["archivo"]["name"], PATHINFO_EXTENSION);
+                 $nombre = date("Ymdhmsi") . ".$extension";
+                 $archivo = $_FILES["archivo"]["tmp_name"];
+                 move_uploaded_file($archivo, env('APP_PATH') . "/public/files/$nombre"); //guardaelarchivo
+                 $entidad->imagen = $nombre;
+             }
+  
 
             //validaciones
             if ($entidad->nombre == "") {
@@ -82,6 +95,16 @@ class ControladorProducto extends Controller
                 $msg["MSG"] = "Complete todos los datos";
             } else {
                 if ($_POST["id"] > 0) {
+                    $productAnt = new Producto();
+                    $productAnt->obtenerPorId($entidad->idproducto);
+
+                    if($_FILES["archivo"]["error"] === UPLOAD_ERR_OK){
+                        //Eliminar imagen anterior
+                        @unlink(env('APP_PATH') . "/public/files/$productAnt->imagen");                          
+                    } else {
+                        $entidad->imagen = $productAnt->imagen;
+                    }
+
                     //Es actualizacion
                     $entidad->guardar();
 
@@ -93,8 +116,8 @@ class ControladorProducto extends Controller
 
                     $msg["ESTADO"] = MSG_SUCCESS;
                     $msg["MSG"] = OKINSERT;
-                }       
-                
+                }
+         
                 $_POST["id"] = $entidad->idproducto;
                 return view('producto.producto-listar', compact('titulo', 'msg'));
             }
@@ -115,15 +138,19 @@ class ControladorProducto extends Controller
     {
         $titulo = "Modificar producto";
         if (Usuario::autenticado() == true) {
-            if (!Patente::autorizarOperacion("PRODUCTOEDITAR")) {
-                $codigo = "PRODUCTOEDITAR";
+            if (!Patente::autorizarOperacion("MENUMODIFICACION")) {
+                $codigo = "MENUMODIFICACION";
                 $mensaje = "No tiene pemisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
             } else {
                 $producto = new Producto();
                 $producto->obtenerPorId($id);
 
-                return view('producto.producto-nuevo', compact('producto', 'titulo'));
+                $categoria = new Categoria();
+                $aCategorias = $categoria->obtenerTodos();  
+                
+                return view('producto.producto-nuevo', compact('producto', 'titulo', 'aCategorias'));
+
             }
         } else {
             return redirect('admin/login');
@@ -135,7 +162,7 @@ class ControladorProducto extends Controller
         $id = $request->input('id');
 
         if (Usuario::autenticado() == true) {
-            if (Patente::autorizarOperacion("PRODUCTOELIMINAR")) {
+            if (Patente::autorizarOperacion("MENUELIMINAR")) {
 
                 $entidad = new Producto();
                 $entidad->cargarDesdeRequest($request);
@@ -143,7 +170,7 @@ class ControladorProducto extends Controller
 
                 $aResultado["err"] = EXIT_SUCCESS; //eliminado correctamente
             } else {
-                $codigo = "PRODUCTOELIMINAR";
+                $codigo = "ELIMINARPROFESIONAL";
                 $aResultado["err"] = "No tiene pemisos para la operaci&oacute;n.";
             }
             echo json_encode($aResultado);

@@ -12,7 +12,7 @@
     <li class="breadcrumb-item"><a href="/home">Inicio</a></li>
     <li class="breadcrumb-item active">Producto</a></li>
 </ol>
-<!-- Deino la toolbar -->
+<!-- Toolbar -->
 <ol class="toolbar">
     <li class="btn-item"><a title="Nuevo" href="/admin/producto/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
     <li class="btn-item"><a title="Recargar" href="#" class="fa fa-refresh" aria-hidden="true" onclick='window.location.replace("/admin/productos");'><span>Recargar</span></a></li>
@@ -28,12 +28,12 @@ if (isset($msg)) {
 <table id="grilla" class="display">
     <thead>
         <tr>
-            <th></th>
+            <th></th>            
             <th>Nombre</th>
             <th>Cantidad</th>
             <th>Precio</th>
-            <th>Categoria</th>
-            <th>Descripcion</th>
+            <th>Categoria</th> 
+            <th>Imagen</th>           
         </tr>
     </thead>
 </table> 

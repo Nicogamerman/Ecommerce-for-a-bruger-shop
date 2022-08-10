@@ -19,7 +19,6 @@ class ControladorPostulacion extends Controller
 
     }
 
-
     public function editar($id)
     {
         $titulo = "Modificar postulacion";

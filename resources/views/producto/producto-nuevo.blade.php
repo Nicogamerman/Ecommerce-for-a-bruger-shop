@@ -42,15 +42,16 @@ if (isset($msg)) {
     echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
 }
 ?>
-
-<form id="form1" method="POST">          
+<form id="form1" method="POST" enctype="multipart/form-data">          
 <div class="row">
-    <div class="col-5">
+    <div  class="form-group col-lg-6">
         <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
-                <div class>
+
+                <div>
                   <label>Nombre: *</label>
                         <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{$producto->nombre}}"required>
+                        <option selected="" disabled=""></option>                    
                 </div>
                 <div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
@@ -70,14 +71,27 @@ if (isset($msg)) {
                 <div>
                   <label>Precio: *</label>
                         <input type="number" id="txtPrecio" name="txtPrecio" class="form-control" value="{{$producto->precio}}"required>
-                </div>     
+                </div>                  
+                <label> Categoria:</label>
+                    <select id="lstCategoria" name="lstCategoria" class="form-control " required>
+                        <option  disabled selected>Seleccionar</option>
+                        @foreach($aCategorias as $item )
+                            @if($producto->fk_idcategoria == $item->idcategoria)
+                                <option selected value="{{ $item->idcategoria}}">{{$item->nombre}}</option>
+                            @else
+                                <option value="{{ $item->idcategoria}}"> {{$item->nombre}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>    
                 <div>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                     <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div>
-                  <label>Imagen: *</label>
-                  <input type="file" name="imagen" />
-                </div>                     
+                    <label for="imagen">Imagen:</label>
+                    <input type="file" name="archivo" id="archivo" class=" form-control-file" >
+                    <p>Archivos admitidos: .jpg .jpeg .png</p>
+                </div>               
             </div>
     </div>
 </form>

@@ -6,7 +6,6 @@
     <?php $globalId = isset($categoria->idcategoria) ? $categoria->idcategoria : "0";?>
 </script>
 @endsection
-<!-- TOOLBAR  INICIO/MENU/MODIFICAR dentro de NUEVA CATEGORIA -->
 @section('breadcrumb') 
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/admin/home">Inicio</a></li>

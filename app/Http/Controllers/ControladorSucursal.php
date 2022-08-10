@@ -2,38 +2,60 @@
 
 namespace App\Http\Controllers;
 
+/* Importing the classes. */
 use App\Entidades\Sucursal;
-use App\Entidades\Sistema\MenuArea;
 use App\Entidades\Sistema\Patente;//controles de permisos
 use App\Entidades\Sistema\Usuario;//controles de permisos
 use Illuminate\Http\Request;
 
 require app_path() . '/start/constants.php';
 
+/* A class that is used to create a new branch. */
 class ControladorSucursal extends Controller
 {
     public function nuevo()
     {
-      $titulo = "Nueva Sucursal";
-      return view('sucursal.sucursal-nuevo', compact('titulo'));
-      }
+        $titulo = "Nueva Sucursal";
 
-      public function index()
-      {
-          $titulo = "Listado de Sucursales";
-          if (Usuario::autenticado() == true) {
-              if (!Patente::autorizarOperacion("MENUCONSULTA")) {
-                  $codigo = "MENUCONSULTA";
-                  $mensaje = "No tiene permisos para la operaci&oacute;n.";
-                  return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
-              } else {
-                  return view('sucursal.sucursal-listar', compact('titulo'));
-              }
-          } else {
-              return redirect('admin/login');
-          }
-      }
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("SUCURSALCONSULTA")) {
+                $codigo = "SUCURSALCONSULTA";
+                $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                $sucursal = new Sucursal();
+                return view('sucursal.sucursal-nuevo', compact('titulo', 'sucursal'));
+            }
+        } else {
 
+            return redirect('admin/login');
+        }
+    }
+
+    /**
+     * It returns a view if the user is authenticated and has the right permissions, otherwise it
+     * redirects to the login page
+     */
+    public function index()
+    {
+        $titulo = "Listado de sucursales";
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("SUCURSALCONSULTA")) {
+                $codigo = "SUCURSALCONSULTA";
+                $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                return view('sucursal.sucursal-listar', compact('titulo'));
+            }
+        } else {
+            return redirect('admin/login');
+        }
+    }
+
+      /**
+       * It takes a request from the datatable, gets the data from the database, and returns a json
+       * object with the data
+       */
       public function cargarGrilla()
     {
         $request = $_REQUEST;
@@ -67,6 +89,12 @@ class ControladorSucursal extends Controller
         return json_encode($json_data);
     }
 
+      /**
+       * It's a function that takes a request, creates a new entity, loads the request into the entity,
+       * validates the entity, and then either inserts or updates the entity
+       * 
+       * @param Request request The request object.
+       */
       public function guardar(Request $request) {
         try {
             //Define la entidad servicio
@@ -108,6 +136,12 @@ class ControladorSucursal extends Controller
         return view('sucursal.sucursal-nuevo', compact('msg', 'sucursal', 'titulo')) . '?id=' . $sucursal->idsucursal;
 
     }
+
+   /**
+    * It's a function that edits a branch
+    * 
+    * @param id The id of the record to be edited.
+    */
     public function editar($id)
     {
         $titulo = "Modificar Sucursal";
@@ -119,7 +153,6 @@ class ControladorSucursal extends Controller
             } else {
                 $sucursal = new Sucursal();
                 $sucursal->obtenerPorId($id);
-
                 return view('sucursal.sucursal-nuevo', compact('sucursal', 'titulo'));
             }
         } else {
@@ -127,12 +160,16 @@ class ControladorSucursal extends Controller
         }
     }
 
-    public function eliminar(Request $request)
-    {
+    /**
+     * It's a function that deletes a record from the database
+     * 
+     * @param Request request The request object.
+     */
+    public function eliminar(Request $request){
         $id = $request->input('id');
 
         if (Usuario::autenticado() == true) {
-            if (Patente::autorizarOperacion("SUCURSALELIMINAR")) {
+            if (Patente::autorizarOperacion("SUCURSALBAJA")) {
 
                 $entidad = new Sucursal();
                 $entidad->cargarDesdeRequest($request);
@@ -140,7 +177,7 @@ class ControladorSucursal extends Controller
 
                 $aResultado["err"] = EXIT_SUCCESS; //eliminado correctamente
             } else {
-                $codigo = "SUCURSALELIMINAR";
+                $codigo = "SUCURSALBAJA";
                 $aResultado["err"] = "No tiene pemisos para la operaci&oacute;n.";
             }
             echo json_encode($aResultado);
@@ -149,4 +186,6 @@ class ControladorSucursal extends Controller
         }
     }
 }
+
+?>
 

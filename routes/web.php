@@ -182,6 +182,7 @@ Route::get('/admin/estados', 'ControladorEstado@index');
 Route::get('/admin/estados/CargarGrilla', 'ControladorEstado@cargarGrilla')->name('estado.cargarGrilla');
 Route::get('/admin/estado/eliminar', 'ControladorEstado@eliminar');
 Route::get('/admin/estado/{id}', 'ControladorEstado@editar');
+Route::post('/admin/estado/{id}', 'ControladorEstado@guardar');
 
 /* --------------------------------------------- */
 /* CONTROLADOR SUCURSALES                          */
@@ -192,5 +193,6 @@ Route::get('/admin/sucursales', 'ControladorSucursal@index');
 Route::get('/admin/sucursales/CargarGrilla', 'ControladorSucursal@cargarGrilla')->name('sucursal.cargarGrilla');
 Route::get('/admin/sucursal/eliminar', 'ControladorSucursal@eliminar');
 Route::get('/admin/sucursal/{id}', 'ControladorSucursal@editar');
+Route::post('/admin/sucursal/{id}', 'ControladorSucursal@guardar');
 
 

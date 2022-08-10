@@ -27,9 +27,14 @@ class Sucursal extends Model{
         $this->nombre = $request->input('txtNombre');
         $this->telefono = $request->input('txtTelefono');
         $this->direccion = $request->input('txtDireccion');
-        $this->linkmapa = $request->input('txtLinkmapa');
+        $this->linkmapa = $request->input('txtLinkMapa');
     }
 
+    /**
+     * It inserts a new row into the database table, and returns the ID of the new row
+     * 
+     * @return The last inserted id.
+     */
     public function insertar(){
         $sql = "INSERT INTO $this->table (    
             nombre,   
@@ -46,6 +51,9 @@ class Sucursal extends Model{
         return $this->idsucursal = DB::getPdo()->lastInsertId();
     }
  
+   /**
+    * It updates the table with the values of the object's properties
+    */
     public function guardar() {
         $sql = "UPDATE $this->table SET
             idsucursal=$this->idsucursal,
@@ -57,6 +65,13 @@ class Sucursal extends Model{
         $affected = DB::update($sql, [$this->idsucursal]);
     }
 
+   /**
+    * It's a function that returns a single row from a table
+    * 
+    * @param idsucursal The ID of the record you want to retrieve.
+    * 
+    * @return The object itself.
+    */
     public function obtenerPorId($idsucursal)
     {
         $sql = "SELECT
@@ -79,9 +94,12 @@ class Sucursal extends Model{
         return null;
     }
 
+    /**
+     * It deletes a row from the database table where the id of the row is equal to the id of the
+     * object
+     */
     public function eliminar(){
-        $sql = "DELETE FROM $this->table WHERE
-            idsucursal=?";
+        $sql = "DELETE FROM $this->table WHERE idsucursal=?";
         $affected = DB::delete($sql, [$this->idsucursal]);
     }
 
@@ -98,6 +116,9 @@ class Sucursal extends Model{
         return $lstRetorno;
     }
  
+   /**
+    * It's a function that returns a list of objects that are filtered by a search term.
+    */
     public function obtenerFiltrado()
     {
         $request = $_REQUEST;
@@ -114,16 +135,14 @@ class Sucursal extends Model{
                     A.direccion,
                     A.linkmapa,
                     A.nombre
-                    FROM sucursales A
-                WHERE 1=1
+                    FROM sucursales A WHERE 1=1
                 ";
 
         //Realiza el filtrado
         if (!empty($request['search']['value'])) {
             $sql .= " AND ( A.nombre LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR A.telefono LIKE '%" . $request['search']['value'] . "%' ";
-            $sql .= " OR A.direccion LIKE '%" . $request['search']['value'] . "%' ";
-            $sql .= " OR A.linkmapa LIKE '%" . $request['search']['value'] . "%' )";            
+            $sql .= " OR A.direccion LIKE '%" . $request['search']['value'] . "%' ";       
         }
         $sql .= " ORDER BY " . $columns[$request['order'][0]['column']] . "   " . $request['order'][0]['dir'];
 

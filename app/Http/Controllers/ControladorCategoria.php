@@ -14,16 +14,28 @@ class ControladorCategoria extends Controller
 {
     public function nuevo()
     {
-      $titulo = "Nueva categoria";
-      return view('categoria.categoria-nuevo', compact('titulo'));
-    } 
+        $titulo = "Nueva Categoria";
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("CATEGORIAALTA")) {
+                $codigo = "CATEGORIAALTA";
+                $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+                $categoria = new Categoria();
+                return view('categoria.categoria-nuevo', compact('titulo', 'categoria'));
+            }
+        } else {
+
+            return redirect('admin/login');
+        }
+    }
 
     public function index()
     {
         $titulo = "Categorias";
         if (Usuario::autenticado() == true) {
-            if (!Patente::autorizarOperacion("MENUCONSULTA")) {
-                $codigo = "MENUCONSULTA";
+            if (!Patente::autorizarOperacion("CATEGORIACONSULTA")) {
+                $codigo = "CATEGORIACONSULTA";
                 $mensaje = "No tiene permisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
             } else {
@@ -47,10 +59,11 @@ class ControladorCategoria extends Controller
         $inicio = $request['start'];
         $registros_por_pagina = $request['length'];
 
+
         for ($i = $inicio; $i < count($aCategorias) && $cont < $registros_por_pagina; $i++) {
             $row = array();
-            $row[] = "<a href='/admin/categoria/" . $aCategorias[$i]->idcategoria . "' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
-            $row[] = $aCategorias[$i]->nombre;            
+            $row[] = "<a href='/admin/categorias/" . $aCategorias[$i]->idcategoria . "' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
+            $row[] = $aCategorias[$i]->nombre;
             $cont++;
             $data[] = $row;
         }
@@ -108,7 +121,7 @@ class ControladorCategoria extends Controller
 
     public function editar($id)
     {
-        $titulo = "Modificar categoria";
+        $titulo = "Modificar Categoria";
         if (Usuario::autenticado() == true) {
             if (!Patente::autorizarOperacion("CATEGORIAEDITAR")) {
                 $codigo = "CATEGORIAEDITAR";
