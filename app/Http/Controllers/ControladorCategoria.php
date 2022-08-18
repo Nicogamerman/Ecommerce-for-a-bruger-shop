@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Entidades\Categoria;
-use App\Entidades\Sistema\MenuArea;
-use App\Entidades\Sistema\Patente;//controles de permisos
-use App\Entidades\Sistema\Usuario;//controles de permisos
+use App\Entidades\Sistema\Patente;
+use App\Entidades\Sistema\Usuario;
 use Illuminate\Http\Request;
 
 require app_path() . '/start/constants.php';
@@ -14,7 +13,7 @@ class ControladorCategoria extends Controller
 {
     public function nuevo()
     {
-        $titulo = "Nueva Categoria";
+        $titulo = "Nueva categoria"; 
         if (Usuario::autenticado() == true) {
             if (!Patente::autorizarOperacion("CATEGORIAALTA")) {
                 $codigo = "CATEGORIAALTA";
@@ -25,14 +24,13 @@ class ControladorCategoria extends Controller
                 return view('categoria.categoria-nuevo', compact('titulo', 'categoria'));
             }
         } else {
-
             return redirect('admin/login');
         }
     }
-
+    
     public function index()
     {
-        $titulo = "Categorias";
+        $titulo = "Listado de Categorias";
         if (Usuario::autenticado() == true) {
             if (!Patente::autorizarOperacion("CATEGORIACONSULTA")) {
                 $codigo = "CATEGORIACONSULTA";
@@ -45,7 +43,6 @@ class ControladorCategoria extends Controller
             return redirect('admin/login');
         }
     }
-
     public function cargarGrilla()
     {
         $request = $_REQUEST;
@@ -62,7 +59,7 @@ class ControladorCategoria extends Controller
 
         for ($i = $inicio; $i < count($aCategorias) && $cont < $registros_por_pagina; $i++) {
             $row = array();
-            $row[] = "<a href='/admin/categorias/" . $aCategorias[$i]->idcategoria . "' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
+            $row[] = "<a href='/admin/categoria/".$aCategorias[$i]->idcategoria."' class='btn btn-secondary'><i class='fa-solid fa-pencil'></i></a>";
             $row[] = $aCategorias[$i]->nombre;
             $cont++;
             $data[] = $row;
@@ -76,7 +73,6 @@ class ControladorCategoria extends Controller
         );
         return json_encode($json_data);
     }
-
     public function guardar(Request $request) {
         try {
             //Define la entidad servicio
@@ -101,8 +97,8 @@ class ControladorCategoria extends Controller
 
                     $msg["ESTADO"] = MSG_SUCCESS;
                     $msg["MSG"] = OKINSERT;
-                }       
-                
+                }
+         
                 $_POST["id"] = $entidad->idcategoria;
                 return view('categoria.categoria-listar', compact('titulo', 'msg'));
             }
@@ -118,13 +114,12 @@ class ControladorCategoria extends Controller
         return view('categoria.categoria-nuevo', compact('msg', 'categoria', 'titulo')) . '?id=' . $categoria->idcategoria;
 
     }
-
     public function editar($id)
     {
-        $titulo = "Modificar Categoria";
+        $titulo = "Modificar categoria";
         if (Usuario::autenticado() == true) {
-            if (!Patente::autorizarOperacion("CATEGORIAEDITAR")) {
-                $codigo = "CATEGORIAEDITAR";
+            if (!Patente::autorizarOperacion("CATEGORIAMODIFICACION")) {
+                $codigo = "CATEGORIAMODIFICACION";
                 $mensaje = "No tiene pemisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
             } else {

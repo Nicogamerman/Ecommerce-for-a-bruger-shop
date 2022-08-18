@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Entidades\Estado;
-use App\Entidades\Sistema\Patente;//controles de permisos
-use App\Entidades\Sistema\Usuario;//controles de permisos
+use App\Entidades\Sistema\Patente;
+use App\Entidades\Sistema\Usuario;
 use Illuminate\Http\Request;
 
 require app_path() . '/start/constants.php';
@@ -13,17 +13,30 @@ class ControladorEstado extends Controller
 {
     public function nuevo()
     {
-      $titulo = "Nuevo Estado";      
-      $estado = new Estado();
-      return view('estado.estado-nuevo', compact('titulo'));
-    }
-      
-      public function index()
-    {
-        $titulo = "Estados";
+        $titulo = "Nuevo estado";
+
         if (Usuario::autenticado() == true) {
-            if (!Patente::autorizarOperacion("MENUCONSULTA")) {
-                $codigo = "MENUCONSULTA";
+            if (!Patente::autorizarOperacion("ESTADOCONSULTA")) {
+                $codigo = "ESTADOCONSULTA";
+                $mensaje = "No tiene permisos para la operaci&oacute;n.";
+                return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            } else {
+
+                $estado = new Estado();
+                return view('estado.estado-nuevo', compact('titulo', 'estado'));
+
+            }
+        } else {
+            return redirect('admin/login');
+        }
+    }
+
+    public function index()
+    {
+        $titulo = "Listado de Estados";
+        if (Usuario::autenticado() == true) {
+            if (!Patente::autorizarOperacion("ESTADOCONSULTA")) {
+                $codigo = "ESTADOCONSULTA";
                 $mensaje = "No tiene permisos para la operaci&oacute;n.";
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
             } else {
@@ -57,17 +70,18 @@ class ControladorEstado extends Controller
 
         $json_data = array(
             "draw" => intval($request['draw']),
-            "recordsTotal" => count($aEstados), //cantidad total de registros sin paginar
-            "recordsFiltered" => count($aEstados), //cantidad total de registros en la paginacion
+            "recordsTotal" => count($aEstados), 
+            "recordsFiltered" => count($aEstados),
             "data" => $data,
         );
         return json_encode($json_data);
     }
-      
-      public function guardar(Request $request) {
+
+    public function guardar(Request $request)
+    {
         try {
             //Define la entidad servicio
-            $titulo = "Modificar Estado";
+            $titulo = "Modificar estado";
             $entidad = new Estado();
             $entidad->cargarDesdeRequest($request);
 
@@ -88,8 +102,8 @@ class ControladorEstado extends Controller
 
                     $msg["ESTADO"] = MSG_SUCCESS;
                     $msg["MSG"] = OKINSERT;
-                }       
-                
+                }
+
                 $_POST["id"] = $entidad->idestado;
                 return view('estado.estado-listar', compact('titulo', 'msg'));
             }
@@ -125,12 +139,18 @@ class ControladorEstado extends Controller
         }
     }
 
+   /**
+    * It's a function that receives a request, checks if the user is authenticated, checks if the user
+    * has the right permissions, and then deletes the record
+    * 
+    * @param Request request The request object.
+    */
     public function eliminar(Request $request)
     {
         $id = $request->input('id');
 
         if (Usuario::autenticado() == true) {
-            if (Patente::autorizarOperacion("ESTADOELIMINAR")) {
+            if (Patente::autorizarOperacion("ESTADOBAJA")) {
 
                 $entidad = new Estado();
                 $entidad->cargarDesdeRequest($request);
@@ -138,7 +158,7 @@ class ControladorEstado extends Controller
 
                 $aResultado["err"] = EXIT_SUCCESS; //eliminado correctamente
             } else {
-                $codigo = "ESTADOELIMINAR";
+                $codigo = "ESTADOBAJA";
                 $aResultado["err"] = "No tiene pemisos para la operaci&oacute;n.";
             }
             echo json_encode($aResultado);

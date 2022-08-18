@@ -82,7 +82,7 @@ class Categoria extends Model{
             1 => 'A.nombre',            
         );
         $sql = "SELECT DISTINCT
-                    A.idcategoria,
+                    A.idcategoria, 
                     A.nombre
                     FROM categorias A
                 WHERE 1=1

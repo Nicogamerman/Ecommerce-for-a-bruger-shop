@@ -33,7 +33,7 @@ if (isset($msg)) {
         </tr>
     </thead>
 </table> 
-<script> //Con esta parte del codigo, podemos agregar el buscador, ordenar por nombre, ordenar por documento, mostrar X cantidad de items... etc
+<script> 
 	$(document).ready( function () {
     var dataTable = $('#grilla').DataTable({
 	    "processing": true,
