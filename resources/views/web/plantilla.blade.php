@@ -13,7 +13,7 @@
   <meta name="author" content="" />
   <link rel="shortcut icon" href="web/images/favicon.png" type="">
 
-  <title> Burger </title>
+  <title>Córdoba Burger </title>
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
@@ -51,7 +51,7 @@
           <nav class="navbar navbar-expand-lg custom_nav-container ">
             <a class="navbar-brand" href="index.html">
               <span>
-                Burger
+                Cordoba Burger´s
               </span>
             </a>
 
@@ -103,6 +103,7 @@
     </div>
     @endif
 
+    <!-- end header section -->
     @yield('contenido')
 
     <!-- footer section -->
@@ -112,14 +113,41 @@
           <div class="col-12 ">
             <h5 class="pb-5">Sucursales</h5>
           </div>
-         
+          {{-- defino el array $aSucursales como una sucursal particular --}}
+          @foreach($aSucursales as $sucursal)
+          <div class="col-3 footer-col">
+            <div class="footer_contact ">
+              <h4>
+                {{-- imprimo los nombres de las Sucursales para mostrarlos en el footer --}}
+                {{ $sucursal->nombre }}                 
+              </h4>
+              <div class="contact_link_box">
+                {{-- traigo linkmapa para mostrar como href del nombre sucursal --}}
+                <a target="_blank" href="{{ $sucursal->linkmapa }}">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  <span>
+                    {{-- imprimo direccion --}}
+                    Dirección: {{ $sucursal->direccion }}
+                  </span>
+                </a>
+                <a target="_blank" href="">
+                  <i class="fa fa-phone" aria-hidden="true"></i>
+                  <span>
+                    {{-- imprimo telefono --}}
+                    Telefono: {{ $sucursal->telefono }}
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+          @endforeach
         </div>
         <div class="footer-info">
           <p>
-            &copy; <span id="displayYear"></span> Restaurante de comida rapida
+            &copy; <span id="displayYear"></span> All rights reserver By Córdoba burgers.           
           </p>
           <p> 
-            &copy; <span id="displayYear"></span> Argentina y Colombia
+            &copy; <span id="displayYear"></span> Córdoba, Argentina.
           </p>
         </div>
       </div>
@@ -142,6 +170,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
     <!-- custom js -->
     <script src="web/js/custom.js"></script>
+
   </body>
 
 </html>

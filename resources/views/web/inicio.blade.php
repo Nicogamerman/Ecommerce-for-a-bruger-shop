@@ -1,8 +1,6 @@
 @extends('web.plantilla')
 @section('contenido')
-
-<!-- slider section -->
-  <div>  
+    <!-- slider section -->
     <section class="slider_section ">
       <div id="customCarousel1" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
@@ -12,11 +10,10 @@
                 <div class="col-md-7 col-lg-6 ">
                   <div class="detail-box">
                     <h1>
-                      Burger Home                   
+                      Cordoba Burger´s 
                     </h1>
                     <p>
-                      La calidad nos distingue!                    
-                    </p>
+                      A pesar de su reconocimiento mundial, muchas personas no han oído hablar de las hamburguesas cordobesas. Sin embargo, una vez que las prueben, se convertirán en fanáticos, como lo ha hecho la mayoría!</p>
                     <div class="btn-box">
                       <a href="" class="btn1">
                         Nuevo pedido
@@ -33,11 +30,11 @@
                 <div class="col-md-7 col-lg-6 ">
                   <div class="detail-box">
                     <h1>
-                        Burger Place 
+                      Cordoba Burger´s 
+ 
                     </h1>
                     <p>
-                      Tenemos la mayor variedad de hamburguesas de la ciudad, veni a probarlas!
-                    </p>
+                      Las hamburguesas son deliciosas y nutritivas; ¡no se puede pedir mucho más que eso!   </p>
                     <div class="btn-box">
                       <a href="" class="btn1">
                         Nuevo pedido
@@ -54,10 +51,11 @@
                 <div class="col-md-7 col-lg-6 ">
                   <div class="detail-box">
                     <h1>
-                       Free Burger! 
+                      Cordoba Burger´s 
+ 
                     </h1>
                     <p>
-                      Tu Hamburguesa en menos de 15 minutos o es totalmente GRATIS!
+                      ¡Veni a probarlas hoy mismo!
                     </p>
                     <div class="btn-box">
                       <a href="" class="btn1">
@@ -78,12 +76,13 @@
           </ol>
         </div>
       </div>
+
     </section>
+    <!-- end slider section -->
   </div>
-  <!-- end slider section -->
-  
+
   <!-- offer section -->
-<div>
+
   <section class="offer_section layout_padding-bottom">
     <div class="offer_container">
       <div class="container ">
