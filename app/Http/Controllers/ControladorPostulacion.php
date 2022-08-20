@@ -158,5 +158,5 @@ class ControladorPostulacion extends Controller
         } else {
             return redirect('admin/login');
         }
-}
+    }
 }

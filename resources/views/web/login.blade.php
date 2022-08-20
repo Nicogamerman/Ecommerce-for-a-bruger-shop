@@ -13,6 +13,7 @@
         <div class="col-md-6">
           <div class="form_container">
             <form action="" method="POST" class="">
+              {{-- si existe la variable $msg muestra el $msg 'estado' --}}
               @if(isset($msg))
               <div class="alert alert-{{ $msg['estado'] }}" role="alert">
                 {{$msg["msg"]}}

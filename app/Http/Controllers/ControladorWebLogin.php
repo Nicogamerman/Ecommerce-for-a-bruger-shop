@@ -33,7 +33,7 @@ class ControladorWebLogin extends Controller
 
             $cliente->obtenerPorId($cliente->idcliente);
             Session::put("idcliente", $cliente->idcliente);
-            return view("web.login", compact('cliente', 'aSucursales'));
+            return view("web.bienvenido", compact('cliente', 'aSucursales'));
             
         } else {
             $msg["msg"]= "Correo o clave incorrecto";

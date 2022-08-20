@@ -64,6 +64,7 @@ class ControladorWebNuevoRegistro extends Controller
             $cliente->correo = $correo;
             $cliente->dni = $dni;
             $cliente->celular = $celular;
+            /* Hashing the password. This is for secturity, the pw will travel encrypted */
             $cliente->clave = password_hash($clave, PASSWORD_DEFAULT);
             $cliente->insertar();
 

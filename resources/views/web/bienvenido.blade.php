@@ -6,14 +6,13 @@
     <div class="container offset-sm-3 " >
       <div class="heading_container">
         <h2 class="pb-4 text-white">
-          ¡Gracias por tu mensaje!
+          ¡Bienvenido a Burger´s Córdoba!
         </h2>
-      </div>
-      
+      </div>      
 
       <div class="row">
         <div class="col-md-6 text-white">
-          <p>¡Nos comunicaremos con usted a la brevedad!</p>
+          <p>¡Te extrañabamos!</p>
         </div>
       </div>
     </div>
