@@ -8,23 +8,19 @@
           Take away
         </h2>
       </div>
-
       @if(isset($msg))
               <div class="alert alert-{{ $msg['estado'] }}" role="alert">
                 {{$msg["mensaje"]}}
               </div>
-              @endif
+      @endif
       <ul class="filters_menu">
         <li class="active" data-filter="*">Todos</li>
         @foreach($aCategorias as $item)
             <li data-filter=".{{ $item->nombre}}"> {{ $item->nombre}} </li>
-        @endforeach
-        
+        @endforeach        
       </ul>
-
       <div class="filters-content">
         <div class="row grid">
-
         @foreach($aProductos as $item)
           @foreach($aCategorias as $itemCategoria)
             @if($item->fk_idcategoria == $itemCategoria->idcategoria)
@@ -53,18 +49,15 @@
                         <input type="hidden" name="txtIdProducto" value="{{ $item->idproducto }}">
                         <input type="number" name="txtCantidadProducto" id="" class="text-center" style="border: 0;outline: none; background-color:  #f1f2f3; cursor: pointer; " min="1" value="1" max="10">
                       </div>
-                      <button type="submit"><i class="fa-solid fa-cart-plus"></i></button>
-                      
+                      <button type="submit"><i class="fa-solid fa-cart-plus"></i>                      
                     </form>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          
-        @endforeach
-         
-                
+          </div>          
+        @endforeach    
+
         </div>
       </div>
     </div>

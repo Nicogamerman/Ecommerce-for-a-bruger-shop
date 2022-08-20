@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Entidades\Producto;
 use App\Entidades\Categoria;
 use App\Entidades\Sucursal;
+use App\Entidades\Postulacion;
 use App\Entidades\Carrito;
 use App\Entidades\Carrito_producto;
 use Session;
@@ -27,7 +28,7 @@ class ControladorWebContacto extends Controller
         $pg = "contacto";
         return view("web.contacto", compact('pg', 'producto', 'aProductos', 'aCategorias', 'aSucursales'));
     }
-
+   
     public function agregarAlCarrito(Request $request){
        /* Creating a new instance of the Producto class and then calling the obtenerTodos() method on
        it. */

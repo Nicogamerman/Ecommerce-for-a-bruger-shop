@@ -2,6 +2,7 @@
 @section('contenido')
 
   <!-- book section -->
+
   <section class="book_section layout_padding">
     <div class="container offset-sm-3">
       <div class="heading_container">
@@ -26,6 +27,6 @@
       </div>
     </div>
   </section>
+  
   <!-- end book section -->
-
 @endsection

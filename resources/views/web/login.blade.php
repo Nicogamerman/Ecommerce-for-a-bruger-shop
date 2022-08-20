@@ -7,8 +7,7 @@
     <div class="container offset-sm-3">
       <div class="heading_container">
         <h2 class="pb-4">
-          Ingreso/Registro
-        </h2>
+          Ingresar
       </div>
       <div class="row">
         <div class="col-md-6">
@@ -42,5 +41,4 @@
     </div>
   </section>
   <!-- end book section -->
-
 @endsection

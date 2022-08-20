@@ -124,7 +124,10 @@
             <form method="POST" action="" enctype="multipart/form-data">
                <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
               <div>
-                <input type="text" class="form-control" placeholder="Nombre y Apellido" name="txtNombre"/>
+                <input type="text" class="form-control" placeholder="Nombre" name="txtNombre"/>
+              </div>
+              <div>
+                <input type="text" class="form-control" placeholder="Apellido" name="txtApellido"/>
               </div>
               <div>
                 <input type="text" class="form-control" placeholder="Numero de Whatsapp" name="txtTelefono" />
@@ -132,9 +135,8 @@
               <div>
                 <input type="email" class="form-control" placeholder="Correo electronico" name="txtCorreo" />
               </div>
-               <div>
-                <label for="TxtFechaNac">Mensaje:</label>
-                <textarea name="txtMensaje" id="txtMensaje" class="form-control"></textarea>
+               <div>                
+                <textarea name="txtMensaje" id="txtMensaje" class="form-control" placeholder="Mensaje"></textarea>
               </div>
               <div>
                 <label for="archivo" class="d-block">Adjunta tu CV:</label>

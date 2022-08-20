@@ -15,12 +15,28 @@ Route::group(array('domain' => '127.0.0.1'), function () {
 
     Route::get('/', 'ControladorWebHome@index');
     Route::get('/takeaway', 'ControladorWebTakeaway@index');
+    Route::post('/takeaway', 'ControladorWebTakeaway@agregarAlCarrito');
     Route::get('/nosotros', 'ControladorWebNosotros@index');
+   /* A route that is being called when the user is redirected to the `/gracias-postulacion` page. */
+    Route::get('/gracias-postulacion', 'ControladorWebGraciasPostulacion@index');
+    Route::post('/nosotros', 'ControladorWebNosotros@enviar');
     Route::get('/contacto', 'ControladorWebContacto@index');
-    Route::get('/mi-cuenta', 'ControladorMiCuenta@index');
-
-
-
+    Route::get('/confirmacion-envio', 'ControladorWebConfirmacionEnvio@index');
+    Route::post('/contacto', 'ControladorWebContacto@enviar');
+    Route::get('/mi-cuenta', 'ControladorWebMiCuenta@index');
+    Route::post('/mi-cuenta', 'ControladorWebMiCuenta@editar');
+    Route::get('/login', 'ControladorWebLogin@index');
+    Route::post('/login', 'ControladorWebLogin@ingresar');
+    Route::get('/nuevo-registro', 'ControladorWebNuevoRegistro@index');
+    Route::post('/nuevo-registro', 'ControladorWebNuevoRegistro@enviar');
+    Route::get('/recuperar-clave', 'ControladorWebRecuperarClave@index');
+    Route::post('/recuperar-clave', 'ControladorWebRecuperarClave@enviar');   
+    Route::get('/logout', 'ControladorWebLogout@logout');
+    Route::get('/carrito', 'ControladorWebCarrito@index');
+    Route::get('/cambiar-datos', 'ControladorWebCambiarDatos@index');
+    Route::post('/cambiar-datos', 'ControladorWebCambiarDatos@editar');
+    Route::get('/cambiar-clave', 'ControladorWebCambiarClave@index');
+    Route::post('/cambiar-clave', 'ControladorWebCambiarClave@guardar');
 /* --------------------------------------------- */
 /* CONTROLADOR LOGIN                           */
 /* --------------------------------------------- */

@@ -1,5 +1,6 @@
 @extends('web.plantilla')
 @section('contenido')
+
 <!-- book section -->
 <section class="book_section layout_padding">
       <div class="container">
@@ -9,7 +10,6 @@
                         {{$msg["msg"]}}
                   </div>
                   @endif
-
                   <div class="card border-light mb-3 col-6">
                         <div class="card-body">
                               <h2 class="card-title">{{ $cliente->nombre . " " . $cliente->apellido}}</h2>
@@ -24,8 +24,6 @@
                         <div class="btn_box">
                               <a href="/cambiar-clave">Cambiar clave</a>
                         </div>
-
-
                   </div>
             </div>
       </div>
