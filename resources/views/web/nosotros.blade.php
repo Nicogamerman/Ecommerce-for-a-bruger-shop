@@ -7,7 +7,7 @@
 
       <div class="row">
         <div class="col-md-6 ">
-          <div class="img-box">
+          <div class="img-box animate__animated animate__backInUp">
             <img src="web/images/about-img.png" alt="">
           </div>
         </div>
@@ -23,9 +23,7 @@
                 estamos en cada detalle, seleccionando cada ingrediente, buscando siempre la excelencia para garantizar
                 el mejor sabor!
             </p>
-            <a href="">
-              ¡Mas informacion acá!
-            </a>
+            <a href="#seccion1" >¡Solicita más informacion acá!</a>            
           </div>
         </div>
       </div>
@@ -36,7 +34,7 @@
   
   <!-- client section -->
 
-  <section class="client_section pt-5">
+  <section class="client_section pt-5" id="seccion1">
     <div class="container">
       <div class="heading_container heading_center psudo_white_primary mb_45">
         <h2>

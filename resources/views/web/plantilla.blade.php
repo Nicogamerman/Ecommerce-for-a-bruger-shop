@@ -13,7 +13,7 @@
   <meta name="author" content="" />
   <link rel="shortcut icon" href="web/images/favicon.png" type="">
 
-  <title>Córdoba Burger </title>
+  <title>Córdoba Burger´s</title>
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
@@ -30,6 +30,8 @@
   <link href="web/css/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="web/css/responsive.css" rel="stylesheet" />
+  <!-- Animaciones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 </head>
 @if(isset($pg) && $pg=="inicio")
@@ -49,11 +51,7 @@
       <header class="header_section">
         <div class="container">
           <nav class="navbar navbar-expand-lg custom_nav-container ">
-            <a class="navbar-brand" href="index.html">
-              <span>
-                Cordoba Burger´s
-              </span>
-            </a>
+            <a class="navbar-brand" href="/"><span>Cordoba Burger´s</span></a>            
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class=""> </span>
@@ -82,12 +80,14 @@
               <div class="user_option">
                 @if(Session::get("idcliente") > 0)
                 <a class="cart_link" href="/carrito"><i class="fa-solid fa-cart-plus text-white"></i></a>
-                @endif
-                @if(Session::get("idcliente") > 0)
+                @endif                
+                {{-- si idcliente es mayor a 0  va a mostrar el boton salir--}}
+                @if(Session::get("idcliente") > 0) 
                 <a href="/logout" class="order_online">
                   Salir
-                  <i class="fa fa-user" aria-hidden="true"></i>
-                </a>
+                  <i class="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+                </a>    
+                {{-- si no es mayor a 0, entonces mostrara login--}}
                 @else
                 <a href="/login" class="order_online">
                   Ingresar

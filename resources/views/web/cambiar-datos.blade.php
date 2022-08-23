@@ -35,7 +35,7 @@
                 <input id="txtCelular" name="txtCelular" type="text" class="form-control" placeholder="Celular" value="{{ $cliente->celular }}"/>
               </div>
               <div class="btn_box">
-                <button type="submit" id="btnEnviar" name="btnEnviar" href="">Editar</button>
+                <button type="submit" id="btnEnviar" name="btnEnviar" href="">Guardar cambios</button>
               </div>
             </form>
           </div>

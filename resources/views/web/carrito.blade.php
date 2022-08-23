@@ -6,7 +6,6 @@
             <div class="heading_container heading_center">
                   <h2>Mi Carrito</h2>
             </div>
-
             @if(isset($msg))
                   <div class="alert alert-{{ $msg['estado'] }}" role="alert">{{$msg["mensaje"]}}</div>
             @endif
@@ -21,13 +20,6 @@
                         </tr>
                   </thead>
             </table>
-
-
-
-
-
       </div>
 </section>
-
-  <!-- end food section -->
 @endsection

@@ -29,13 +29,15 @@ class ControladorWebLogin extends Controller
         $cliente->obtenerPorCorreo($correo);
 
 
+       /* Checking if the client exists and if the password is correct. */
         if($cliente->idcliente > 0 && password_verify($clave, $cliente->clave)){
 
             $cliente->obtenerPorId($cliente->idcliente);
             Session::put("idcliente", $cliente->idcliente);
-            return view("web.bienvenido", compact('cliente', 'aSucursales'));
-            
-        } else {
+            return view("web.bienvenido", compact('cliente', 'aSucursales'));            
+        } 
+        /* Returning the login page with a message. */
+        else {
             $msg["msg"]= "Correo o clave incorrecto";
             $msg["estado"]= "danger";
 

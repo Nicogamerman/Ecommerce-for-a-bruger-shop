@@ -14,7 +14,7 @@ $pg = "contacto"; ?>
       </div>
       <div class="row">
         <div class="col-md-6">
-          <div class="form_container">
+          <div class="form_container animate__animated animate__backInUp">
           <form method="POST" action="" enctype="multipart/form-data">
                <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
               <div>

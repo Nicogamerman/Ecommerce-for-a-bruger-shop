@@ -1,8 +1,8 @@
 @extends('web.plantilla')
 @section('contenido')
     <!-- slider section -->
-    <section class="slider_section ">
-      <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+    <section class="slider_section">
+      <div id="customCarousel1" class="carousel slide animate__animated animate__backInUp" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
             <div class="container ">
@@ -15,7 +15,7 @@
                     <p>
                       A pesar de su reconocimiento mundial, muchas personas no han oído hablar de las hamburguesas cordobesas. Sin embargo, una vez que las prueben, se convertirán en fanáticos, como lo ha hecho la mayoría!</p>
                     <div class="btn-box">
-                      <a href="" class="btn1">
+                      <a href="/takeaway" class="btn1">
                         Nuevo pedido
                       </a>
                     </div>
@@ -36,7 +36,7 @@
                     <p>
                       Las hamburguesas son deliciosas y nutritivas; ¡no se puede pedir mucho más que eso!   </p>
                     <div class="btn-box">
-                      <a href="" class="btn1">
+                      <a href="/takeaway" class="btn1">
                         Nuevo pedido
                       </a>
                     </div>
@@ -51,16 +51,13 @@
                 <div class="col-md-7 col-lg-6 ">
                   <div class="detail-box">
                     <h1>
-                      Cordoba Burger´s 
- 
+                      Cordoba Burger´s  
                     </h1>
                     <p>
                       ¡Veni a probarlas hoy mismo!
-                    </p>
+                    </p>                    
                     <div class="btn-box">
-                      <a href="" class="btn1">
-                        Nuevo pedido
-                      </a>
+                      <a href="/takeaway" class="btn1">Nuevo pedido</a>
                     </div>
                   </div>
                 </div>

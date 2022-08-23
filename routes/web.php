@@ -27,17 +27,18 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::post('/mi-cuenta', 'ControladorWebMiCuenta@editar');
     Route::get('/login', 'ControladorWebLogin@index');
     Route::post('/login', 'ControladorWebLogin@ingresar');
+    Route::post('/bienvenido', 'ControladorWebBienvenido@index');
     Route::get('/nuevo-registro', 'ControladorWebNuevoRegistro@index');
     Route::post('/nuevo-registro', 'ControladorWebNuevoRegistro@enviar');
     Route::get('/recuperar-clave', 'ControladorWebRecuperarClave@index');
-    Route::post('/recuperar-clave', 'ControladorWebRecuperarClave@enviar');   
-    Route::get('/logout', 'ControladorWebLogout@logout');
+    Route::post('/recuperar-clave', 'ControladorWebRecuperarClave@enviar');       
     Route::get('/carrito', 'ControladorWebCarrito@index');
     Route::get('/cambiar-datos', 'ControladorWebCambiarDatos@index');
     Route::post('/cambiar-datos', 'ControladorWebCambiarDatos@editar');
     Route::get('/cambiar-clave', 'ControladorWebCambiarClave@index');
     Route::post('/cambiar-clave', 'ControladorWebCambiarClave@guardar');
-    Route::post('/bienvenido', 'ControladorWebBienvenido@index');
+    Route::get('/logout', 'ControladorWebLogout@logout');
+    
 /* --------------------------------------------- */
 /* CONTROLADOR LOGIN                           */
 /* --------------------------------------------- */

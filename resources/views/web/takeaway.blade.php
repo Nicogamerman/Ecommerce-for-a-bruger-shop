@@ -27,7 +27,7 @@
               <div class="col-sm-6 col-lg-4 all {{$itemCategoria->nombre}}">
             @endif
           @endforeach
-            <div class="box">
+            <div class="box animate__animated animate__backInUp">
               <div>
                 <div class="img-box">
                   <img src="/files/{{ $item->imagen }}" alt=""> 
@@ -49,7 +49,8 @@
                         <input type="hidden" name="txtIdProducto" value="{{ $item->idproducto }}">
                         <input type="number" name="txtCantidadProducto" id="" class="text-center" style="border: 0;outline: none; background-color:  #f1f2f3; cursor: pointer; " min="1" value="1" max="10">
                       </div>
-                      <button type="submit"><i class="fa-solid fa-cart-plus"></i>                      
+                      <button type="submit"><i class="fa-solid fa-cart-plus"></i></button>
+                      
                     </form>
                   </div>
                 </div>

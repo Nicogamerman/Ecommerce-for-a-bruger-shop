@@ -17,13 +17,11 @@
                               <p class="card-text">Correo: {{ $cliente->correo}}</p>
                         </div>
                   </div>
-                  <div class="form_container">
+                  <div class="form_container">                       
                         <div class="btn_box">
-                              <a href="/cambiar-datos">Cambiar datos</a>
-                        </div>
-                        <div class="btn_box">
-                              <a href="/cambiar-clave">Cambiar clave</a>
-                        </div>
+                              <button><a href="/cambiar-datos" class="text-white">Cambiar datos</a></button>                       
+                              <button><a href="/cambiar-clave" class="text-white">Cambiar clave</a></button>
+                        </div>                        
                   </div>
             </div>
       </div>

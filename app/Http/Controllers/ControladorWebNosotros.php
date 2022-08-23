@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Entidades\Postulacion;
 use App\Entidades\Sucursal;
 use Illuminate\Http\Request;
-
 class ControladorWebNosotros extends Controller
 {
     public function index()
@@ -20,21 +17,33 @@ class ControladorWebNosotros extends Controller
     public function enviar(Request $request)
     {
         $nombre = $request->input('txtNombre');
-        $apellido = $request->input('txtApellido');
         $celular = $request->input('txtTelefono');
         $correo = $request->input('txtCorreo');
         $mensaje = $request->input('txtMensaje');
-
         $postulacion = new Postulacion();
-        $postulacion->nombre= $nombre;
-        $postulacion->apellido= $apellido;
         $postulacion->curriculum = "";
-        $postulacion->celular= $celular;
-        $postulacion->correo= $correo;
-        $postulacion->mensaje= $mensaje;    
-        $postulacion-> insertar();
+
+       /* Checking if the file is uploaded correctly and then it is checking the extension of the file. */
+        if ($_FILES["archivo"]["error"] === UPLOAD_ERR_OK) {
+            $extension = pathinfo($_FILES["archivo"]["name"], PATHINFO_EXTENSION);
+            $nombreRandom = date("Ymdhmsi") . ".$extension"; 
+            $archivo_tmp = $_FILES["archivo"]["tmp_name"];
+        
+            if ($extension == "pdf" || $extension == "doc" || $extension == "docx") {;
+                move_uploaded_file($archivo_tmp, env('APP_PATH') . "/public/files/$nombreRandom");
+                $postulacion->curriculum = $nombreRandom;
+            }
+            
+        }
+        $postulacion->nombre = $nombre;
+        $postulacion->apellido = "";
+        $postulacion->celular = $celular;
+        $postulacion->correo = $correo;
+        $postulacion->mensaje = $mensaje;
+        $postulacion->insertar();
 
         return redirect("/gracias-postulacion");
     }
+
 
 }
