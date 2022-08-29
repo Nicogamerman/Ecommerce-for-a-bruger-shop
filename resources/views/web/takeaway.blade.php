@@ -45,12 +45,11 @@
                     </h6>
                     <form action="" method="POST">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
-                      <div class="btn selecCant" style="background: #f1f2f3; border-radius: 30px;margin-top: 2px;padding-bottom: 4px;padding-top: 4px;">
+                      <div class="btn selecCant " style="background: #f1f2f3; border-radius: 30px;margin-top: 2px;padding-bottom: 4px;padding-top: 4px;">
                         <input type="hidden" name="txtIdProducto" value="{{ $item->idproducto }}">
                         <input type="number" name="txtCantidadProducto" id="" class="text-center" style="border: 0;outline: none; background-color:  #f1f2f3; cursor: pointer; " min="1" value="1" max="10">
                       </div>
-                      <button type="submit"><i class="fa-solid fa-cart-plus"></i></button>
-                      
+                      <button type="submit" class="btn btn-warning carrito"><i class="fa-solid fa-cart-plus icono"></i></button>                      
                     </form>
                   </div>
                 </div>
@@ -63,6 +62,5 @@
       </div>
     </div>
   </section>
-
   <!-- end food section -->
 @endsection

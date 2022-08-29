@@ -34,6 +34,7 @@ if (!defined('USUARIOBLOQUEADO')) define("USUARIOBLOQUEADO", "Usuario bloqueado.
 if (!defined('USUARIOINCORRECTO')) define("USUARIOINCORRECTO", "El usuario no est&aacute; autorizado a usar el sistema. Comun&iacute;quese con el administrador");
 
 //Web Carrito
+if (!defined('OKPEDIDO')) define("PEDIDO_PENDIENTE", 2);
 if (!defined('OKPEDIDO')) define("OKPEDIDO", "¡Pedido enviado!");
 
 ?>

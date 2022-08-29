@@ -15,8 +15,7 @@ class Carrito extends Model{
           'fk_idcliente'
       ];
   
-      protected $hidden = [
-  
+      protected $hidden = [  
       ];
 
     public function guardar() {
@@ -26,6 +25,7 @@ class Carrito extends Model{
             WHERE idcarrito=?";
         $affected = DB::update($sql, [$this->idcarrito]);
     }
+    
     public function obtenerPorId($idcarrito)
     {
         $sql = "SELECT
@@ -57,6 +57,23 @@ class Carrito extends Model{
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
-
+ 
+    public function obtenerPorCliente($idcliente){
+        $sql = "SELECT
+                   idcarrito,
+                   fk_idcliente
+               FROM carritos WHERE fk_idcliente = $idcliente";
+       $lstRetorno = DB::select($sql);
+   
+     /* Checking if the query returns any data. If it does, it will return the data. If it doesn't, it
+     will return null. */
+       if (count($lstRetorno) > 0) {
+           $this->idcarrito = $lstRetorno[0]->idcarrito;
+           $this->fk_idcliente = $lstRetorno[0]->fk_idcliente;
+           return $this;
+       }
+       return null;
+     }
 
 }
+

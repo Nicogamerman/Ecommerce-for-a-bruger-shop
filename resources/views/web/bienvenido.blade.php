@@ -5,8 +5,8 @@
   <section class="book_section layout_padding ">
     <div class="container offset-sm-3 " >
       <div class="heading_container">
-        <h2 class="pb-4 text-white">
-          ¡Bienvenido a Burger´s Córdoba!
+        <h2 class="pb-4 text-white animate__animated animate__backInUp">
+          ¡Bienvenido a Córdoba Burger´s !
         </h2>
       </div>      
 
