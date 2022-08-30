@@ -5,8 +5,7 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Carrito_producto extends Model
-{
+class Carrito_producto extends Model{
       protected $table = 'carrito_productos';
       public $timestamps = false;
       public $producto;
@@ -22,8 +21,7 @@ class Carrito_producto extends Model
 
     ];
 
-      public function insertar()
-    {
+      public function insertar(){
         $sql = "INSERT INTO $this->table (
                   fk_idproducto,
                   fk_idcarrito,
@@ -37,7 +35,7 @@ class Carrito_producto extends Model
         ]);
         return $this->idcarrito_producto = DB::getPdo()->lastInsertId();
     }
-    public function guardar() {
+    public function guardar(){
       $sql = "UPDATE $this->table SET
           fk_idproducto=$this->fk_idproducto,
           fk_idcarrito=$this->fk_idcarrito,
@@ -46,8 +44,7 @@ class Carrito_producto extends Model
       $affected = DB::update($sql, [$this->idcarrito_producto]);
   }
 
-   public function obtenerPorId($idcarrito_producto)
-  {
+   public function obtenerPorId($idcarrito_producto){
       $sql = "SELECT
               idcarrito_producto,
               fk_idproducto,
@@ -66,8 +63,7 @@ class Carrito_producto extends Model
       return null;
   }
 
-   public function obtenerPorCarrito($idcarrito)
-  {  //tengo q seleccionar todos los carritos donde el fk_idcarrito sea igual al $idcarrito.
+   public function obtenerPorCarrito($idcarrito){
       $sql = "SELECT
                 A.idcarrito_producto,
                 A.fk_idproducto,
@@ -81,10 +77,9 @@ class Carrito_producto extends Model
                 WHERE A.fk_idcarrito = $idcarrito";
       $lstRetorno = DB::select($sql);
       return $lstRetorno;
-    }
-     
-  public function obtenerPorCliente($idcliente)
-  {
+    }    
+
+  public function obtenerPorCliente($idcliente)  {
     $sql = "SELECT
                 A.idcarrito_producto,
                 A.fk_idproducto,
@@ -99,35 +94,37 @@ class Carrito_producto extends Model
    $lstRetorno = DB::select($sql);
 
    $aResultado = array();
+   /* A loop that is going through the array and creating a new object for each item in the array. */
    if (count($lstRetorno) > 0) {
         foreach($lstRetorno as $resultado){
-            $carrito_producto = new Carrito_producto();
-            $carrito_producto->idcarrito_producto = $resultado->idcarrito_producto;
-            $carrito_producto->fk_idproducto = $resultado->fk_idproducto;
-            $carrito_producto->fk_idcarrito = $resultado->fk_idcarrito;
-            $carrito_producto->cantidad = $resultado->cantidad;
-            $carrito_producto->producto = $resultado->producto;
-            $carrito_producto->precio = $resultado->precio;
-            $aResultado[] = $carrito_producto;
+                $carrito_producto = new Carrito_producto();
+                $carrito_producto->idcarrito_producto = $resultado->idcarrito_producto;
+                $carrito_producto->fk_idproducto = $resultado->fk_idproducto;
+                $carrito_producto->fk_idcarrito = $resultado->fk_idcarrito;
+                $carrito_producto->cantidad = $resultado->cantidad;
+                $carrito_producto->producto = $resultado->producto;
+                $carrito_producto->precio = $resultado->precio;            
+                $aResultado[] = $carrito_producto;
         }
     }
-    return $aResultado;
+        return $aResultado;
 }
-
-   public function eliminar()
-  {
+ 
+   /* Delete the row from the table where the idcarrito_producto column is equal to the value of the idcarrito_producto property of the object.*/
+   public function eliminar(){
       $sql = "DELETE FROM $this->table WHERE idcarrito_producto=?";
       $affected = DB::delete($sql, [$this->idcarrito_producto]);
   }
 
-   public function eliminarPorCliente($idCliente)
-  {
+   /* Delete all the products from the cart of a given client.*/
+   public function eliminarPorCliente($idCliente){
       $sql = "DELETE A.* FROM carrito_productos A
                 INNER JOIN carritos B ON A.fk_idcarrito = B.idcarrito
       WHERE B.fk_idcliente = ?";
       $affected = DB::delete($sql, [$idCliente]);
   }
 
+  /* It returns a list of all the rows in the table*/
    public function obtenerTodos()
   {
       $sql = "SELECT
@@ -139,6 +136,5 @@ class Carrito_producto extends Model
       $lstRetorno = DB::select($sql);
       return $lstRetorno;
   }
-
 }
 ?>

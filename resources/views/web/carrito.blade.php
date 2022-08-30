@@ -14,23 +14,25 @@
                   <table class="table table-striped table-hover border">
                         <thead>
                               <tr>
-                                    <th class="lead">Cantidad</th>
-                                    <th class="lead">Imagen</th>
+                                    
+                                    <th class="lead"></th>
                                     <th class="lead">Nombre</th>
                                     <th class="lead">Precio</th>
+                                    <th class="lead">Cantidad</th>
+                                    <th class="lead">Total item</th>
                                     <th class="lead">Boton eliminar</th>
                               </tr>
                         </thead>
                   <tbody>
                         <?php $total = 0 ?>
                         @foreach($aCarrito_productos as $item)
-                        <?php $subtotal =$item ->precioproducto * item ->cantidad; ?>
+                        <?php $subtotal= $item ->precioproducto * $item ->cantidad; ?>
                         <tr>
                               <td><img src="/files {{$item->imagenproducto}}" alt=""></td>
                               <td>{{$item->nombreproducto}}</td>
                               <td>${{$item->precioproducto}}</td>
                               <td>{{$item->cantidad}}</td>
-                              <td>${{ numbre_format ($subtotal, 2, ",","." ) }}</td>
+                              <td>${{ number_format ($subtotal, 2, ",","." ) }}</td>
                               <td><i class="fa-solid fa-ban"></i></td>                  
                         </tr>
                         <?php $total += $subtotal; ?>
@@ -44,10 +46,8 @@
                   <div class="col-12">
                         <label for="" class="d-block">Sucursal donde retirar el pedido:</label>
                         <select name="lstSucursal" id="lstSucursal" class="form-control">
-                              @foreach (aSucursales as $sucursal)
-                                    <option value="">{{ $sucursal -> idsucursal}} </option>
-
-                        
+                              @foreach ($aSucursales as $sucursal)
+                                    <option value="">{{ $sucursal -> idsucursal}} </option>                        
                               @endforeach
                         </select>
                   </div>

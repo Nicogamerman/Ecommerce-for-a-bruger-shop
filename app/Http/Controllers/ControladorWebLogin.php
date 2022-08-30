@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Entidades\Sucursal;
 use Illuminate\Http\Request;
 use App\Entidades\Cliente;
+use App\Http\Controllers\Pedidos;
 use Session;
 class ControladorWebLogin extends Controller
 {
@@ -28,13 +29,15 @@ class ControladorWebLogin extends Controller
         $cliente = new Cliente();
         $cliente->obtenerPorCorreo($correo);
 
+        $pedido = new Pedido();
+        $aPedidos = $pedido -> obtenerPorCliente(Session::get('idcliente'));
 
        /* Checking if the client exists and if the password is correct. */
         if($cliente->idcliente > 0 && password_verify($clave, $cliente->clave)){
 
             $cliente->obtenerPorId($cliente->idcliente);
             Session::put("idcliente", $cliente->idcliente);
-            return view("web.bienvenido", compact('cliente', 'aSucursales'));            
+            return view("web.bienvenido", compact('cliente', 'aSucursales', 'aPedidos'));            
         } 
         /* Returning the login page with a message. */
         else {

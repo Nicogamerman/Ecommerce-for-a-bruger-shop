@@ -22,8 +22,7 @@ class Pedido extends Model{
       protected $hidden = [
 
       ];
-      public function cargarDesdeRequest($request)
-    {
+      public function cargarDesdeRequest($request)    {
         $this->idpedido = $request->input('id') != "0" ? $request->input('id') : $this->idpedido;
         if($request->input('txtMes') && $request->input('txtMes') && $request->input('txtDia')){
             $this->fecha = $request->input('txtAnio') . "-" . $request->input('txtMes') . "-" . $request->input('txtDia');
@@ -32,13 +31,11 @@ class Pedido extends Model{
         $this->total = $request->input('txtTotal');
         $this->fk_idsucursal = $request->input('lstSucursal');
         $this->fk_idcliente = $request->input('lstCliente');
-        $this->fk_idestado = $request->input('lstEstado');
-       
+        $this->fk_idestado = $request->input('lstEstado');       
        
     }
 
-      public function insertar()
-      {
+      public function insertar(){
             $sql = "INSERT INTO $this->table (
                         fecha, 
                         descripcion, 
@@ -58,8 +55,7 @@ class Pedido extends Model{
             return $this->idpedido = DB::getPdo()->lastInsertId();
       }
 
-      public function guardar() 
-      {
+      public function guardar(){
             $sql = "UPDATE pedidos SET
                 fecha='$this->fecha',
                 descripcion='$this->descripcion',
@@ -71,14 +67,12 @@ class Pedido extends Model{
             $affected = DB::update($sql, [$this->idpedido]);
       }
 
-      public function eliminar()
-      {
+      public function eliminar(){
         $sql = "DELETE FROM pedidos WHERE idpedido=?";
         $affected = DB::delete($sql, [$this->idpedido]);
       }
 
-      public function obtenerTodos()
-      {
+      public function obtenerTodos(){
             $sql = "SELECT
                   idpedido,
                   fecha,
@@ -92,8 +86,7 @@ class Pedido extends Model{
             return $lstRetorno;
       }
 
-      public function obtenerPorId($idpedido)
-    {
+      public function obtenerPorId($idpedido){
         $sql = "SELECT
                 idpedido,
                 fecha,
@@ -117,8 +110,7 @@ class Pedido extends Model{
         }
         return null;
     }
-    public function obtenerFiltrado()
-    {
+    public function obtenerFiltrado(){
         $request = $_REQUEST;
         $columns = array(
             0 => 'A.idpedido',
@@ -146,8 +138,7 @@ class Pedido extends Model{
                     
                 WHERE 1=1
                 ";
-
-        //Realiza el filtrado
+        
         if (!empty($request['search']['value'])) {
             $sql .= " AND ( A.fecha LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR B.nombre LIKE '%" . $request['search']['value'] . "%' ";
@@ -162,4 +153,21 @@ class Pedido extends Model{
         return $lstRetorno;
     }
 
+    public function obtenerPorCliente($idcliente){
+            $sql = "SELECT
+                       A.idpedido,
+                       A.fecha,
+                       A.descripcion,
+                       A.total,
+                       A.fk_idsucursal,
+                       B. nombre AS sucursal,
+                       A.fk_idcliente,
+                       A.fk_idestado,
+                       C.nombre AS estado                      
+                   FROM pedidos A 
+                   INNER JOIN sucursales B ON A.fk_idsucursal = B.idsucursal
+                   INNER JOIN estados C ON A.fk_idestado = C.idestado                   
+                   WHERE fk_idcliente = $idcliente";
+           $lstRetorno = DB::select($sql);  
+    }
 }

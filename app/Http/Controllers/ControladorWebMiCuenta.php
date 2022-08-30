@@ -7,8 +7,7 @@ use App\Entidades\Pedido;
 use App\Entidades\Sucursal;
 use Illuminate\Http\Request;
 use Session;
-class ControladorWebMiCuenta extends Controller
-{
+class ControladorWebMiCuenta extends Controller{
     public function index()
     {
         $sucursal = new Sucursal();
@@ -18,8 +17,9 @@ class ControladorWebMiCuenta extends Controller
         $cliente->obtenerPorId(Session::get('idcliente'));
 
         $pedido = new Pedido();
+        $aPedidos = $pedido -> obtenerPorCliente(Session::get('idcliente'));
 
-        return view("web.mi-cuenta", compact('aSucursales', 'cliente'));
-    }
-      
+
+        return view("web.mi-cuenta", compact('aSucursales', 'cliente', 'aPedidos'));
+    }      
 }

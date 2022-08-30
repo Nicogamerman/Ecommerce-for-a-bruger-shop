@@ -44,6 +44,18 @@
                                                             <th>Estado</th>
                                                       </tr>
                                                 </thead>
+                                                <tbody>
+                                                      {{-- @foreach ($aPedidos as $pedido)
+                                                      <tr>
+                                                            <td>{($pedido->idpedido)}</td>
+                                                            <td>{($pedido->fecha)}</td>
+                                                            <td>{($pedido->descripcion)}</td>
+                                                            <td>{($pedido->total)}</td>
+                                                            <td>{($pedido->sucursal)}</td>                                                            
+                                                            <td>{($pedido->estado)}</td>
+                                                      </tr>
+                                                      @endforeach --}}
+                                                </tbody>
                                           </table>
                                     </div>
                               </div>
