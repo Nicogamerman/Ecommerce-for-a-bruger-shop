@@ -42,7 +42,6 @@ class ControladorPedido extends Controller
         }
     }
 
-
     public function editar($id)
     {
         $titulo = "Modificar pedido";
@@ -187,8 +186,6 @@ class ControladorPedido extends Controller
             return redirect('admin/login');
         }
     }
-
 }
-
 
 ?>

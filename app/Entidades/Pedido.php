@@ -5,38 +5,38 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-class Pedido extends Model{
-    
-      protected $table = 'pedidos';
-      public $timestamps = false;
+class Pedido extends Model
+{
 
-      protected $fillable = [
-            'idpedido', 
-            'fecha', 
-            'descripcion', 
-            'total', 
-            'fk_idsucursal', 
-            'fk_idcliente', 
-            'fk_idestado'
-      ];
-      protected $hidden = [
+    protected $table = 'pedidos';
+    public $timestamps = false;
 
-      ];
-      public function cargarDesdeRequest($request)    {
+    protected $fillable = [
+        'idpedido',
+        'fecha',
+        'descripcion',
+        'total',
+        'fk_idsucursal',
+        'fk_idcliente',
+        'fk_idestado'
+    ];
+    protected $hidden = [];
+    public function cargarDesdeRequest($request)
+    {
         $this->idpedido = $request->input('id') != "0" ? $request->input('id') : $this->idpedido;
-        if($request->input('txtMes') && $request->input('txtMes') && $request->input('txtDia')){
+        if ($request->input('txtMes') && $request->input('txtMes') && $request->input('txtDia')) {
             $this->fecha = $request->input('txtAnio') . "-" . $request->input('txtMes') . "-" . $request->input('txtDia');
         }
         $this->descripcion = $request->input('txtDescripcion');
         $this->total = $request->input('txtTotal');
         $this->fk_idsucursal = $request->input('lstSucursal');
         $this->fk_idcliente = $request->input('lstCliente');
-        $this->fk_idestado = $request->input('lstEstado');       
-       
+        $this->fk_idestado = $request->input('lstEstado');
     }
 
-      public function insertar(){
-            $sql = "INSERT INTO $this->table (
+    public function insertar()
+    {
+        $sql = "INSERT INTO $this->table (
                         fecha, 
                         descripcion, 
                         total, 
@@ -44,19 +44,20 @@ class Pedido extends Model{
                         fk_idcliente, 
                         fk_idestado
                   ) VALUES (?, ?, ?, ?, ?, ?);";
-            $result = DB::insert($sql, [ 
-                  $this->fecha,
-                  $this->descripcion,
-                  $this->total,
-                  $this->fk_idsucursal,
-                  $this->fk_idcliente,
-                  $this->fk_idestado
-            ]);
-            return $this->idpedido = DB::getPdo()->lastInsertId();
-      }
+        $result = DB::insert($sql, [
+            $this->fecha,
+            $this->descripcion,
+            $this->total,
+            $this->fk_idsucursal,
+            $this->fk_idcliente,
+            $this->fk_idestado
+        ]);
+        return $this->idpedido = DB::getPdo()->lastInsertId();
+    }
 
-      public function guardar(){
-            $sql = "UPDATE pedidos SET
+    public function guardar()
+    {
+        $sql = "UPDATE pedidos SET
                 fecha='$this->fecha',
                 descripcion='$this->descripcion',
                 total=$this->total,
@@ -64,16 +65,18 @@ class Pedido extends Model{
                 fk_idcliente=$this->fk_idcliente,
                 fk_idestado=$this->fk_idestado
                 WHERE idpedido=?";
-            $affected = DB::update($sql, [$this->idpedido]);
-      }
+        $affected = DB::update($sql, [$this->idpedido]);
+    }
 
-      public function eliminar(){
+    public function eliminar()
+    {
         $sql = "DELETE FROM pedidos WHERE idpedido=?";
         $affected = DB::delete($sql, [$this->idpedido]);
-      }
+    }
 
-      public function obtenerTodos(){
-            $sql = "SELECT
+    public function obtenerTodos()
+    {
+        $sql = "SELECT
                   idpedido,
                   fecha,
                   descripcion,
@@ -82,11 +85,12 @@ class Pedido extends Model{
                   fk_idcliente,
                   fk_idestado
                   FROM pedidos ORDER BY idpedido";
-            $lstRetorno = DB::select($sql);
-            return $lstRetorno;
-      }
+        $lstRetorno = DB::select($sql);
+        return $lstRetorno;
+    }
 
-      public function obtenerPorId($idpedido){
+    public function obtenerPorId($idpedido)
+    {
         $sql = "SELECT
                 idpedido,
                 fecha,
@@ -110,7 +114,8 @@ class Pedido extends Model{
         }
         return null;
     }
-    public function obtenerFiltrado(){
+    public function obtenerFiltrado()
+    {
         $request = $_REQUEST;
         $columns = array(
             0 => 'A.idpedido',
@@ -138,7 +143,7 @@ class Pedido extends Model{
                     
                 WHERE 1=1
                 ";
-        
+
         if (!empty($request['search']['value'])) {
             $sql .= " AND ( A.fecha LIKE '%" . $request['search']['value'] . "%' ";
             $sql .= " OR B.nombre LIKE '%" . $request['search']['value'] . "%' ";
@@ -153,21 +158,24 @@ class Pedido extends Model{
         return $lstRetorno;
     }
 
-    public function obtenerPorCliente($idcliente){
-            $sql = "SELECT
-                       A.idpedido,
-                       A.fecha,
-                       A.descripcion,
-                       A.total,
-                       A.fk_idsucursal,
-                       B. nombre AS sucursal,
-                       A.fk_idcliente,
-                       A.fk_idestado,
-                       C.nombre AS estado                      
-                   FROM pedidos A 
-                   INNER JOIN sucursales B ON A.fk_idsucursal = B.idsucursal
-                   INNER JOIN estados C ON A.fk_idestado = C.idestado                   
-                   WHERE fk_idcliente = $idcliente";
-           $lstRetorno = DB::select($sql);  
-    }
+    // public function obtenerPorCliente($idcliente)
+    // {
+    //     $sql = "SELECT
+    //                    A.idpedido,
+    //                    A.fecha,
+    //                    A.descripcion,
+    //                    A.total,
+    //                    A.fk_idsucursal,
+    //                    B.nombre AS sucursal,
+    //                    A.fk_idcliente,
+    //                    A.fk_idestado,
+    //                    C.nombre AS estado                      
+    //                FROM pedidos A 
+    //                INNER JOIN sucursales B ON A.fk_idsucursal = B.idsucursal
+    //                INNER JOIN estados C ON A.fk_idestado = C.idestado                   
+    //                WHERE fk_idcliente = $idcliente AND A.fk_estado <> 1";
+    //     $lstRetorno = DB::select($sql);
+    //     return $lstRetorno;
+    // }
 }
+?>

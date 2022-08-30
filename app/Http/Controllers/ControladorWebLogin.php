@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 use App\Entidades\Sucursal;
 use Illuminate\Http\Request;
 use App\Entidades\Cliente;
-use App\Http\Controllers\Pedidos;
+use App\Entidades\Pedido;
 use Session;
 class ControladorWebLogin extends Controller
 {
-    public function index()
-    {
+    public function index(){
         $pg = "login";
 
         $sucursal = new Sucursal();
@@ -48,3 +47,4 @@ class ControladorWebLogin extends Controller
         }
     }
 }
+?>
