@@ -39,7 +39,10 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::get('/cambiar-clave', 'ControladorWebCambiarClave@index');
     Route::post('/cambiar-clave', 'ControladorWebCambiarClave@guardar');
     Route::get('/logout', 'ControladorWebLogout@logout');
-    
+    Route::get('/mercado-pago/aprobado/{idCliente}', 'ControladorWebMercadopago@aprobar');
+    Route::get('/mercado-pago/pediente/{idCliente}', 'ControladorWebMercadopago@pendiente');
+    Route::get('/mercado-pago/error/{idCliente}', 'ControladorWebMercadopago@error');
+
 /* --------------------------------------------- */
 /* CONTROLADOR LOGIN                           */
 /* --------------------------------------------- */

@@ -11,43 +11,40 @@
                   @if(isset($msg))
                         <div class="alert alert-{{ $msg['estado'] }}" role="alert">{{$msg["mensaje"]}}</div>
                   @endif
+                  <div class="row">                        
                   <table class="table table-striped table-hover border">
                         <thead>
-                              <tr>
-                                    
+                              <tr>                                    
                                     <th class="lead"></th>
                                     <th class="lead">Nombre</th>
                                     <th class="lead">Precio</th>
                                     <th class="lead">Cantidad</th>
                                     <th class="lead">Total item</th>
                                     <th class="lead">Boton eliminar</th>
+                                    <th class="lead">Imagen</th>                                    
                               </tr>
                         </thead>
                   <tbody>
                         <?php $total = 0 ?>
                         @foreach($aCarrito_productos as $item)
                         <?php $subtotal= $item ->precioproducto * $item ->cantidad; ?>
-                        <tr>
-                              <td><img src="/files {{$item->imagenproducto}}" alt=""></td>
-                              <td>{{$item->nombreproducto}}</td>
-                              <td>${{$item->precioproducto}}</td>
-                              <td>{{$item->cantidad}}</td>
-                              <td>${{ number_format ($subtotal, 2, ",","." ) }}</td>
-                              <td><i class="fa-solid fa-ban"></i></td>                  
-                        </tr>
+                              <tr>
+                                    <td><img src="\files {{$item->imagenproducto}}" alt=""></td>
+                                    <td>{{$item->nombreproducto}}</td>
+                                    <td>${{$item->precioproducto}}</td>
+                                    <td>{{$item->cantidad}}</td>
+                                    <td>${{ number_format ($subtotal, 2, ",","." ) }}</td>
+                                    <td><i class="fa-solid fa-ban"></i></td>                  
+                              </tr>
                         <?php $total += $subtotal; ?>
                         @endforeach
-                  </tbody>
-                  <div class="float-right lead"> <h3>TOTAL: ${{$total}}</h3></div>
-                  </table>           
-                  <div>
-                        <button type="submite" class="float-right btn btn-primary"></button>
-                  </div>
+                  </tbody>                        
+                  </table>          
                   <div class="col-12">
                         <label for="" class="d-block">Sucursal donde retirar el pedido:</label>
                         <select name="lstSucursal" id="lstSucursal" class="form-control">
                               @foreach ($aSucursales as $sucursal)
-                                    <option value="">{{ $sucursal -> idsucursal}} </option>                        
+                                    <option value="{{ $sucursal -> idsucursal }}">{{ $sucursal -> nombre}} </option>                        
                               @endforeach
                         </select>
                   </div>
@@ -57,13 +54,19 @@
                               <option value="mercadopago">Mercadopago</option>
                               <option value="sucursal">Pago en sucursal</option>
                         </select>
-                  </div>
+                  </div>                  
                   <div class="col-6">
                         <a href="/takeaway" class="lead">Agregar más productos</a>
-                  </div>
-                  <div class="col-6">
-                        <button type="submit" href="/takeaway" class="float-right btn btn-primary">Finalizar pedido</button>
-                  </div>
+                  </div>  
+                  <div>
+                        <div class="col-12 float-right lead">
+                              <h3>TOTAL: ${{$total}}</h3>
+                              <div>
+                                    <button type="submit" href="/takeaway" class="float-right btn btn-primary">Finalizar pedido</button>
+                              </div>
+                        </div>
+                  </div>  
+                  
             </div>
       </form>
 </section>

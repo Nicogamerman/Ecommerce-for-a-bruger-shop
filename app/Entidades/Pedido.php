@@ -21,6 +21,7 @@ class Pedido extends Model
         'fk_idestado'
     ];
     protected $hidden = [];
+
     public function cargarDesdeRequest($request)
     {
         $this->idpedido = $request->input('id') != "0" ? $request->input('id') : $this->idpedido;
@@ -158,24 +159,45 @@ class Pedido extends Model
         return $lstRetorno;
     }
 
-    // public function obtenerPorCliente($idcliente)
-    // {
-    //     $sql = "SELECT
-    //                    A.idpedido,
-    //                    A.fecha,
-    //                    A.descripcion,
-    //                    A.total,
-    //                    A.fk_idsucursal,
-    //                    B.nombre AS sucursal,
-    //                    A.fk_idcliente,
-    //                    A.fk_idestado,
-    //                    C.nombre AS estado                      
-    //                FROM pedidos A 
-    //                INNER JOIN sucursales B ON A.fk_idsucursal = B.idsucursal
-    //                INNER JOIN estados C ON A.fk_idestado = C.idestado                   
-    //                WHERE fk_idcliente = $idcliente AND A.fk_estado <> 1";
-    //     $lstRetorno = DB::select($sql);
-    //     return $lstRetorno;
-    // }
+    public function obtenerPorCliente($idcliente){
+            $sql = "SELECT
+                       A.idpedido,
+                       A.fecha,
+                       A.descripcion,
+                       A.total,
+                       A.fk_idsucursal,
+                       B.nombre AS sucursal,
+                       A.fk_idcliente,
+                       A.fk_idestado,
+                       C.nombre AS estado
+                    FROM pedidos A
+                    INNER JOIN sucursales B ON A.fk_idsucursal = B.idsucursal
+                    INNER JOIN estados C ON A.fk_idestado = C.idestado
+                    WHERE fk_idcliente = $idcliente AND A.fk_idestado <> 4";
+           $lstRetorno = DB::select($sql);
+           return $lstRetorno;
+    }
+
+    public function aprobar($idCliente)
+    {
+        $sql = "UPDATE pedidos SET                
+                fk_idestado=2
+                WHERE fk_idcliente=?";
+        $affected = DB::update($sql, [$idCliente]);
+    }
+    public function pendiente($idCliente)
+    {
+        $sql = "UPDATE pedidos SET                
+                fk_idestado=10
+                WHERE fk_idcliente=?";
+        $affected = DB::update($sql, [$idCliente]);
+    }
+    public function error($idCliente)
+    {
+        $sql = "UPDATE pedidos SET                
+                fk_idestado=11
+                WHERE fk_idcliente=?";
+        $affected = DB::update($sql, [$idCliente]);
+    }
 }
 ?>

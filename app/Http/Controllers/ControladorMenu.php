@@ -52,6 +52,7 @@ class ControladorMenu extends Controller
             $data[] = $row;
         }
 
+       /* This is the response that the datatable is expecting. */
         $json_data = array(
             "draw" => intval($request['draw']),
             "recordsTotal" => count($aMenu), //cantidad total de registros sin paginar
@@ -69,7 +70,6 @@ class ControladorMenu extends Controller
         return view('sistema.menu-nuevo', compact('menu', 'titulo', 'array_menu'));
 
     }
-
     
     public function editar($id)
     {
@@ -111,7 +111,7 @@ class ControladorMenu extends Controller
                 $entidad->cargarDesdeRequest($request);
                 $entidad->eliminar();
 
-                $aResultado["err"] = EXIT_SUCCESS; //eliminado correctamente
+                $aResultado["err"] = EXIT_SUCCESS; //Deleted status ok!
             } else {
                 $codigo = "ELIMINARPROFESIONAL";
                 $aResultado["err"] = "No tiene pemisos para la operaci&oacute;n.";
@@ -122,26 +122,27 @@ class ControladorMenu extends Controller
         }
     }
 
+   /* Loading the data from the request into the entity. */
     public function guardar(Request $request) {
         try {
-            //Define la entidad servicio
+            
             $titulo = "Modificar menú";
             $entidad = new Menu();
             $entidad->cargarDesdeRequest($request);
-
-            //validaciones
+      
+           /* Checking if the name is empty, if it is empty it will return an error message. If it is
+           not empty it will check if the id is greater than 0, if it is greater than 0 it will
+           update the data. */
             if ($entidad->nombre == "") {
                 $msg["ESTADO"] = MSG_ERROR;
                 $msg["MSG"] = "Complete todos los datos";
             } else {
-                if ($_POST["id"] > 0) {
-                    //Es actualizacion
+                if ($_POST["id"] > 0) {                    
                     $entidad->guardar();
 
                     $msg["ESTADO"] = MSG_SUCCESS;
                     $msg["MSG"] = OKINSERT;
-                } else {
-                    //Es nuevo
+                } else {                    
                     $entidad->insertar();
 
                     $msg["ESTADO"] = MSG_SUCCESS;

@@ -108,8 +108,7 @@ class Carrito_producto extends Model{
         }
     }
         return $aResultado;
-}
- 
+} 
    /* Delete the row from the table where the idcarrito_producto column is equal to the value of the idcarrito_producto property of the object.*/
    public function eliminar(){
       $sql = "DELETE FROM $this->table WHERE idcarrito_producto=?";
@@ -137,4 +136,3 @@ class Carrito_producto extends Model{
       return $lstRetorno;
   }
 }
-?>

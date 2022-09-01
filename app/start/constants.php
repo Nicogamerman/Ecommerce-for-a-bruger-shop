@@ -34,7 +34,9 @@ if (!defined('USUARIOBLOQUEADO')) define("USUARIOBLOQUEADO", "Usuario bloqueado.
 if (!defined('USUARIOINCORRECTO')) define("USUARIOINCORRECTO", "El usuario no est&aacute; autorizado a usar el sistema. Comun&iacute;quese con el administrador");
 
 //Web Carrito
-if (!defined('OKPEDIDO')) define("PEDIDO_PENDIENTE", 2);
+if (!defined('PEDIDO_PENDIENTE')) define("PEDIDO_PENDIENTE", 2);
+if (!defined('PEDIDO_PENDIENTEDEPAGO')) define("PEDIDO_PENDIENTEDEPAGO", 10);
+if (!defined('PEDIDO_CONERROR')) define("PEDIDO_CONERROR", 11);
 if (!defined('OKPEDIDO')) define("OKPEDIDO", "¡Pedido enviado!");
 
 ?>

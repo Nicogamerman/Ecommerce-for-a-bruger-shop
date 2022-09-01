@@ -39,22 +39,21 @@
                                                             <th>Fecha</th>
                                                             <th>Descripción</th>
                                                             <th>Total</th>
-                                                            <th>Sucursal</th>
-                                                            <th>Cliente</th>
+                                                            <th>Sucursal</th>                                                            
                                                             <th>Estado</th>
                                                       </tr>
                                                 </thead>
                                                 <tbody>
-                                                      {{-- @foreach ($aPedidos as $pedido)
-                                                      <tr>
-                                                            <td>{($pedido->idpedido)}</td>
-                                                            <td>{($pedido->fecha)}</td>
-                                                            <td>{($pedido->descripcion)}</td>
-                                                            <td>{($pedido->total)}</td>
-                                                            <td>{($pedido->sucursal)}</td>                                                            
-                                                            <td>{($pedido->estado)}</td>
-                                                      </tr>
-                                                      @endforeach --}}
+                                                      @foreach ($aPedidos as $pedido)
+                                                            <tr>
+                                                                  <td>{{$pedido->idpedido}}</td>
+                                                                  <td>{{date_format(date_create($pedido->fecha), "d/m/Y H:i")}}</td>
+                                                                  <td>{{$pedido->descripcion}}</td>
+                                                                  <td>${{$pedido->total}}</td>
+                                                                  <td>{{$pedido->sucursal}}</td>                                                            
+                                                                  <td>{{$pedido->estado}}</td>
+                                                            </tr>
+                                                      @endforeach
                                                 </tbody>
                                           </table>
                                     </div>
