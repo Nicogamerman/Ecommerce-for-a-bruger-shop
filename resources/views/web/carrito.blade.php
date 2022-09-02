@@ -14,14 +14,13 @@
                   <div class="row">                        
                   <table class="table table-striped table-hover border">
                         <thead>
-                              <tr>                                    
-                                    <th class="lead"></th>
+                              <tr>       
+                                    <th class="lead">Imagen</th>                                 
                                     <th class="lead">Nombre</th>
                                     <th class="lead">Precio</th>
                                     <th class="lead">Cantidad</th>
-                                    <th class="lead">Total item</th>
-                                    <th class="lead">Boton eliminar</th>
-                                    <th class="lead">Imagen</th>                                    
+                                    <th class="lead">Total item</th>                                   
+                                    <th class="lead">Eliminar Producto</th>                                    
                               </tr>
                         </thead>
                   <tbody>
@@ -29,15 +28,20 @@
                         @foreach($aCarrito_productos as $item)
                         <?php $subtotal= $item ->precioproducto * $item ->cantidad; ?>
                               <tr>
-                                    <td><img src="\files {{$item->imagenproducto}}" alt=""></td>
+                                    <td><img src="/files/{{$item->imagenproducto}}" class = "img-responsive" width="150px" height="110px"></td>   
                                     <td>{{$item->nombreproducto}}</td>
                                     <td>${{$item->precioproducto}}</td>
                                     <td>{{$item->cantidad}}</td>
-                                    <td>${{ number_format ($subtotal, 2, ",","." ) }}</td>
-                                    <td><i class="fa-solid fa-ban"></i></td>                  
-                              </tr>
+                                    <td>${{ number_format ($subtotal, 2, ",","." ) }}</td>       
+                                    
+                                    <form action="" method="POST">
+                                    <td><button type="submit" class="btn btn-danger" id="btnEliminar" name="btnEliminar">Eliminar</button></td>
+                                    </form>
+                              </tr>       
+                                                 
                         <?php $total += $subtotal; ?>
                         @endforeach
+                        
                   </tbody>                        
                   </table>          
                   <div class="col-12">
@@ -58,11 +62,11 @@
                   <div class="col-6">
                         <a href="/takeaway" class="lead">Agregar más productos</a>
                   </div>  
-                  <div>
+                  <div class="col-6">
                         <div class="col-12 float-right lead">
                               <h3>TOTAL: ${{$total}}</h3>
                               <div>
-                                    <button type="submit" href="/takeaway" class="float-right btn btn-primary">Finalizar pedido</button>
+                                    <button type="submit" href="/takeaway" class="btn btn-success ">Finalizar pedido</button>
                               </div>
                         </div>
                   </div>  

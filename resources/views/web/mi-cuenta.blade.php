@@ -50,9 +50,9 @@
                                                                   <td>{{date_format(date_create($pedido->fecha), "d/m/Y H:i")}}</td>
                                                                   <td>{{$pedido->descripcion}}</td>
                                                                   <td>${{$pedido->total}}</td>
-                                                                  <td>{{$pedido->sucursal}}</td>                                                            
+                                                                  <td>{{$pedido->sucursal}}</td>         
                                                                   <td>{{$pedido->estado}}</td>
-                                                            </tr>
+                                                            </tr>                                                            
                                                       @endforeach
                                                 </tbody>
                                           </table>
@@ -62,7 +62,6 @@
                   </div>
             </div>
       </div>
-
 </section>
 <!-- end book section -->
 

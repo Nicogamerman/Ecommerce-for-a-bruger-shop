@@ -48,6 +48,12 @@ class Carrito extends Model{
         $affected = DB::delete($sql, [$this->idcarrito]);
     }
 
+    public function eliminarPorCliente(){
+        $sql = "DELETE FROM carritos WHERE
+            idcarrito=?";
+        $affected = DB::delete($sql, [$this->idcarrito]);
+    }
+
     public function obtenerTodos()
     {
         $sql = "SELECT
@@ -75,5 +81,55 @@ class Carrito extends Model{
        return null;
      }
 
+     public function insertar(){
+        $sql = "INSERT INTO $this->table (            
+            idcarrito,
+            fk_idcliente
+            ) VALUES (?,?)";
+        $result = DB::insert($sql, [
+            $this->idcarrito,
+            $this->fk_idcliente,             
+        ]);
+        return $this->idcarrito = DB::getPdo()->lastInsertId();
+    }
+
+    //boton eliminar producto del carrito
+    // public function eliminarProducto()
+    // {
+    //     $sql = "DELETE FROM $this->table(
+    //         imagen, 
+    //         precio, 
+    //         cantidad, 
+    //         total,
+    //         descripcion, 
+    //         fk_idcliente,
+    //         fk_idestado
+    //         )VALUES (?,?,?,?,?,?,?)";    
+    //     $result = DB::delete($sql,[ 
+    //     $this->imagen,
+    //     $this->precio,
+    //     $this->cantidad,
+    //     $this->total,
+    //     $this->descripcion,
+    //     $this->fk_idcliente,
+    //     $this->fk_idestado,
+    //     ]);
+    // }
+
+    public function obtenerProductos()
+    {
+        $sql = "SELECT
+                idproducto,
+                nombre,
+                cantidad,
+                precio,
+                imagen,
+                fk_idcategoria,
+                descripcion
+                FROM $this->table ORDER BY idproducto";
+        $lstRetorno = DB::select($sql);
+        return $lstRetorno;
+    }
+ 
 }
 
