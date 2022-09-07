@@ -26,20 +26,27 @@
                   <tbody>
                         <?php $total = 0 ?>
                         @foreach($aCarrito_productos as $item)
-                        <?php $subtotal= $item ->precioproducto * $item ->cantidad; ?>
-                              <tr>
-                                    <td><img src="/files/{{$item->imagenproducto}}" class = "img-responsive" width="150px" height="110px"></td>   
-                                    <td>{{$item->nombreproducto}}</td>
-                                    <td>${{$item->precioproducto}}</td>
-                                    <td>{{$item->cantidad}}</td>
-                                    <td>${{ number_format ($subtotal, 2, ",","." ) }}</td>       
-                                    
-                                    <form action="" method="POST">
-                                    <td><button type="submit" class="btn btn-danger" id="btnEliminar" name="btnEliminar">Eliminar</button></td>
-                                    </form>
-                              </tr>       
-                                                 
-                        <?php $total += $subtotal; ?>
+                              <?php $subtotal= $item ->precioproducto * $item ->cantidad; ?>
+                                    <tr>
+                                          <td><img src="/files/{{$item->imagenproducto}}" class = "img-responsive" width="150px" height="110px"></td>   
+                                          <td>{{$item->nombreproducto}}</td>
+                                          <td>${{$item->precioproducto}}</td>
+                                          <td>{{$item->cantidad}}</td>
+                                          <td>${{ number_format ($subtotal, 2, ",","." ) }}</td>       
+                                          
+                                          <?php $total = 0 ?>
+                                          @foreach ($aCarrito_productos as $idcarrito)
+                                          <form action="" method="POST">
+                                                <td>
+                                                      <button type="submit" class="btn btn-danger" id="btnEliminar" name="btnEliminar" >Eliminar {{$item->idcarrito}}</button>
+                                                      <button type="submit" class="btn btn-primary" id="btnEditar" name="btnEditar" >Editar{{$item->idcarrito}}</button>
+                                                </td>
+                                          @endforeach
+                                          </form>
+                                                                              
+                                    </tr>       
+                                                      
+                              <?php $total += $subtotal; ?>
                         @endforeach
                         
                   </tbody>                        

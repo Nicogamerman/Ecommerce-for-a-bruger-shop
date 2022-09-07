@@ -51,7 +51,7 @@ class ControladorWebCarrito extends Controller
             $pg = "carrito";
             return view("web.carrito", compact('pg', 'carrito', 'carrito_producto', 'aSucursales', 'aCarrito_productos'));
         }
-    }
+    }  
 
     /* A function that is called when the user clicks on the "Finalizar Pedido" button. */
     public function finalizarPedido(Request $request)
@@ -134,5 +134,8 @@ class ControladorWebCarrito extends Controller
         $carrito->eliminarPorCliente(Session::get("idcliente"));
 
         return redirect("/mi-cuenta");
+       
     }
+
+
 }

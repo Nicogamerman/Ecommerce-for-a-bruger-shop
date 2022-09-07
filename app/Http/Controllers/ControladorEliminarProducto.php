@@ -9,29 +9,22 @@ use App\Entidades\Sistema\Patente; //controles de permisos
 use App\Entidades\Sistema\Usuario; //controles de permisos
 use Illuminate\Http\Request;
 use App\Entidades\Pedido;
+use Illuminate\Contracts\Session\Session;
+
 
 require app_path() . '/start/constants.php';
 
 class ControladorEliminarProducto extends Controller
 {
-      // public function destroy($id)
-      // {
-      //       $titulo = "Eliminar producto";
-      //       $item = new Producto();
-      //       $item->delete();
-
-      //       return back()-> with('succes','Producto eliminado correctamente');
-      // }
-
-      public function eliminarProducto(Request $request)
-    {
-        $id = $request->input('id');
+    
+      public function eliminarProducto(Request $idcarrito)
+    {      
 
         if (Usuario::autenticado() == true) {
             if (Patente::autorizarOperacion("PRODUCTOELIMINAR")) {
 
                 $entidad = new Producto();
-                $entidad->cargarDesdeRequest($request);
+                $entidad->cargarDesdeRequest($idcarrito);
                 $entidad->eliminar();
 
                 $aResultado["err"] = EXIT_SUCCESS; //eliminado correctamente

@@ -10,6 +10,7 @@
 |
  */
 
+use App\Http\Controllers\ControladorEliminarProducto;
 
 Route::group(array('domain' => '127.0.0.1'), function () {
 
@@ -31,9 +32,7 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::get('/nuevo-registro', 'ControladorWebNuevoRegistro@index');
     Route::post('/nuevo-registro', 'ControladorWebNuevoRegistro@enviar');
     Route::get('/recuperar-clave', 'ControladorWebRecuperarClave@index');
-    Route::post('/recuperar-clave', 'ControladorWebRecuperarClave@enviar');       
-    Route::get('/carrito', 'ControladorWebCarrito@index');
-    Route::post('/carrito', 'ControladorWebCarrito@finalizarPedido');
+    Route::post('/recuperar-clave', 'ControladorWebRecuperarClave@enviar');      
     Route::get('/cambiar-datos', 'ControladorWebCambiarDatos@index');
     Route::post('/cambiar-datos', 'ControladorWebCambiarDatos@editar');
     Route::get('/cambiar-clave', 'ControladorWebCambiarClave@index');
@@ -42,7 +41,9 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::get('/mercado-pago/aprobado/{idCliente}', 'ControladorWebMercadopago@aprobar');
     Route::get('/mercado-pago/pediente/{idCliente}', 'ControladorWebMercadopago@pendiente');
     Route::get('/mercado-pago/error/{idCliente}', 'ControladorWebMercadopago@error');
-    Route::delete('/carrito/{idProducto}', 'ControladorEliminarProductoDeCarrito@eliminar');
+    Route::get('/carrito', 'ControladorWebCarrito@index');
+    Route::post('/carrito', 'ControladorWebCarrito@finalizarPedido');
+    Route::get('/carrito/{idcarrito}', 'ControladorEliminarProducto@eliminar');
     
 /* --------------------------------------------- */
 /* CONTROLADOR LOGIN                           */
