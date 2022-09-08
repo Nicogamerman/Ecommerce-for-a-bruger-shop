@@ -104,11 +104,10 @@ class Carrito extends Model{
     //     ]);
     // }
 
-    public function eliminarProducto($idcarrito){
-        $sql = "DELETE FROM carritos WHERE
-            idcarrito=?";
+    public function eliminar()
+    {
+        $sql = "DELETE FROM pedidos WHERE idcarrito=?";
         $affected = DB::delete($sql, [$this->idcarrito]);
-        return $idcarrito;
     }
 
     public function obtenerProductos()
@@ -125,6 +124,7 @@ class Carrito extends Model{
         $lstRetorno = DB::select($sql);
         return $lstRetorno;
     }
+    
  
 }
 

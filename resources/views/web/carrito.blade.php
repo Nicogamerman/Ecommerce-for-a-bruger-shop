@@ -3,6 +3,7 @@
 
 <section class="food_section layout_padding">
       <form action="" method="POST">
+            {{-- Error a partir del input --}}
             <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
             <div class="container">
                   <div class="heading_container heading_center">
@@ -33,19 +34,47 @@
                                           <td>${{$item->precioproducto}}</td>
                                           <td>{{$item->cantidad}}</td>
                                           <td>${{ number_format ($subtotal, 2, ",","." ) }}</td>       
-                                          
-                                          <?php $total = 0 ?>
-                                          
-                                          <form action="" method="POST">
+                                    
                                                 <td>
-                                                      <button type="submit" class="btn btn-danger" id="btnEliminar" name="btnEliminar"> Eliminar </button>
-                                                      <button type="submit" class="btn btn-primary" id="btnEditar" name="btnEditar"> Editar</button>
-                                                </td>
-                                          
-                                          </form>
-                                                                              
-                                    </tr>       
                                                       
+                                                      <input type="submit" value="Eliminar" class="btn btn-danger" ></input>
+
+                                                      <input type="submit" class="btn btn-primary" value="Editar"></input>
+                                                    
+                                                </td>                                               
+                                            
+                                          <script>
+
+                                                function eliminarProducto($id) {
+                                                var confirmText = "Are you sure you want to delete this object?";
+                                                if(confirm(confirmText)) {
+                                                            $.ajax({
+                                                                  type: "GET",
+                                                                  url: "{{ asset('/carrito/') }}",
+                                                                  data: { id:$id },
+                                                                  async: true,
+                                                                  dataType: "json",
+                                                                  success: function (data) {
+                                                                  if (data.err = "0") {
+                                                                        msgShow("Registro eliminado exitosamente.", "success");
+                                                                        $("#btnEnviar").hide();
+                                                                        $("#btnEliminar").hide();
+                                                                        $('#mdlEliminar').modal('toggle');
+                                                                  } else {
+                                                                        msgShow("Error al eliminar", "success");
+                                                                  }
+                                                            }
+                                                      });
+                                                }
+                                                return false;
+                                                }
+
+
+                                          </script>
+                                                                               
+                                                                              
+                                    </tr>    
+                                                       
                               <?php $total += $subtotal; ?>
                         @endforeach
                         

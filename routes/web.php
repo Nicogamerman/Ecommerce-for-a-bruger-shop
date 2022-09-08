@@ -43,7 +43,8 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::get('/mercado-pago/error/{idCliente}', 'ControladorWebMercadopago@error');
     Route::get('/carrito', 'ControladorWebCarrito@index');
     Route::post('/carrito', 'ControladorWebCarrito@finalizarPedido');
-    Route::get('/carrito/{idcarrito}', 'ControladorEliminarProducto@eliminar');
+    Route::get('/carrito/{id}', 'ControladorEliminarProducto@eliminarProducto');
+    Route::post('/carrito/{id}', 'ControladorEliminarProducto@eliminarProducto');
     
 /* --------------------------------------------- */
 /* CONTROLADOR LOGIN                           */
