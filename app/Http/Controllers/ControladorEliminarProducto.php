@@ -16,7 +16,7 @@ require app_path() . '/start/constants.php';
 
 class ControladorEliminarProducto extends Controller
 {
-    
+      
       public function eliminarProducto(Request $idcarrito)
     {      
 

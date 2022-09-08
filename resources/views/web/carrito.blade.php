@@ -35,13 +35,13 @@
                                           <td>${{ number_format ($subtotal, 2, ",","." ) }}</td>       
                                           
                                           <?php $total = 0 ?>
-                                          @foreach ($aCarrito_productos as $idcarrito)
+                                          
                                           <form action="" method="POST">
                                                 <td>
-                                                      <button type="submit" class="btn btn-danger" id="btnEliminar" name="btnEliminar" >Eliminar {{$item->idcarrito}}</button>
-                                                      <button type="submit" class="btn btn-primary" id="btnEditar" name="btnEditar" >Editar{{$item->idcarrito}}</button>
+                                                      <button type="submit" class="btn btn-danger" id="btnEliminar" name="btnEliminar"> Eliminar </button>
+                                                      <button type="submit" class="btn btn-primary" id="btnEditar" name="btnEditar"> Editar</button>
                                                 </td>
-                                          @endforeach
+                                          
                                           </form>
                                                                               
                                     </tr>       
