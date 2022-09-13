@@ -54,8 +54,7 @@ class ControladorWebCarrito extends Controller
     }  
 
     /* A function that is called when the user clicks on the "Finalizar Pedido" button. */
-    public function finalizarPedido(Request $request)
-    {
+    public function finalizarPedido(Request $request){
         $pedido = new Pedido();
         $pedido->fecha = Date("Y-m-d H:i:s");
         $medioDePago =  $request->input('lstMedioDePago');
@@ -63,7 +62,6 @@ class ControladorWebCarrito extends Controller
         $carrito_producto = new Carrito_producto();
         $aCarritoProductos = $carrito_producto->obtenerPorCliente(Session::get("idcliente"));
 
-        /* Adding the product name and the price to the description and the total of the order. */
         foreach ($aCarritoProductos as $carrito) {
             $pedido->descripcion .= $carrito->producto . " - ";
             $pedido->total = $carrito->cantidad * $carrito->precio;
@@ -72,35 +70,32 @@ class ControladorWebCarrito extends Controller
         $pedido->fk_idsucursal = $request->input('lstSucursal');
         $pedido->fk_idcliente = Session::get("idcliente");
 
-       /* Checking if the payment method is "sucursal" or not. If it is, it will set the order state to
-       "PENDIENTE" and insert it. If it is not, it will set the order state to "PENDIENTEDEPAGO" and
-       insert it. */
-        if ($medioDePago == "sucursal") {
+        if($medioDePago == "sucursal"){
             $pedido->fk_idestado = PEDIDO_PENDIENTE;
             $pedido->insertar();
         } else {
             $pedido->fk_idestado = PEDIDO_PENDIENTEDEPAGO;
             $pedido->insertar();
-        
-           /* MercadoPago paying method, Setting the access token, client id. */
+
+            //Abona por MP
             $access_token = "";
             SDK::setClientId(config("payment-methods.mercadopago.client"));
             SDK::setClientSecret(config("payment-methods.mercadopago.secret"));
-            SDK::setAccessToken($access_token); //token where you will recive the payment. 
+            SDK::setAccessToken($access_token); //Es el token de la cuenta de MP donde se deposita el dinero
 
-            /* Creating a new item, setting the id, title, category, quantity, unit price and currency. */
+            //Armado del producto ‘item’
             $item = new Item();
             $item->id = "1234";
-            $item->title = "Burger´s SRL";
+            $item->title = "Burger SRL";
             $item->category_id = "products";
             $item->quantity = 1;
             $item->unit_price = $pedido->total;
-            $item->currency_id = "ARS"; 
+            $item->currency_id = "ARS"; //COP
 
             $preference = new Preference();
             $preference->items = array($item);
-  
-           /* Setting the payer information. */
+
+            //Datos del comprador
             $payer = new Payer();
             $cliente = new Cliente();
             $cliente->obtenerPorId(Session::get("idcliente"));
@@ -109,12 +104,12 @@ class ControladorWebCarrito extends Controller
             $payer->email = $cliente->correo;
             $payer->date_created = date('Y-m-d H:m:s');
             $payer->identification = array(
-                "type" => "DNI",
+                "type" => "DNI", //CC
                 "number" => $cliente->dni,
             );
             $preference->payer = $payer;
 
-           /* Setting the url where the user will be redirected after the payment in MercadoPago. */
+            //URL de configuración para indicarle a MP
             $preference->back_urls = [
                 "success" => "http://127.0.0.1:8000/mercado-pago/aprobado/" . $cliente->idcliente,
                 "pending" => "http://127.0.0.1:8000/mercado-pago/pendiente/" . $cliente->idcliente,
@@ -124,18 +119,39 @@ class ControladorWebCarrito extends Controller
             $preference->payment_methods = array("installments" => 6);
             $preference->auto_return = "all";
             $preference->notification_url = '';
-            $preference->save();
+            $preference->save(); //Ejecuta la transacción
         }
 
-        /* Deleting the cart and redirecting to the account page.*/
+        //Vaciar el carrito
         $carrito_producto->eliminarPorCliente(Session::get("idcliente"));
 
         $carrito = new Carrito();
         $carrito->eliminarPorCliente(Session::get("idcliente"));
 
         return redirect("/mi-cuenta");
-       
     }
 
+    public function eliminar(Request $request)
+    {   
+        $carrito_producto = new Carrito_producto();
+        $carrito_producto->eliminar(Session::get("idproducto"));
+         
+        $carrito = new Carrito_producto();
+        $carrito->eliminar(Session::get("idproducto"));
 
+        return redirect("/carrito");
+
+        
+             
+    //         else {
+    //             $codigo = "ELIMINARPROFESIONAL";
+    //             $aResultado["err"] = "No tiene pemisos para la operaci&oacute;n.";
+    //         }
+    //         echo json_encode($aResultado);
+    //     } else {
+    //         return redirect('admin/login');
+    //     }
+    // }   
+    }
 }
+?>
