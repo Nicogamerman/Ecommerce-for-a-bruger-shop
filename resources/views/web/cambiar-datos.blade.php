@@ -1,7 +1,7 @@
 @extends('web.plantilla')
 @section('contenido')
 
-  <!-- book section -->  
+  <!-- book section -->
   <section class="book_section layout_padding">
     <div class="container offset-sm-3">
       <div class="heading_container">
@@ -35,7 +35,7 @@
                 <input id="txtCelular" name="txtCelular" type="text" class="form-control" placeholder="Celular" value="{{ $cliente->celular }}"/>
               </div>
               <div class="btn_box">
-                <button type="submit" id="btnEnviar" name="btnEnviar" href="">Guardar cambios</button>
+                <button type="submit" id="btnEnviar" name="btnEnviar" href="">Editar</button>
               </div>
             </form>
           </div>

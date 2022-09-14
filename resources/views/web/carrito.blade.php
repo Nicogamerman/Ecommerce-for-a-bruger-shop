@@ -41,12 +41,11 @@
                                                       <td>{{$item->nombreproducto}}</td>
                                                       <td>${{$item->precioproducto}}</td>
                                                       <td>{{$item->cantidad}}</td>
-                                                      <td>${{ number_format ($subtotal, 2, ",","." ) }}</td>
-                                                            
+                                                      <td>${{ number_format ($subtotal, 2, ",","." ) }}</td>                                                            
                                                 <td>
-                                                      @if($globalId > 0)
+                                                     
                                                       <a title="Eliminar" href="#" class="btn btn-danger" aria-hidden="true" onclick="javascript: $('#mdlEliminar').modal('toggle');">Eliminar</a>
-                                                      @endif
+                                                      
                                                 </td>
                                                 <?php print_r($item);?>
 

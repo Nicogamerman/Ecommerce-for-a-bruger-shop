@@ -123,7 +123,7 @@ class ControladorWebCarrito extends Controller
         }
 
         //Vaciar el carrito
-        $carrito_producto->eliminarPorCliente(Session::get("idcliente"));
+        // $carrito_producto->eliminarPorCliente(Session::get("idcliente"));
 
         $carrito = new Carrito();
         $carrito->eliminarPorCliente(Session::get("idcliente"));
@@ -139,7 +139,7 @@ class ControladorWebCarrito extends Controller
         $carrito = new Carrito_producto();
         $carrito->eliminar(Session::get("idproducto"));
 
-        return redirect("/carrito");
+        return redirect("/carrito"); 
 
         
              
