@@ -28,7 +28,7 @@
                                           <th class="lead">Precio</th>
                                           <th class="lead">Cantidad</th>
                                           <th class="lead">Total item</th>                                   
-                                          <th class="lead">Eliminar Producto</th>                                    
+                                           {{--<th class="lead">Eliminar Producto</th>--}}                                    
                                     </tr>
                               </thead>
 
@@ -42,15 +42,9 @@
                                                       <td>${{$item->precioproducto}}</td>
                                                       <td>{{$item->cantidad}}</td>
                                                       <td>${{ number_format ($subtotal, 2, ",","." ) }}</td>                                                            
-                                                <td>
-                                                     
+                                                 {{--<td>
                                                       <a title="Eliminar" href="#" class="btn btn-danger" aria-hidden="true" onclick="javascript: $('#mdlEliminar').modal('toggle');">Eliminar</a>
-                                                      
-                                                </td>
-                                                <?php print_r($item);?>
-
-
-
+                                                </td> --}}
 
                                                                   {{-- <td><a href="carrito/ {{ $item -> idcarrito_producto }}" class="btn btn-danger">Eliminar</a></td>  --}}
                                                             
@@ -96,26 +90,26 @@
             </div>
       </form>
 </section>
-<script>
-function eliminar() {
-        $.ajax({
-            type: "GET",
-            url: "{{ asset('carrito/eliminar') }}",
-            data: { id:globalId },
-            async: true,
-            dataType: "json",
-            success: function (data) {
-                if (data.err = "0") {
-                    msgShow("Registro eliminado exitosamente.", "success");
-                    $("#btnEnviar").hide();
-                    $("#btnEliminar").hide();
-                    $('#mdlEliminar').modal('toggle');
-                } else {
-                    msgShow("Error al eliminar", "success");
-                }
-            }
-        });
-    }
+// <script>
+// function eliminar() {
+//         $.ajax({
+//             type: "GET",
+//             url: "{{ asset('carrito/eliminar') }}",
+//             data: { id:globalId },
+//             async: true,
+//             dataType: "json",
+//             success: function (data) {
+//                 if (data.err = "0") {
+//                     msgShow("Registro eliminado exitosamente.", "success");
+//                     $("#btnEnviar").hide();
+//                     $("#btnEliminar").hide();
+//                     $('#mdlEliminar').modal('toggle');
+//                 } else {
+//                     msgShow("Error al eliminar", "success");
+//                 }
+//             }
+//         });
+//     }
 
-</script>
+// </script>
 @endsection
