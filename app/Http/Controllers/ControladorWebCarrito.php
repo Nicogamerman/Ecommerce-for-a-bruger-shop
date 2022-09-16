@@ -73,15 +73,18 @@ class ControladorWebCarrito extends Controller
         if($medioDePago == "sucursal"){
             $pedido->fk_idestado = PEDIDO_PENDIENTE;
             $pedido->insertar();
+            return redirect("/mi-cuenta");            
+
         } else {
             $pedido->fk_idestado = PEDIDO_PENDIENTEDEPAGO;
             $pedido->insertar();
+            
 
-            //Abona por MP
+            //pago con mercadopago
             $access_token = "";
             SDK::setClientId(config("payment-methods.mercadopago.client"));
             SDK::setClientSecret(config("payment-methods.mercadopago.secret"));
-            SDK::setAccessToken($access_token); //Es el token de la cuenta de MP donde se deposita el dinero
+            SDK::setAccessToken($access_token); //Es el id de la cuenta de MP donde se realiza el cobro
 
             //Armado del producto ‘item’
             $item = new Item();
@@ -122,7 +125,7 @@ class ControladorWebCarrito extends Controller
             $preference->save(); //Ejecuta la transacción
         }
 
-        //Vaciar el carrito
+        // Vaciar el carrito
         // $carrito_producto->eliminarPorCliente(Session::get("idcliente"));
 
         $carrito = new Carrito();
@@ -139,19 +142,7 @@ class ControladorWebCarrito extends Controller
         $carrito = new Carrito_producto();
         $carrito->eliminar(Session::get("idproducto"));
 
-        return redirect("/carrito"); 
-
-        
-             
-    //         else {
-    //             $codigo = "ELIMINARPROFESIONAL";
-    //             $aResultado["err"] = "No tiene pemisos para la operaci&oacute;n.";
-    //         }
-    //         echo json_encode($aResultado);
-    //     } else {
-    //         return redirect('admin/login');
-    //     }
-    // }   
-    }
+        return redirect("/carrito");   
+    } 
 }
 ?>

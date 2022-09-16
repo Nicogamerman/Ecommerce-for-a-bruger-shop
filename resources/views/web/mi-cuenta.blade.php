@@ -44,14 +44,14 @@
                                                       </tr>
                                                 </thead>
                                                 <tbody>
-                                                      @foreach ($aPedidos as $pedido)
+                                                      @foreach ($aPedidos as $item)
                                                             <tr>
-                                                                  <td>{{$pedido->idpedido}}</td>
-                                                                  <td>{{date_format(date_create($pedido->fecha), "d/m/Y H:i")}}</td>
-                                                                  <td>{{$pedido->descripcion}}</td>
-                                                                  <td>${{$pedido->total}}</td>
-                                                                  <td>{{$pedido->sucursal}}</td>         
-                                                                  <td>{{$pedido->estado}}</td>
+                                                                  <td>{{$item->idpedido}}</td>
+                                                                  <td>{{date_format(date_create($item->fecha), "d/m/Y H:i")}}</td>
+                                                                  <td>{{$item->descripcion}}</td>                                                                                                            
+                                                                  <td>${{number_format($item->total, 2, "," , ".")}}</td>                                                                                                                                
+                                                                  <td>{{$item->sucursal}}</td>         
+                                                                  <td>{{$item->estado}}</td>
                                                             </tr>                                                            
                                                       @endforeach
                                                 </tbody>

@@ -8,8 +8,7 @@
 @endsection
 <section class="food_section layout_padding">
       
-      <form action="" method="POST">
-            {{-- Error a partir del input --}}
+      <form action="" method="POST">            
             <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
             <div class="container">
                   <div class="heading_container heading_center">
@@ -28,7 +27,7 @@
                                           <th class="lead">Precio</th>
                                           <th class="lead">Cantidad</th>
                                           <th class="lead">Total item</th>                                   
-                                           {{--<th class="lead">Eliminar Producto</th>--}}                                    
+                                          <th class="lead">Eliminar Producto</th>                                   
                                     </tr>
                               </thead>
 
@@ -41,16 +40,8 @@
                                                       <td>{{$item->nombreproducto}}</td>
                                                       <td>${{$item->precioproducto}}</td>
                                                       <td>{{$item->cantidad}}</td>
-                                                      <td>${{ number_format ($subtotal, 2, ",","." ) }}</td>                                                            
-                                                 {{--<td>
-                                                      <a title="Eliminar" href="#" class="btn btn-danger" aria-hidden="true" onclick="javascript: $('#mdlEliminar').modal('toggle');">Eliminar</a>
-                                                </td> --}}
-
-                                                                  {{-- <td><a href="carrito/ {{ $item -> idcarrito_producto }}" class="btn btn-danger">Eliminar</a></td>  --}}
-                                                            
-                                                                  
-                                                                                                   
-                                                                  {{-- eliminar por url porque ahora me esta llamando al boton finalizar, se tiene que diferenciar del eliminar producto. --}}                     
+                                                      <td>${{ number_format ($subtotal, 2, ",","." ) }}</td>
+                                                      <td><button type="button" class="btn btn-outline-danger">Eliminar</button></td>                                                                
                                                 </tr>   
                                                                                                           
                                           <?php $total += $subtotal; ?>
@@ -71,7 +62,7 @@
                         <label for="" class="d-block">Selecciona el medio de pago:</label>
                         <select name="lstMedioDePago" id="lstMedioDePago" class="form-control">
                               <option value="mercadopago">Mercadopago</option>
-                              <option value="sucursal">Pago en sucursal</option>
+                              <option value="sucursal" >Pago en sucursal</option>
                         </select>
                   </div>  
                   <div class="col-6 mt-3">
@@ -90,26 +81,4 @@
             </div>
       </form>
 </section>
-// <script>
-// function eliminar() {
-//         $.ajax({
-//             type: "GET",
-//             url: "{{ asset('carrito/eliminar') }}",
-//             data: { id:globalId },
-//             async: true,
-//             dataType: "json",
-//             success: function (data) {
-//                 if (data.err = "0") {
-//                     msgShow("Registro eliminado exitosamente.", "success");
-//                     $("#btnEnviar").hide();
-//                     $("#btnEliminar").hide();
-//                     $('#mdlEliminar').modal('toggle');
-//                 } else {
-//                     msgShow("Error al eliminar", "success");
-//                 }
-//             }
-//         });
-//     }
-
-// </script>
 @endsection
