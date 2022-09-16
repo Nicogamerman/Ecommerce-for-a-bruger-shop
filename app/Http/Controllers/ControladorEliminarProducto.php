@@ -3,41 +3,40 @@
 namespace App\Http\Controllers;
 
 use App\Entidades\Producto;
-use App\Entidades\Carrito;
-use App\Entidades\Carrito_producto;
-use App\Entidades\Categoria;
 use App\Entidades\Sistema\Patente; //controles de permisos
 use App\Entidades\Sistema\Usuario; //controles de permisos
 use Illuminate\Http\Request;
-use App\Entidades\Pedido;
-use Illuminate\Contracts\Session\Session;
 
+use Illuminate\Contracts\Session\Session;
 
 require app_path() . '/start/constants.php';
 
 class ControladorEliminarProducto extends Controller
 {
 
-    // public function eliminarProducto(Request $request)
+    // public function eliminar(Request $request)
     // {
-    //     $id = $request->input('idcarrito_producto');
+    //     $id = $request->idcarrito_producto;
 
-    //     if (Usuario::autenticado() == true) {
-    //         if (Patente::autorizarOperacion("MENUELIMINAR")) {
+    //     $carrito = new Carrito();
+    //     $carrito->eliminar(request("idcarrito_producto"));
+ 
+    //     return view("web.carrito");
 
-    //             $entidad = new Producto();
-    //             $entidad->cargarDesdeRequest($request);
-    //             $entidad->eliminar();
+    //     } 
 
-    //             $aResultado["err"] = EXIT_SUCCESS; //eliminado correctamente
-    //         } else {
-    //             $codigo = "ELIMINARPROFESIONAL";
-    //             $aResultado["err"] = "No tiene pemisos para la operaci&oacute;n.";
-    //         }
-    //         echo json_encode($aResultado);
-    //     } else {
-    //         return redirect('admin/login');
-    //     }
-    // }
-}      
+    public function eliminar(Request $request)
+        {
+            $id = $request->get('idcarrito_producto');
+    
+            if (Usuario::autenticado() == true) {
+                    $entidad = new Producto();
+                    $entidad->cargarDesdeRequest($request);
+                    $entidad->eliminar();
+    
+                return view("web.carrito");  
+            }
+        }
+}
+
 

@@ -122,19 +122,19 @@
             <form method="POST" action="" enctype="multipart/form-data">
                <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
               <div>
-                <input type="text" class="form-control" placeholder="Nombre" name="txtNombre"/>
+                <input type="text" class="form-control" placeholder="Nombre" name="txtNombre" required/>
               </div>
               <div>
-                <input type="text" class="form-control" placeholder="Apellido" name="txtApellido"/>
+                <input type="text" class="form-control" placeholder="Apellido" name="txtApellido" required/>
               </div>
               <div>
-                <input type="text" class="form-control" placeholder="Numero de Whatsapp" name="txtTelefono" />
+                <input type="text" class="form-control" placeholder="Numero de Whatsapp" name="txtTelefono" required/>
               </div>
               <div>
-                <input type="email" class="form-control" placeholder="Correo electronico" name="txtCorreo" />
+                <input type="email" class="form-control" placeholder="Correo electronico" name="txtCorreo" required/>
               </div>
                <div>                
-                <textarea name="txtMensaje" id="txtMensaje" class="form-control" placeholder="Mensaje"></textarea>
+                <textarea name="txtMensaje" id="txtMensaje" class="form-control" placeholder="Mensaje" required></textarea>
               </div>
               <div>
                 <label for="archivo" class="d-block">Adjunta tu CV:</label>

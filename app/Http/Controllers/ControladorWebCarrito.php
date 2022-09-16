@@ -78,8 +78,8 @@ class ControladorWebCarrito extends Controller
         } else {
             $pedido->fk_idestado = PEDIDO_PENDIENTEDEPAGO;
             $pedido->insertar();
+            return redirect("/mi-cuenta");
             
-
             //pago con mercadopago
             $access_token = "";
             SDK::setClientId(config("payment-methods.mercadopago.client"));
@@ -123,26 +123,25 @@ class ControladorWebCarrito extends Controller
             $preference->auto_return = "all";
             $preference->notification_url = '';
             $preference->save(); //Ejecuta la transacción
+
         }
 
-        // Vaciar el carrito
-        // $carrito_producto->eliminarPorCliente(Session::get("idcliente"));
+         //Vaciar el carrito
+         $carrito_producto->eliminarPorCliente(Session::get("idcliente"));
 
-        $carrito = new Carrito();
-        $carrito->eliminarPorCliente(Session::get("idcliente"));
+         $carrito = new Carrito();
+         $carrito->eliminarPorCliente(Session::get("idcliente"));
+ 
+         return redirect("/mi-cuenta");
+     }
+     
+     public function eliminar()
+     {
+         $idcarrito_producto = new Carrito();
+         $idcarrito_producto->eliminar(Session::get("idcarrito_producto"));
+        
+         return redirect("/takeaway");
+     }
 
-        return redirect("/mi-cuenta");
     }
-
-    public function eliminar(Request $request)
-    {   
-        $carrito_producto = new Carrito_producto();
-        $carrito_producto->eliminar(Session::get("idproducto"));
-         
-        $carrito = new Carrito_producto();
-        $carrito->eliminar(Session::get("idproducto"));
-
-        return redirect("/carrito");   
-    } 
-}
 ?>

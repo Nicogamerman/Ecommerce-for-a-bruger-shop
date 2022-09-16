@@ -35,6 +35,7 @@ class ControladorWebNosotros extends Controller
             }
             
         }
+        
         $postulacion->nombre = $nombre;
         $postulacion->apellido = "";
         $postulacion->celular = $celular;
