@@ -80,25 +80,28 @@ class ControladorWebCarrito extends Controller
             $pedido->insertar();
             return redirect("/mi-cuenta");
             
-            //pago con mercadopago
+            //Mercadopago
             $access_token = "";
             SDK::setClientId(config("payment-methods.mercadopago.client"));
             SDK::setClientSecret(config("payment-methods.mercadopago.secret"));
-            SDK::setAccessToken($access_token); //Es el id de la cuenta de MP donde se realiza el cobro
+           /* Setting the access token. */
+            SDK::setAccessToken($access_token); 
 
-            //Armado del producto ‘item’
+            /* Creating a new item. */
             $item = new Item();
             $item->id = "1234";
             $item->title = "Burger SRL";
             $item->category_id = "products";
             $item->quantity = 1;
             $item->unit_price = $pedido->total;
-            $item->currency_id = "ARS"; //COP
+            $item->currency_id = "ARS";
 
             $preference = new Preference();
             $preference->items = array($item);
 
-            //Datos del comprador
+            
+           /* Creating a new payer and setting the payer's name, surname, email, date created and
+           identification. */
             $payer = new Payer();
             $cliente = new Cliente();
             $cliente->obtenerPorId(Session::get("idcliente"));
@@ -107,12 +110,12 @@ class ControladorWebCarrito extends Controller
             $payer->email = $cliente->correo;
             $payer->date_created = date('Y-m-d H:m:s');
             $payer->identification = array(
-                "type" => "DNI", //CC
+                "type" => "DNI",
                 "number" => $cliente->dni,
             );
             $preference->payer = $payer;
 
-            //URL de configuración para indicarle a MP
+           /* Setting the back urls. */
             $preference->back_urls = [
                 "success" => "http://127.0.0.1:8000/mercado-pago/aprobado/" . $cliente->idcliente,
                 "pending" => "http://127.0.0.1:8000/mercado-pago/pendiente/" . $cliente->idcliente,
@@ -122,26 +125,33 @@ class ControladorWebCarrito extends Controller
             $preference->payment_methods = array("installments" => 6);
             $preference->auto_return = "all";
             $preference->notification_url = '';
-            $preference->save(); //Ejecuta la transacción
-
+            /* Saving the preference. */
+            $preference->save();
         }
 
-         //Vaciar el carrito
-         $carrito_producto->eliminarPorCliente(Session::get("idcliente"));
+        /* Deleting the cart and redirecting to the account page. */
+        $carrito_producto->eliminarPorCliente(Session::get("idcliente"));
 
-         $carrito = new Carrito();
-         $carrito->eliminarPorCliente(Session::get("idcliente"));
+        $carrito = new Carrito();
+        $carrito->eliminarPorCliente(Session::get("idcliente"));
  
-         return redirect("/mi-cuenta");
+        return redirect("/mi-cuenta");
      }
      
      public function eliminar()
      {
          $idcarrito_producto = new Carrito();
          $idcarrito_producto->eliminar(Session::get("idcarrito_producto"));
-        
          return redirect("/takeaway");
      }
-
+     public function eliminarProducto()
+     {
+         
+             $carrito_producto= new Carrito_producto();
+             $carrito_producto->obtenerPorId('idcarrito_producto');
+             $carrito_producto->eliminar();
+             
+             return redirect('carrito');
+      }  
     }
 ?>

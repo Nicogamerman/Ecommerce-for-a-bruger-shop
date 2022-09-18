@@ -41,7 +41,7 @@
                   </p>
                   <div class="options">
                     <h6>
-                    {{ $item->precio }}
+                    ${{ $item->precio }}
                     </h6>
                     <form action="" method="POST">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>

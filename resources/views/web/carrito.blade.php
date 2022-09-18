@@ -41,7 +41,7 @@
                                                       <td>${{$item->precioproducto}}</td>
                                                       <td>{{$item->cantidad}}</td>
                                                       <td>${{ number_format ($subtotal, 2, ",","." ) }}</td>
-                                                      <td><a href="/carrito/eliminar/{{$item->idcarrito_producto}}" type="button" class="btn btn-outline-danger">Eliminar</a></td>                                                                
+                                                      <td><a href="/carrito/eliminarProducto/{{$item->idcarrito_producto}}" type="button" class="btn btn-outline-danger">Eliminar</a></td>                                                               
                                                 </tr>   
                                                                                                           
                                           <?php $total += $subtotal; ?>
