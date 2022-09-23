@@ -25,11 +25,15 @@ class ControladorWebCarrito extends Controller
     public function index()
     {
         $idcliente = Session::get("idcliente");
-        /* Checking if the cart is empty or not. */
+        
         if ($idcliente > 0) {
             $carrito = new Carrito();
+            
+            $sucursal = new Sucursal();
+            $aSucursales = $sucursal->obtenerTodos();
 
-            /* Checking if the cart is empty or not. */
+            $pg = "carrito";
+            
             if ($carrito->obtenerPorCliente($idcliente) != null) {
                 $carrito_producto = new Carrito_producto();
                 if ($carrito_producto->obtenerPorCarrito($carrito->idcarrito) != null) {
@@ -39,18 +43,24 @@ class ControladorWebCarrito extends Controller
                     $aCarrito_productos = array();
                 }
             }
-            /* Checking if the cart is empty or not. */ 
-            else {
-                $msg["estado"] = "info";
+            else {     
+                $carrito_producto = new Carrito_producto();
+                $aCarrito_productos = $carrito_producto->obtenerPorCliente(Session::get("idcliente"));
+
+                $msg["estado"] = "danger";
                 $msg["mensaje"] = "Su carrito esta vacio, agregue productos desde Takeaway";
+                return view("web.carrito", compact('pg', 'carrito', 'carrito_producto', 'aSucursales', 'aCarrito_productos','msg'));
             }
-
-            $sucursal = new Sucursal();
-            $aSucursales = $sucursal->obtenerTodos();
-
-            $pg = "carrito";
             return view("web.carrito", compact('pg', 'carrito', 'carrito_producto', 'aSucursales', 'aCarrito_productos'));
         }
+    }
+
+    public function eliminarProducto($idcarrito_producto)
+    {
+        $carrito_producto= new Carrito_producto();
+        $carrito_producto->obtenerPorId($idcarrito_producto);
+        $carrito_producto->eliminar();
+        return redirect('carrito'); 
     }  
 
     /* A function that is called when the user clicks on the "Finalizar Pedido" button. */
@@ -138,20 +148,5 @@ class ControladorWebCarrito extends Controller
         return redirect("/mi-cuenta");
      }
      
-     public function eliminar()
-     {
-         $idcarrito_producto = new Carrito();
-         $idcarrito_producto->eliminar(Session::get("idcarrito_producto"));
-         return redirect("/takeaway");
-     }
-     public function eliminarProducto()
-     {
-         
-             $carrito_producto= new Carrito_producto();
-             $carrito_producto->obtenerPorId('idcarrito_producto');
-             $carrito_producto->eliminar();
-             
-             return redirect('carrito');
-      }  
     }
 ?>

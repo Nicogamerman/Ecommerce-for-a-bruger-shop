@@ -27,7 +27,7 @@
                                           <th class="lead">Precio</th>
                                           <th class="lead">Cantidad</th>
                                           <th class="lead">Total item</th>                                   
-                                          <th class="lead">Quitar producto</th>                                   
+                                          <th class="lead"></th>                                   
                                     </tr>
                               </thead>
 
@@ -41,15 +41,14 @@
                                                       <td>${{$item->precioproducto}}</td>
                                                       <td>{{$item->cantidad}}</td>
                                                       <td>${{ number_format ($subtotal, 2, ",","." ) }}</td>
-                                                      <td><a href="/carrito/eliminarProducto/{{$item->idcarrito_producto}}" type="button" class="btn btn-outline-danger">Eliminar</a></td>                                                               
-                                                </tr>   
-                                                                                                          
+                                                      <td><a href="/carrito/eliminarProducto/{{$item->idcarrito_producto}}" type="button" class="btn btn-outline-danger shadow">Eliminar</a></td>                                                               
+                                                </tr>
+                                               
                                           <?php $total += $subtotal; ?>
-                                          
                                     @endforeach
-                                    
                               </tbody>                        
-                        </table>          
+                        </table> 
+
                   <div class="col-12">
                         <label for="" class="d-block">Sucursal donde retirar el pedido:</label>
                         <select name="lstSucursal" id="lstSucursal" class="form-control">
@@ -58,23 +57,25 @@
                               @endforeach
                         </select>
                   </div>
+
                   <div class="col-12">
                         <label for="" class="d-block">Selecciona el medio de pago:</label>
                         <select name="lstMedioDePago" id="lstMedioDePago" class="form-control">
                               <option value="mercadopago">Mercadopago</option>
                               <option value="sucursal" >Pago en sucursal</option>
                         </select>
-                  </div>  
+                  </div> 
+
                   <div class="col-6 mt-3">
                         <a href="/takeaway" class="lead btn btn-warning shadow float-left">Agregar más productos</a>
-                  </div>  
+                  </div> 
+                   
                   <div class="col-6">
                         <div class="col-6 float-right lead">                              
                               <div>
                                     <button type="submit" href="/mi-cuenta" class="btn btn-success shadow float-right">Finalizar pedido</button>
                               </div>
-                              <h4 class="float-right mt-3">TOTAL: ${{$total}}</h4>
-                             
+                              <h4 class="float-right mt-3">TOTAL: ${{$total}}</h4>                              
                         </div>
                   </div>  
                   

@@ -77,7 +77,7 @@
             <div class="box">
               <div class="detail-box">
                 <p>
-                Que decir... probe hamburguesas de todo el mundo, sin duda me quedo con las de Córdoba!
+                Que decir... probe hamburguesas de todo el mundo, sin duda me quedo con las de Córdoba, son algo fuera de lo comun digno a ser probado al menos una vez en tu vida!
                 </p>
                 <h6>
                   Ivan Mongi
@@ -92,7 +92,8 @@
             <div class="box">
               <div class="detail-box">
                 <p>
-                Había gente haciendo fila afuera, recomiendo reservar algunos días antes.
+                Había gente haciendo fila afuera, la verdad pensaba que era una locura que tanta gente haga fila por una hamburguesa! Recomiendo reservar algunos días antes para no quedarte sin probarlas o usar el delivery!
+
                 </p>
                 <h6>
                   Rodrigo Gamerman

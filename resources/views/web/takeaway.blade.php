@@ -27,7 +27,7 @@
               <div class="col-sm-6 col-lg-4 all {{$itemCategoria->nombre}}">
             @endif
           @endforeach
-            <div class="box animate__animated animate__backInUp">
+            <div class="box">
               <div>
                 <div class="img-box">
                   <img src="/files/{{ $item->imagen }}" alt=""> 
